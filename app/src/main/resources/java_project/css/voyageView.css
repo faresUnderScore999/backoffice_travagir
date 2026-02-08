@@ -1,0 +1,127 @@
+/* ============================================
+   VOYAGE VIEW STYLES - FIXED VERSION
+   ============================================ */
+
+.root {
+    /* Fixed: Using standard naming conventions to avoid lookup errors */
+    -fx-primary-navy: #131a22;
+    -fx-gold-accent: #F9B729;
+    -fx-gold-light: #FFD166;
+    -fx-gold-dark: #E6A420;
+    -fx-light-bg: #F8F9FA;
+    -fx-border-gray: #E0E0E0;
+}
+
+/* ===== MAIN CONTAINER ===== */
+.card {
+    -fx-background-color: -fx-light-bg;
+    -fx-background-radius: 20;
+    -fx-padding: 25;
+}
+
+/* ===== HEADER STYLING ===== */
+.header-label-container {
+    -fx-background-color: linear-gradient(to right, #131a22, #1E293B);
+    -fx-background-radius: 12;
+    -fx-padding: 10 20;
+}
+
+.header-label {
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-font-weight: 800;
+}
+
+/* ===== BUTTONS ===== */
+.primary-button {
+    -fx-background-color: -fx-gold-accent;
+    -fx-text-fill: #131a22; /* Directly using hex to prevent CastException */
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+}
+
+.secondary-button {
+    -fx-background-color: white;
+    -fx-text-fill: #131a22;
+    -fx-border-color: #131a22;
+    -fx-border-width: 2;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.add-user {
+    -fx-background-color: linear-gradient(to right, #F9B729, #FFD166);
+    -fx-text-fill: #131a22;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+}
+
+/* ===== TABLE VIEW - THE CRITICAL FIXES ===== */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+}
+
+/* Header Background - Dark Navy */
+.table-view .column-header-background {
+    -fx-background-color: #131a22;
+    -fx-background-radius: 15 15 0 0;
+    -fx-padding: 5 0;
+}
+
+/* Header Labels */
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-size: 45;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+/* Rows and Cells */
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-cell-size: 50;
+    -fx-border-color: transparent transparent #F0F0F0 transparent; /* Light bottom border */
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #F9F9F9;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: rgba(249, 183, 41, 0.1);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(249, 183, 41, 0.2);
+}
+
+.table-view .table-cell {
+    -fx-text-fill: #374151;
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* ===== ACTION BUTTONS (Update/Delete) ===== */
+.button.update-btn {
+    -fx-background-color: #F9B729;
+    -fx-text-fill: #131a22;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+}
+
+.button.delete-btn {
+    -fx-background-color: #EF4444;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+}

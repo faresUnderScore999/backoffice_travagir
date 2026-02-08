@@ -1,0 +1,68 @@
+/* ===== ROOT THEME ===== */
+.root {
+    -fx-navy-dark: #131a22;   /* From your existing palette  */
+    -fx-gold-main: #F9B729;   /* From your existing palette  */
+    -fx-gold-light: #FFD166;
+    -fx-text-muted: #64748b;
+}
+
+/* ===== SIDEBAR CONTAINER ===== */
+.sidebar {
+    -fx-background-color: white;
+    -fx-padding: 25 15 25 15;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 0 1 0 0;
+    /* Subtle shadow to give it depth against the main content */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.03), 10, 0, 5, 0);
+}
+
+/* ===== COMPANY HEADER ===== */
+.company-box {
+    -fx-alignment: CENTER;
+    -fx-padding: 0 0 40 0;
+}
+
+.company-name {
+    -fx-text-fill: -fx-navy-dark;
+    -fx-font-size: 20px;
+    -fx-font-weight: 800;
+    -fx-letter-spacing: 1px;
+}
+
+/* ===== MENU ITEMS ===== */
+.menu-item {
+    -fx-padding: 12 15 12 15;
+    -fx-spacing: 12;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.menu-item Label {
+    -fx-text-fill: -fx-text-muted;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+
+/* Hover State: Subtle lift and light background */
+.menu-item:hover {
+    -fx-background-color: #F8FAFC;
+    -fx-translate-x: 5; /* Moves the item slightly right on hover */
+}
+
+.menu-item:hover Label {
+    -fx-text-fill: -fx-navy-dark;
+}
+
+/* Active State: The "Floating Gold" look */
+.menu-item.active {
+
+    -fx-background-color: #F9B729;
+
+    -fx-border-color: transparent transparent transparent white;
+
+    -fx-border-width: 0 0 0 4;
+
+}

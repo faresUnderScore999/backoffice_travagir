@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<VBox xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="15"
+      prefWidth="250"
+      fx:controller="java_project.controllers.MenuController"
+      styleClass="sidebar"
+      stylesheets="@../css/menu.css">
+
+    <!-- Company header -->
+    <HBox spacing="10" styleClass="company-box">
+        <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
+            <image>
+                <Image url="@../icons/logo.png"/>
+            </image>
+        </ImageView>
+  
+    </HBox>
+
+    <!-- Menu Items -->
+    <VBox spacing="10">
+
+        <HBox fx:id="menuDashboard" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            
+            <Label text="🏠 Dashboard"/>
+        </HBox>
+
+        <HBox spacing="10" styleClass="menu-item">
+         
+            <Label text="📄	Overview"/>
+        </HBox>
+
+        <HBox spacing="10" styleClass="menu-item">
+          
+            <Label text="📅 Schedule"/>
+        </HBox>
+
+        <HBox spacing="10" styleClass="menu-item">
+          
+            <Label text="🔔 Notifications"/>
+        </HBox>
+
+        <HBox spacing="10" styleClass="menu-item">
+            <ImageView fitWidth="18" fitHeight="18">
+                <image><Image url="@../icons/complain.png"/></image>
+            </ImageView>
+            <Label text="Complain"/>
+        </HBox>
+
+        <HBox fx:id="menuVoyage" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <ImageView fitWidth="18" fitHeight="18">
+                <image><Image url="@../icons/voyage.png"/></image>
+            </ImageView>
+            <Label text="Gestion Voyage"/>
+        </HBox>
+
+        <HBox spacing="10" styleClass="menu-item">
+            <ImageView fitWidth="18" fitHeight="18">
+                <image><Image url="@../icons/reservation.png"/></image>
+            </ImageView>
+            <Label text="Gestion Reservation"/>
+        </HBox>
+
+        <HBox fx:id="menuUser" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+          
+            <Label text="💻 Gestion Utilisateur"/>
+        </HBox>
+
+        <HBox spacing="10" styleClass="menu-item">
+          
+            <Label text="🔥 Promo"/>
+        </HBox>
+
+        <HBox spacing="10" styleClass="menu-item">
+            <ImageView fitWidth="18" fitHeight="18">
+                <image><Image url="@../icons/settings.png"/></image>
+            </ImageView>
+            <Label text="Settings"/>
+        </HBox>
+
+    </VBox>
+
+</VBox>
