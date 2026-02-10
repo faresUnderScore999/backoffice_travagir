@@ -46,4 +46,12 @@ public class UserService {
         // Endpoint matched from: .requestMatchers("/api/v1/users/all").hasRole("ADMIN")
         return apiClient.sendWithRetry("/api/v1/users/all", "GET", null);
     }
+    /**
+ * Fetches a specific user's details by email.
+ * Requires appropriate admin permissions as per backend security.
+ */
+public CompletableFuture<HttpResponse<String>> getUserByEmail(String email) {
+    // Endpoint: /api/v1/users/{email}
+    return apiClient.sendWithRetry("/api/v1/users/" + email, "GET", null);
+}
 }

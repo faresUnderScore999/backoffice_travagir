@@ -61,7 +61,7 @@
             <Label text="Gestion Voyage"/>
         </HBox>
 
-        <HBox spacing="10" styleClass="menu-item">
+        <HBox fx:id="menuReservation" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
             <ImageView fitWidth="18" fitHeight="18">
                 <image><Image url="@../icons/reservation.png"/></image>
             </ImageView>

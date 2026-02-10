@@ -6,8 +6,8 @@
 
 <VBox spacing="20" alignment="TOP_CENTER" prefWidth="550" prefHeight="700"
       xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="java_project.controllers.AddVoyageController"
-      stylesheets="@../css/addUser.css" styleClass="form-card">
+      fx:controller="java_project.controllers.voyage.AddVoyageController"
+      stylesheets="@../../css/addUser.css" styleClass="form-card">
     
     <padding>
         <Insets top="30" right="40" bottom="30" left="40"/>

@@ -20,6 +20,8 @@ private void handleMenuClick(MouseEvent event) {
     // Determine path based on ID
     if (clickedItem.getId().equals("menuVoyage")) fxmlPath = "/java_project/views/voyageView.fxml";
     else if (clickedItem.getId().equals("menuUser")) fxmlPath = "/java_project/views/gestionuserView.fxml";
+    else if (clickedItem.getId().equals("menuReservation")) fxmlPath = "/java_project/views/reservationView.fxml";
+    // else if (clickedItem.getId().equals("menuDashboard")) fxmlPath = "/java_project/views/dashboardView.fxml";
 
     try {
         BorderPane root = (BorderPane) clickedItem.getScene().getRoot();

@@ -154,7 +154,7 @@ public class VoyageController {
         @FXML
     private void openAddVoyageModal() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/addVoyageView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/voyage/addVoyageView.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
@@ -169,4 +169,5 @@ public class VoyageController {
             e.printStackTrace();
         }
     }
+    
 }

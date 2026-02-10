@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" alignment="TOP_CENTER" prefWidth="500" prefHeight="600"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="java_project.controllers.user.UpdateUserController"
+      stylesheets="@../../css/addUser.css" styleClass="form-card">
+    
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" styleClass="form-header">
+        <Label text="Register New User" styleClass="form-title"/>
+        <Label text="Please fill in all information accurately." styleClass="form-subtitle"/>
+    </VBox>
+
+    <Separator />
+
+    <GridPane vgap="15" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="120" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Full Name" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="nameField" promptText="Enter full name" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Email Address" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="emailField" promptText="example@travagir.com" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Phone Number" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="phoneField" promptText="+216 ..." GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Role" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label"/>
+        <ComboBox fx:id="roleCombo" promptText="Select Role" maxWidth="Infinity" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Password" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="field-label"/>
+        <PasswordField fx:id="passField" promptText="••••••••" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="form-field"/>
+    </GridPane>
+
+    <Region VBox.vgrow="ALWAYS" />
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#handleCancel" styleClass="btn-cancel" />
+        <Button text="Update User" onAction="#handleUpdate" styleClass="btn-save" />
+    </HBox>
+</VBox>

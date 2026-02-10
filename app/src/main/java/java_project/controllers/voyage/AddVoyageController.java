@@ -1,4 +1,4 @@
-package java_project.controllers;
+package java_project.controllers.voyage;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

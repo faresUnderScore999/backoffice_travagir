@@ -34,12 +34,12 @@
     </VBox>
     
     <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 15 20; -fx-effect: dropshadow(gaussian, rgba(19, 25, 33, 0.05), 10, 0, 0, 2);">
-        <TextField promptText="Search users..." style="-fx-background-radius: 10; -fx-padding: 10 15; -fx-pref-width: 300;" />
+        <TextField promptText="Search users..." fx:id="searchField" style="-fx-background-radius: 10; -fx-padding: 10 15; -fx-pref-width: 300;" />
         <ComboBox promptText="Filter by Role" style="-fx-background-radius: 10; -fx-pref-width: 150;" />
         <ComboBox promptText="Filter by Status" style="-fx-background-radius: 10; -fx-pref-width: 150;" />
         <Region HBox.hgrow="ALWAYS" />
-        <Button text="Clear Filters" styleClass="secondary-button" />
-        <Button text="Apply" styleClass="primary-button" /> </HBox>
+        <Button text="Clear Filters" onAction="#clearFilters" styleClass="secondary-button" />
+        <Button  text="Apply" onAction="#searchAndReplaceList" styleClass="primary-button" /> </HBox>
     
     <VBox VBox.vgrow="ALWAYS">
         <TableView fx:id="userTable" VBox.vgrow="ALWAYS" styleClass="table-view">
@@ -49,7 +49,7 @@
                 <TableColumn fx:id="colEmail" text="Email" prefWidth="320"/>
                 <TableColumn fx:id="colTel" text="Phone" prefWidth="180"/>
                 <TableColumn fx:id="colRole" text="Role" prefWidth="150"/>
-                <TableColumn fx:id="colStatus" text="Status" prefWidth="120" />
+                <!-- <TableColumn fx:id="colStatus" text="Status" prefWidth="120" /> -->
                 <TableColumn fx:id="colActions" text="Actions" prefWidth="250" style="-fx-alignment: CENTER;" />
             </columns>
         </TableView>

@@ -24,6 +24,12 @@ public class LoginController {
     private Label errorLabel;
     private final AuthService authService = new AuthService();
 
+     @FXML
+    public void initialize() {
+        // Clear error message on input change
+        emailField.setText("admin@travagir.com");
+        passwordField.setText("securepassword159A@");
+    }
     @FXML
     public void handleLogin(ActionEvent event) {
         String email = emailField.getText();

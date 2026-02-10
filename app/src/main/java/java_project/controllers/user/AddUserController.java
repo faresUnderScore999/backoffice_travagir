@@ -129,12 +129,4 @@ private void handleSave() {
         alert.showAndWait();
     }
 
-    /**
-     * This is the helper method we completed earlier. 
-     * In a real project, move this to an 'ApiService' class to keep controllers clean.
-     */
-    private CompletableFuture<HttpResponse<String>> sendRequest(String endpoint, String method, String body) {
-        // ... (Insert the full sendRequest logic provided in previous turns here)
-        return null; // Placeholder for compilation
-    }
 }
