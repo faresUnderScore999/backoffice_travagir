@@ -6,7 +6,7 @@
 
 <VBox spacing="20" alignment="TOP_CENTER" prefWidth="500" prefHeight="600"
       xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="java_project.controllers.AddUserController"
+      fx:controller="java_project.controllers.user.AddUserController"
       stylesheets="@../css/addUser.css" styleClass="form-card">
     
     <padding>

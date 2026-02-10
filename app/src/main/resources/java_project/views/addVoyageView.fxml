@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" alignment="TOP_CENTER" prefWidth="550" prefHeight="700"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="java_project.controllers.AddVoyageController"
+      stylesheets="@../css/addUser.css" styleClass="form-card">
+    
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" styleClass="form-header">
+        <Label text="Create New Voyage" styleClass="form-title"/>
+        <Label text="Enter the travel details for the new destination." styleClass="form-subtitle"/>
+    </VBox>
+
+    <Separator />
+
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+        <GridPane vgap="15" hgap="10">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="130" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <Label text="Voyage Title" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+            <TextField fx:id="titleField" promptText="e.g. Summer in Santorini" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="Destination" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
+            <TextField fx:id="destinationField" promptText="Santorini, Greece" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="Start Date" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label"/>
+            <DatePicker fx:id="startDatePicker" maxWidth="Infinity" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="End Date" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label"/>
+            <DatePicker fx:id="endDatePicker" maxWidth="Infinity" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="Price ($)" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="field-label"/>
+            <TextField fx:id="priceField" promptText="1250.50" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="Description" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="field-label"/>
+            <TextArea fx:id="descriptionArea" prefHeight="100" wrapText="true" promptText="Describe the trip..." GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="Image URLs" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="field-label"/>
+            <VBox spacing="5" GridPane.rowIndex="6" GridPane.columnIndex="1">
+                <TextField fx:id="imageUrlField" promptText="Paste image URL here" styleClass="form-field"/>
+                <Button text="+ Add Image URL" style="-fx-font-size: 11px;" />
+            </VBox>
+        </GridPane>
+    </ScrollPane>
+
+    <Region VBox.vgrow="ALWAYS" />
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#handleCancel" styleClass="btn-cancel" />
+        <Button text="Save Voyage" onAction="#handleSave" styleClass="btn-save" />
+    </HBox>
+</VBox>

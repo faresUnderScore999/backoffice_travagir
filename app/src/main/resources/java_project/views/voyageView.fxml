@@ -18,7 +18,7 @@
                     <Insets right="20" />
                 </padding>
                 <Button text="🔄 Refresh Data" onAction="#loadVoyages" styleClass="secondary-button" />
-                <Button text="+ Add New Voyage" styleClass="add-user" /> </HBox>
+                <Button text="+ Add New Voyage" onAction="#openAddVoyageModal" styleClass="add-user" /> </HBox>
         </HBox>
     </VBox>
 

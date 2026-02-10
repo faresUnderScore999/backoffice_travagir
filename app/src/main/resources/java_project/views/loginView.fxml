@@ -43,7 +43,7 @@
           <Label fx:id="errorLabel" style="-fx-text-fill: #EF4444; -fx-font-weight: bold;" text="" />
           
           <Region prefHeight="50" />
-          <Label text="© 2024 Travagir Team" style="-fx-text-fill: #9CA3AF; -fx-font-size: 11;" />
+          <Label text="© 2026 Travagir Team" style="-fx-text-fill: #9CA3AF; -fx-font-size: 11;" />
       </VBox>
    </children>
 </HBox>

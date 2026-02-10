@@ -1,4 +1,4 @@
-package java_project.controllers;
+package java_project.controllers.user;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture;
 import java.net.http.HttpResponse;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import java_project.services.UserService;
 
 public class AddUserController {
 
@@ -15,6 +16,8 @@ public class AddUserController {
     @FXML private TextField phoneField;
     @FXML private PasswordField passField;
     @FXML private ComboBox<String> roleCombo;
+
+    private final UserService userService = new UserService(); // Use UserService for API calls
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -25,8 +28,7 @@ public class AddUserController {
         // Populate the Role ComboBox with your defined roles
         roleCombo.setItems(FXCollections.observableArrayList(
             "ADMIN", 
-            "SUPER_ADMIN", 
-            "MODERATOR"
+            "USER"
         ));
     }
 
@@ -34,42 +36,48 @@ public class AddUserController {
      * Handles the Save button action.
      * Validates input and sends a POST request to the API.
      */
-    @FXML
-    private void handleSave() {
-        if (isInputValid()) {
-            // 1. Construct the JSON payload
-            String jsonBody = String.format(
-                "{\"name\":\"%s\", \"email\":\"%s\", \"tel\":\"%s\", \"password\":\"%s\", \"role\":\"%s\"}",
-                nameField.getText(),
-                emailField.getText(),
-                phoneField.getText(),
-                passField.getText(),
-                roleCombo.getValue()
-            );
+@FXML
+private void handleSave() {
+    if (isInputValid()) {
+        // 1. Construct the JSON payload [cite: 2]
+        String jsonBody = String.format(
+            "{\"name\":\"%s\", \"email\":\"%s\", \"tel\":\"%s\", \"password\":\"%s\", \"role\":\"%s\"}",
+            nameField.getText(),
+            emailField.getText(),
+            phoneField.getText(),
+            passField.getText(),
+            roleCombo.getValue()
+        );
 
-            // 2. Send the async request using the helper method we created earlier
-            // Assuming sendRequest is accessible (e.g., in a BaseController or ApiService)
-            sendRequest("/admins/register", "POST", jsonBody)
-                .thenAccept(response -> {
-                    if (response.statusCode() == 201 || response.statusCode() == 200) {
-                        Platform.runLater(() -> {
-                            showInformation("Success", "User has been registered successfully.");
-                            closeWindow();
-                        });
-                    } else {
-                        Platform.runLater(() -> 
-                            showError("Registration Failed", "Server returned: " + response.body())
-                        );
-                    }
-                })
-                .exceptionally(ex -> {
+        // 2. Use the UserService to send the request
+        // This automatically handles authentication and retries via ApiClient [cite: 3, 4]
+        userService.addUser(jsonBody)
+            .thenAccept(response -> {
+                // Status 201 is standard for successful creation [cite: 2]
+                if (response.statusCode() == 201 || response.statusCode() == 200) {
+                    Platform.runLater(() -> {
+                        showInformation("Success", "User has been registered successfully.");
+                        closeWindow();
+                    });
+                } else if (response.statusCode() == 401 || response.statusCode() == 403) {
+                    // Handle cases where even the refresh attempt failed 
                     Platform.runLater(() -> 
-                        showError("Connection Error", "Could not reach the server.")
+                        showError("Session Expired", "Please log in again to register users.")
                     );
-                    return null;
-                });
-        }
+                } else {
+                    Platform.runLater(() -> 
+                        showError("Registration Failed", "Server returned: " + response.body())
+                    );
+                }
+            })
+            .exceptionally(ex -> {
+                Platform.runLater(() -> 
+                    showError("Connection Error", "Could not reach the server: " + ex.getMessage())
+                );
+                return null;
+            });
     }
+}
 
     /**
      * Handles the Cancel button action.
