@@ -7,31 +7,41 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-
 public class App extends Application {
-    
+
     public String getGreeting() {
         return "Hello World!";
     }
 
-@Override
-public void start(Stage primaryStage) throws Exception {
-    try {
-        // Load the new Login FXML
-FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/loginView.fxml"));
-        Parent root = loader.load();
-        
-        Scene scene = new Scene(root, 1376, 768); // Use the full window size
-        primaryStage.setTitle("Backoffice - Login");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        try {
+            // Load the new Login FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/loginView.fxml"));
+            Parent root = loader.load();
 
+            Scene scene = new Scene(root, 1376, 768); // Use the full window size
+            primaryStage.setTitle("Backoffice - Login");
+       try {    // Define the Cloudinary URL
+            String iconUrl = "https://res.cloudinary.com/dzxxigjkk/image/upload/v1770949791/images_qlsaxx.png";
+
+            // Load the image directly from the URL
+            Image appIcon = new Image(iconUrl);
+
+            // Add it to the stage
+            primaryStage.getIcons().add(appIcon);}catch (Exception e) {
+    System.err.println("Could not load remote icon: " + e.getMessage());
+}
+          
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);

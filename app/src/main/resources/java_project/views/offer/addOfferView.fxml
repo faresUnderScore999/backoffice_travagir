@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" alignment="TOP_CENTER" prefWidth="650" prefHeight="650"
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="java_project.controllers.offer.AddOfferController" stylesheets="@../../css/addUser.css" styleClass="form-card">
+
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" styleClass="form-header">
+        <Label text="Create New Offer" styleClass="form-title"/>
+        <Label text="Set discounts for specific voyages." styleClass="form-subtitle"/>
+    </VBox>
+
+    <Separator />
+
+    <GridPane vgap="15" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="130" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Voyage ID" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="voyageIdField" promptText="Target Voyage ID" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Offer Title" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="titleField" promptText="e.g. Summer Pack" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Description" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextArea fx:id="descriptionArea" prefHeight="80" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Discount (%)" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="discountField" promptText="e.g. 15.5" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Start Date" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="field-label"/>
+        <DatePicker fx:id="startDatePicker" maxWidth="Infinity" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="End Date" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="field-label"/>
+        <DatePicker fx:id="endDatePicker" maxWidth="Infinity" GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Active Status" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="field-label"/>
+        <CheckBox fx:id="activeCheckBox" text="Available for use" selected="true" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 20 0 0 0;">
+        <Button text="Save Offer" onAction="#handleSave" styleClass="btn-save" />
+    </HBox>
+</VBox>

@@ -77,7 +77,7 @@ public class ReservationController {
                         Platform.runLater(() -> {
                             allReservations.setAll(reservations);
                             reservationTable.setItems(allReservations);
-                            updateTotalRevenue(reservations);
+                           // updateTotalRevenue(reservations);
                             statusLabel.setText("Status: " + reservations.size() + " loaded.");
                         });
                     } catch (Exception e) {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox prefHeight="768" prefWidth="1376.0"
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1" 
+    stylesheets="@../css/voyageView.css" 
+    fx:controller="java_project.controllers.OfferController" 
+    spacing="25" 
+    styleClass="card"> 
+
+    <VBox spacing="10">
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header-label-container">
+            <Label text="🎁 Offer &amp; Promotion Management" styleClass="header-label" />
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <padding>
+                    <Insets right="20" />
+                </padding>
+                <Button text="🔄 Refresh" onAction="#loadOffers" styleClass="secondary-button" />
+                <Button text="+ Create New Offer" styleClass="add-user" onAction="#openAddModal" />
+            </HBox>
+        </HBox>
+        
+     
+    </VBox>
+ <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 15 20; -fx-effect: dropshadow(gaussian, rgba(19, 25, 33, 0.05), 10, 0, 0, 2);">
+        <TextField promptText="Search complaints..." style="-fx-background-radius: 10; -fx-padding: 10 15; -fx-pref-width: 300;" />
+    
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="Clear Filters" styleClass="secondary-button" />
+        <Button text="Apply" styleClass="primary-button" /> 
+    </HBox>
+    <VBox VBox.vgrow="ALWAYS">
+        <TableView fx:id="offerTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="60" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colTitle" text="Offer Title" prefWidth="250" style="-fx-alignment: CENTER_LEFT;" />
+                <TableColumn fx:id="colDiscount" text="Discount %" prefWidth="120" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colActions" text="Actions" prefWidth="200" style="-fx-alignment: CENTER;" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+    </VBox>
+    
+    <HBox spacing="20" alignment="CENTER_LEFT" styleClass="footer-bar">
+        <Label fx:id="statusLabel" text="✅ Status: Ready" styleClass="status-label info" />
+    </HBox>
+</VBox>

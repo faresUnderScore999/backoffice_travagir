@@ -18,7 +18,10 @@
     -fx-background-radius: 20;
     -fx-padding: 25;
 }
-
+/* Add this to voyageView.css */
+.table-view .table-column {
+    -fx-alignment: CENTER;
+}
 /* ===== HEADER STYLING ===== */
 .header-label-container {
     -fx-background-color: linear-gradient(to right, #131a22, #1E293B);

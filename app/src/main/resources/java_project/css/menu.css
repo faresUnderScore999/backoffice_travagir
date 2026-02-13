@@ -4,6 +4,10 @@
     -fx-gold-main: #F9B729;   /* From your existing palette  */
     -fx-gold-light: #FFD166;
     -fx-text-muted: #64748b;
+    -fx-font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica", "Arial", "sans-serif";
+    
+    /* Global colors you are already using */
+    -fx-navy-dark: #1e293b;
 }
 
 /* ===== SIDEBAR CONTAINER ===== */
@@ -14,11 +18,19 @@
     -fx-border-width: 0 1 0 0;
     /* Subtle shadow to give it depth against the main content */
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.03), 10, 0, 5, 0);
+    -fx-font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica", "Arial", "sans-serif";
+    
+    /* Global colors you are already using */
+    -fx-navy-dark: #1e293b;
 }
 
 /* ===== COMPANY HEADER ===== */
 .company-box {
     -fx-alignment: CENTER;
+    -fx-font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica", "Arial", "sans-serif";
+    
+    /* Global colors you are already using */
+    -fx-navy-dark: #1e293b;
     -fx-padding: 0 0 40 0;
 }
 
@@ -34,6 +46,10 @@
     -fx-padding: 12 15 12 15;
     -fx-spacing: 12;
     -fx-alignment: CENTER_LEFT;
+    -fx-font-family: "Segoe UI Emoji", "Segoe UI Symbol", "Helvetica", "Arial", "sans-serif";
+    
+    /* Global colors you are already using */
+    -fx-navy-dark: #1e293b;
     -fx-cursor: hand;
     -fx-background-color: transparent;
     -fx-background-radius: 10;

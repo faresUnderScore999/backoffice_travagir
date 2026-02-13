@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" alignment="TOP_CENTER" prefWidth="550" prefHeight="700"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="java_project.controllers.offer.UpdateOfferController"
+      stylesheets="@../../css/addUser.css" styleClass="form-card">
+    
+    <padding>
+        <Insets top="25" right="35" bottom="25" left="35"/>
+    </padding>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" styleClass="form-header">
+        <Label text="Edit Offer" styleClass="form-title"/>
+        <Label text="All fields are required for update." styleClass="form-subtitle"/>
+    </VBox>
+
+    <Separator />
+
+    <GridPane vgap="12" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="140" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Voyage ID" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="voyageIdField" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Offer Title" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="titleField" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Description" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextArea fx:id="descriptionArea" prefHeight="80" wrapText="true" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Discount (%)" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="discountField" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Start Date" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="field-label"/>
+        <DatePicker fx:id="startDatePicker" maxWidth="Infinity" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="End Date" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="field-label"/>
+        <DatePicker fx:id="endDatePicker" maxWidth="Infinity" GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Active" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="field-label"/>
+        <CheckBox fx:id="activeCheckBox" text="Offer is Active" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <Region VBox.vgrow="ALWAYS" />
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#handleCancel" styleClass="cancel-button" />
+        <Button text="Save Changes" onAction="#handleUpdate" styleClass="submit-button" />
+    </HBox>
+</VBox>

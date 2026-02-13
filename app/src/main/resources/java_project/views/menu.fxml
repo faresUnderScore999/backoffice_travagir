@@ -16,7 +16,7 @@
 
     <!-- Company header -->
     <HBox spacing="10" styleClass="company-box">
-        <ImageView fitWidth="100" fitHeight="100" preserveRatio="true">
+        <ImageView fitWidth="200" fitHeight="50" preserveRatio="true">
             <image>
                 <Image url="@../icons/logo.png"/>
             </image>
@@ -47,25 +47,19 @@
             <Label text="🔔 Notifications"/>
         </HBox>
 
-        <HBox spacing="10" styleClass="menu-item">
-            <ImageView fitWidth="18" fitHeight="18">
-                <image><Image url="@../icons/complain.png"/></image>
-            </ImageView>
-            <Label text="Complain"/>
+        <HBox fx:id="menuReclamation" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+          
+            <Label text="📢 Complain"/>
         </HBox>
 
         <HBox fx:id="menuVoyage" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-            <ImageView fitWidth="18" fitHeight="18">
-                <image><Image url="@../icons/voyage.png"/></image>
-            </ImageView>
-            <Label text="Gestion Voyage"/>
+        
+            <Label text="✈️ Gestion Voyage"/>
         </HBox>
 
         <HBox fx:id="menuReservation" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-            <ImageView fitWidth="18" fitHeight="18">
-                <image><Image url="@../icons/reservation.png"/></image>
-            </ImageView>
-            <Label text="Gestion Reservation"/>
+          
+            <Label text="🎟️ Gestion Reservation"/>
         </HBox>
 
         <HBox fx:id="menuUser" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
@@ -73,16 +67,14 @@
             <Label text="💻 Gestion Utilisateur"/>
         </HBox>
 
-        <HBox spacing="10" styleClass="menu-item">
+        <HBox fx:id="menuOffer" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
           
             <Label text="🔥 Promo"/>
         </HBox>
 
         <HBox spacing="10" styleClass="menu-item">
-            <ImageView fitWidth="18" fitHeight="18">
-                <image><Image url="@../icons/settings.png"/></image>
-            </ImageView>
-            <Label text="Settings"/>
+          
+            <Label text="⚙️ Settings"/>
         </HBox>
 
     </VBox>

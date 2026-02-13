@@ -28,4 +28,34 @@ public class Reservation {
     public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public Integer getOfferId() {
+        return offerId;
+    }
+    public void setOfferId(Integer offerId) {
+        this.offerId = offerId;
+    }
+    public String getReservationDate() {
+        return reservationDate;
+    }
+    public void setReservationDate(String reservationDate) {
+        this.reservationDate = reservationDate;
+    }
+    public String getSpecialRequests() {
+        return specialRequests;
+    }
+    public void setSpecialRequests(String specialRequests) {
+        this.specialRequests = specialRequests;
+    }
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+    public String getPaymentDate() {
+        return paymentDate;
+    }
+    public void setPaymentDate(String paymentDate) {
+        this.paymentDate = paymentDate;
+    }
 }
