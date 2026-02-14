@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java_project.controllers.user.UpdateUserController;
+import java_project.controllers.user.UserDocumentController;
 import java_project.models.User;
 import java_project.services.UserService;
 
@@ -36,7 +37,7 @@ public class UserController {
     @FXML
     private Label statusLabel;
     @FXML
-private TextField searchField;
+    private TextField searchField;
 
     // Use the centralized ApiClient
 
@@ -97,12 +98,15 @@ private TextField searchField;
     private void addButtonToTable() {
         colActions.setCellFactory(param -> new TableCell<>() {
             private final Button updateButton = new Button("Update");
+            private final Button docBtn = new Button("Documents");
             private final Button deleteButton = new Button("Delete");
-            private final HBox pane = new HBox(10, updateButton, deleteButton);
+            
+            private final HBox pane = new HBox(10, updateButton, deleteButton,docBtn);
 
             {
                 updateButton.getStyleClass().add("update-btn");
                 deleteButton.getStyleClass().add("delete-btn");
+                docBtn.getStyleClass().add("docs-btn");
 
                 updateButton.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
@@ -114,6 +118,11 @@ private TextField searchField;
                     User user = getTableView().getItems().get(getIndex());
                     // Call your delete logic
                     handleDelete(user);
+                });
+
+                docBtn.setOnAction(event -> {
+                    User user = getTableView().getItems().get(getIndex());
+                    openUserDocumentModal(user);
                 });
             }
 
@@ -199,42 +208,61 @@ private TextField searchField;
             e.printStackTrace();
         }
     }
-        @FXML
-private void searchAndReplaceList() {
- 
-String email = searchField.getText().trim();
-   statusLabel.setText("Searching for " + email + "...");
-    userService.getUserByEmail(email)
-        .thenAccept(response -> {
-            try {
-                if (response.statusCode() == 200) {
-                    // 1. Parse the single user object from the response body
-                    User user = mapper.readValue(response.body(), User.class);
+private void openUserDocumentModal(User user) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/user/userDocumentView.fxml"));
+        Parent root = loader.load();
+        
+        UserDocumentController controller = loader.getController();
+        controller.initData(user.getId()); // Pass the ID to the new controller
 
-                    // 2. Update the UI on the JavaFX Thread
-                    javafx.application.Platform.runLater(() -> {
-                        // This clears the current list and adds only the found user
-                        userTable.getItems().setAll(user); 
-                        statusLabel.setText("Showing results for: " + email);
-                    });
-                } else {
-                    javafx.application.Platform.runLater(() -> 
-                        statusLabel.setText("User not found: " + response.statusCode())
-                    );
-                }
-            } catch (Exception e) {
-                javafx.application.Platform.runLater(() -> statusLabel.setText("Error parsing response"));
-                e.printStackTrace();
-            }
-        })
-        .exceptionally(ex -> {
-            javafx.application.Platform.runLater(() -> statusLabel.setText("Network error: " + ex.getMessage()));
-            return null;
-        });
+        Stage stage = new Stage();
+        stage.setTitle("User Documents - " + user.getName());
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root));
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
 }
-@FXML
-private void clearFilters() {
-    searchField.clear();
-    loadUsers(); // Reload the full list of users
-    statusLabel.setText("Filters cleared. Showing all users.");
-}}
+    @FXML
+    private void searchAndReplaceList() {
+
+        String email = searchField.getText().trim();
+        statusLabel.setText("Searching for " + email + "...");
+        userService.getUserByEmail(email)
+                .thenAccept(response -> {
+                    try {
+                        if (response.statusCode() == 200) {
+                            // 1. Parse the single user object from the response body
+                            User user = mapper.readValue(response.body(), User.class);
+
+                            // 2. Update the UI on the JavaFX Thread
+                            javafx.application.Platform.runLater(() -> {
+                                // This clears the current list and adds only the found user
+                                userTable.getItems().setAll(user);
+                                statusLabel.setText("Showing results for: " + email);
+                            });
+                        } else {
+                            javafx.application.Platform
+                                    .runLater(() -> statusLabel.setText("User not found: " + response.statusCode()));
+                        }
+                    } catch (Exception e) {
+                        javafx.application.Platform.runLater(() -> statusLabel.setText("Error parsing response"));
+                        e.printStackTrace();
+                    }
+                })
+                .exceptionally(ex -> {
+                    javafx.application.Platform
+                            .runLater(() -> statusLabel.setText("Network error: " + ex.getMessage()));
+                    return null;
+                });
+    }
+
+    @FXML
+    private void clearFilters() {
+        searchField.clear();
+        loadUsers(); // Reload the full list of users
+        statusLabel.setText("Filters cleared. Showing all users.");
+    }
+}

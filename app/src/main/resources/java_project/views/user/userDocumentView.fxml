@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" alignment="TOP_CENTER" prefWidth="550" prefHeight="700"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="java_project.controllers.user.UserDocumentController"
+      stylesheets="@../../css/addUser.css" styleClass="form-card">
+    
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" styleClass="form-header">
+        <Label text="User Identity Documents" styleClass="form-title"/>
+        <Label text="Manage identity verification and passport details." styleClass="form-subtitle"/>
+    </VBox>
+
+    <Separator />
+
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+        <GridPane vgap="15" hgap="10">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="150" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <Label text="First Name" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+            <TextField fx:id="firstNameField" promptText="Enter first name" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="Last Name" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
+            <TextField fx:id="lastNameField" promptText="Enter last name" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="Nationality" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label"/>
+            <TextField fx:id="nationalityField" promptText="e.g. Tunisian" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="Date of Birth" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label"/>
+            <DatePicker fx:id="dobPicker" maxWidth="Infinity" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="Passport Number" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="field-label" style="-fx-padding: 10 0 0 0;"/>
+            <TextField fx:id="passportNumField" promptText="Passport ID" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="Passport Expiry" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="field-label"/>
+            <DatePicker fx:id="passportExpiryPicker" maxWidth="Infinity" GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="CIN Number" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="field-label" style="-fx-padding: 10 0 0 0;"/>
+            <TextField fx:id="cinNumField" promptText="National Card ID" GridPane.rowIndex="6" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="CIN Creation Date" GridPane.rowIndex="7" GridPane.columnIndex="0" styleClass="field-label"/>
+            <DatePicker fx:id="cinCreationPicker" maxWidth="Infinity" GridPane.rowIndex="7" GridPane.columnIndex="1" styleClass="form-field"/>
+        </GridPane>
+    </ScrollPane>
+
+    <Region VBox.vgrow="ALWAYS" />
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#handleCancel" styleClass="btn-cancel" prefWidth="100"/>
+        <Button text="Save Documents" onAction="#handleSave" styleClass="btn-save" prefWidth="160"/>
+    </HBox>
+
+</VBox>

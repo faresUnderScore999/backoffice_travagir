@@ -25,16 +25,18 @@ public class UserService {
      * Requires authentication as per SecurityConfig.
      */
     public CompletableFuture<HttpResponse<String>> updateUser(String userId, String jsonBody) {
-        // Endpoint matched from: .requestMatchers(HttpMethod.PUT, "/api/v1/users/{id}").authenticated()
+        // Endpoint matched from: .requestMatchers(HttpMethod.PUT,
+        // "/api/v1/users/{id}").authenticated()
         return apiClient.sendWithRetry("/api/v1/users/" + userId, "PUT", jsonBody);
     }
 
     /**
-     * Deletes a user by ID. 
+     * Deletes a user by ID.
      * Requires ADMIN role as per SecurityConfig.
      */
     public CompletableFuture<HttpResponse<String>> deleteUser(String userId) {
-        // Endpoint matched from: .requestMatchers(HttpMethod.DELETE, "/api/v1/users/{id}").hasRole("ADMIN")
+        // Endpoint matched from: .requestMatchers(HttpMethod.DELETE,
+        // "/api/v1/users/{id}").hasRole("ADMIN")
         return apiClient.sendWithRetry("/api/v1/users/" + userId, "DELETE", null);
     }
 
@@ -46,12 +48,21 @@ public class UserService {
         // Endpoint matched from: .requestMatchers("/api/v1/users/all").hasRole("ADMIN")
         return apiClient.sendWithRetry("/api/v1/users/all", "GET", null);
     }
+
+    public CompletableFuture<HttpResponse<String>> getUserDocument(int userId) {
+        return apiClient.sendWithRetry("/api/v1/user-documents/" + userId, "GET", null);
+    }
+
+    public CompletableFuture<HttpResponse<String>> saveUserDocument(String jsonBody) {
+        return apiClient.sendWithRetry("/api/v1/user-documents/save", "POST", jsonBody);
+    }
+
     /**
- * Fetches a specific user's details by email.
- * Requires appropriate admin permissions as per backend security.
- */
-public CompletableFuture<HttpResponse<String>> getUserByEmail(String email) {
-    // Endpoint: /api/v1/users/{email}
-    return apiClient.sendWithRetry("/api/v1/users/" + email, "GET", null);
-}
+     * Fetches a specific user's details by email.
+     * Requires appropriate admin permissions as per backend security.
+     */
+    public CompletableFuture<HttpResponse<String>> getUserByEmail(String email) {
+        // Endpoint: /api/v1/users/{email}
+        return apiClient.sendWithRetry("/api/v1/users/" + email, "GET", null);
+    }
 }

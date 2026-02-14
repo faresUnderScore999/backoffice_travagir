@@ -25,17 +25,18 @@ public class App extends Application {
 
             Scene scene = new Scene(root, 1376, 768); // Use the full window size
             primaryStage.setTitle("Backoffice - Login");
-       try {    // Define the Cloudinary URL
-            String iconUrl = "https://res.cloudinary.com/dzxxigjkk/image/upload/v1770949791/images_qlsaxx.png";
+            try { // Define the Cloudinary URL
+                String iconUrl = "https://res.cloudinary.com/dzxxigjkk/image/upload/v1770949791/images_qlsaxx.png";
 
-            // Load the image directly from the URL
-            Image appIcon = new Image(iconUrl);
+                // Load the image directly from the URL
+                Image appIcon = new Image(iconUrl);
 
-            // Add it to the stage
-            primaryStage.getIcons().add(appIcon);}catch (Exception e) {
-    System.err.println("Could not load remote icon: " + e.getMessage());
-}
-          
+                // Add it to the stage
+                primaryStage.getIcons().add(appIcon);
+            } catch (Exception e) {
+                System.err.println("Could not load remote icon: " + e.getMessage());
+            }
+
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception e) {
