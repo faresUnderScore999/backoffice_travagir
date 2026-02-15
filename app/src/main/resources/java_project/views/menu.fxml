@@ -51,6 +51,13 @@
           
             <Label text="📢 Complain"/>
         </HBox>
+<HBox fx:id="menuRefund"
+      onMouseClicked="#handleMenuClick"
+      spacing="10"
+      styleClass="menu-item">
+
+    <Label text="💰 Refund Requests"/>
+</HBox>
 
         <HBox fx:id="menuVoyage" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
         
