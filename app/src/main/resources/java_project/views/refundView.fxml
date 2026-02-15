@@ -39,6 +39,12 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
         </columnResizePolicy>
     </TableView>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button fx:id="approveButton" text="Approve" onAction="#handleApproveSelected" styleClass="primary-button" />
+        <Button fx:id="rejectButton" text="Reject" onAction="#handleRejectSelected" styleClass="secondary-button" />
+        <Button fx:id="deleteButton" text="Delete" onAction="#handleDeleteSelected" styleClass="secondary-button" />
+    </HBox>
 </VBox>
 
     <HBox spacing="20" alignment="CENTER_LEFT" styleClass="footer-bar">
