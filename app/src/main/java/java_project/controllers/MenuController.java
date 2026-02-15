@@ -26,6 +26,8 @@ public class MenuController {
             fxmlPath = "/java_project/views/reservationView.fxml";
         else if (clickedItem.getId().equals("menuOffer"))
             fxmlPath = "/java_project/views/offerManagementView.fxml";
+        else if (clickedItem.getId().equals("menuUserOffer"))
+            fxmlPath = "/java_project/views/userOfferView.fxml";
         else if (clickedItem.getId().equals("menuReclamation"))
             fxmlPath = "/java_project/views/reclamationView.fxml";
         else if (clickedItem.getId().equals("menuRefund"))

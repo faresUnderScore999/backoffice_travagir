@@ -79,6 +79,11 @@
             <Label text="🔥 Promo"/>
         </HBox>
 
+        <HBox fx:id="menuUserOffer" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+          
+            <Label text="🎁 My Offers"/>
+        </HBox>
+
         <HBox spacing="10" styleClass="menu-item">
           
             <Label text="⚙️ Settings"/>
