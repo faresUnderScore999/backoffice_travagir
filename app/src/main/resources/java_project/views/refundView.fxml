@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox prefHeight="768" prefWidth="1376.0"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      stylesheets="@../css/refundView.css"
+      fx:controller="java_project.controllers.RefundRequestController"
+      spacing="25"
+      styleClass="card">
+
+    <VBox spacing="10">
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header-label-container">
+            <Label text="💰 Refund Management" styleClass="header-label" />
+            <Region HBox.hgrow="ALWAYS" />
+        </HBox>
+    </VBox>
+
+ <VBox spacing="15">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <HBox spacing="10">
+        <TextField fx:id="amountField" promptText="Amount" />
+        <TextArea fx:id="reasonArea" promptText="Reason" prefRowCount="2" />
+        <Button text="+ Add Refund" onAction="#handleAdd" styleClass="add-user" />
+    </HBox>
+
+    <TableView fx:id="refundTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="idCol" text="ID" prefWidth="80" />
+            <TableColumn fx:id="amountCol" text="Amount" prefWidth="120" />
+            <TableColumn fx:id="statusCol" text="Status" prefWidth="160" />
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+        </columnResizePolicy>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button fx:id="approveButton" text="Approve" onAction="#handleApproveSelected" styleClass="primary-button" />
+        <Button fx:id="rejectButton" text="Reject" onAction="#handleRejectSelected" styleClass="secondary-button" />
+        <Button fx:id="deleteButton" text="Delete" onAction="#handleDeleteSelected" styleClass="secondary-button" />
+    </HBox>
+</VBox>
+
+    <HBox spacing="20" alignment="CENTER_LEFT" styleClass="footer-bar">
+        <Label text="✅ Status: Test mode (in-memory data)" styleClass="status-label" />
+    </HBox>
+
+</VBox>
