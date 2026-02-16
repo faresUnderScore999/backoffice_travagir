@@ -43,16 +43,16 @@ public class ActivityController {
                         activityTable.setItems(FXCollections.observableArrayList(activities));
                         if (statusLabel != null) statusLabel.setText("✅ " + activities.size() + " activités chargées.");
                     } catch (Exception e) {
-                        if (statusLabel != null) statusLabel.setText("❌ Erreur de données.");
+                        if (statusLabel != null) statusLabel.setText("Erreur de données.");
                         e.printStackTrace();
                     }
                 } else {
-                    if (statusLabel != null) statusLabel.setText("❌ Erreur serveur: " + response.statusCode());
+                    if (statusLabel != null) statusLabel.setText("Erreur serveur: " + response.statusCode());
                 }
             });
         }).exceptionally(ex -> {
             Platform.runLater(() -> {
-                if (statusLabel != null) statusLabel.setText("❌ Serveur injoignable.");
+                if (statusLabel != null) statusLabel.setText("Erreur de connexion au serveur.");
             });
             return null;
         });
