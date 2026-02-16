@@ -65,6 +65,99 @@
     -fx-padding: 8 12;
 }
 
+/* ===== REFUND INPUT ROW (AMOUNT / REASON / ADD) ===== */
+.refund-form-row {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 12;
+    -fx-border-color: -fx-border-gray;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 2);
+}
+
+.refund-input {
+    -fx-background-color: -fx-light-bg;
+    -fx-border-color: -fx-border-gray;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10 12;
+}
+
+.refund-input:focused {
+    -fx-background-color: white;
+    -fx-border-color: -fx-gold-accent;
+}
+
+.refund-reason {
+    -fx-pref-height: 44;
+}
+
+.refund-add-button {
+    -fx-padding: 10 18;
+    -fx-font-size: 13px;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.refund-add-button:hover {
+    -fx-background-color: linear-gradient(to right, -fx-gold-accent, -fx-gold-light);
+}
+
+/* ===== SEARCH ROW ===== */
+.refund-search-row {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 12;
+    -fx-border-color: -fx-border-gray;
+    -fx-border-radius: 12;
+}
+
+.refund-search-field {
+    -fx-pref-height: 44;
+}
+
+.refund-sort-row {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 12;
+    -fx-border-color: -fx-border-gray;
+    -fx-border-radius: 12;
+}
+
+.refund-sort-label {
+    -fx-text-fill: #64748B;
+    -fx-font-weight: bold;
+}
+
+.refund-choice {
+    -fx-background-color: -fx-light-bg;
+    -fx-background-radius: 10;
+    -fx-border-color: -fx-border-gray;
+    -fx-border-radius: 10;
+    -fx-padding: 4 10;
+    -fx-pref-height: 44;
+}
+
+.refund-choice:focused {
+    -fx-background-color: white;
+    -fx-border-color: -fx-gold-accent;
+}
+
+/* ===== TOOLS ROW (SEARCH + SORT) ===== */
+.refund-tools-row {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 12;
+    -fx-border-color: -fx-border-gray;
+    -fx-border-radius: 12;
+}
+
+/* Ensures the stacked search input (ChoiceBox/TextField) fills width/height */
+.refund-tools-input {
+    -fx-pref-height: 44;
+    -fx-max-width: Infinity;
+}
+
 /* ===== TABLE VIEW ===== */
 .table-view .table-column {
     -fx-alignment: CENTER;
