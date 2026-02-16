@@ -22,12 +22,21 @@ public class ActivityController {
     private final ActivityService activityService = new ActivityService();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    private Integer voyageId;
+
     @FXML
     public void initialize() {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("pricePerPerson"));
+        // Default behavior: if opened from the menu, show all activities.
+        // If opened from Voyage view, VoyageController will call setVoyageId(...).
+        loadActivities();
+    }
+
+    public void setVoyageId(int voyageId) {
+        this.voyageId = voyageId;
         loadActivities();
     }
 
@@ -35,13 +44,20 @@ public class ActivityController {
     private void loadActivities() {
         if (statusLabel != null) statusLabel.setText("⌛ Chargement...");
 
-        activityService.getAllActivities().thenAccept(response -> {
+        var request = (voyageId == null)
+                ? activityService.getAllActivities()
+                : activityService.getActivitiesByVoyage(voyageId);
+
+        request.thenAccept(response -> {
             Platform.runLater(() -> { // Toujours mettre à jour l'UI dans Platform.runLater
                 if (response.statusCode() == 200) {
                     try {
                         List<Activity> activities = objectMapper.readValue(response.body(), new TypeReference<List<Activity>>() {});
                         activityTable.setItems(FXCollections.observableArrayList(activities));
-                        if (statusLabel != null) statusLabel.setText("✅ " + activities.size() + " activités chargées.");
+                        if (statusLabel != null) {
+                            String scope = (voyageId == null) ? "" : (" (voyage #" + voyageId + ")");
+                            statusLabel.setText("✅ " + activities.size() + " activités chargées" + scope + ".");
+                        }
                     } catch (Exception e) {
                         if (statusLabel != null) statusLabel.setText("❌ Erreur de données.");
                         e.printStackTrace();

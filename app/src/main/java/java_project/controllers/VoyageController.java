@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import java_project.controllers.ActivityController;
 import java_project.models.Voyage; // Reusing your Voyage model
 import java_project.services.ApiClient;
 import javafx.stage.Stage;
@@ -107,11 +108,13 @@ public class VoyageController {
         colActions.setCellFactory(param -> new TableCell<>() {
             private final Button updateButton = new Button("Update");
             private final Button deleteButton = new Button("Delete");
-            private final HBox pane = new HBox(10, updateButton, deleteButton);
+            private final Button viewActivitiesButton = new Button("View Activities");
+            private final HBox pane = new HBox(10, updateButton, deleteButton, viewActivitiesButton);
 
             {
                 updateButton.setStyle("-fx-background-color: #F9B729; -fx-text-fill: white;");
                 deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+                viewActivitiesButton.setStyle("-fx-background-color: #131a22; -fx-text-fill: white;");
 
                 updateButton.setOnAction(event -> {
                     Voyage voyage = getTableView().getItems().get(getIndex());
@@ -123,6 +126,11 @@ public class VoyageController {
                     Voyage voyage = getTableView().getItems().get(getIndex());
                     // Call your delete logic
                     handleDelete(voyage);
+                });
+
+                viewActivitiesButton.setOnAction(event -> {
+                    Voyage voyage = getTableView().getItems().get(getIndex());
+                    openActivityView(voyage);
                 });
             }
 
@@ -136,6 +144,27 @@ public class VoyageController {
                 }
             }
         });
+    }
+
+    private void openActivityView(Voyage voyage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/activityView.fxml"));
+            Parent root = loader.load();
+
+            ActivityController controller = loader.getController();
+            if (controller != null) {
+                controller.setVoyageId(voyage.getId());
+            }
+
+            Stage stage = new Stage();
+            stage.setTitle("Activities - " + voyage.getTitle());
+            stage.initModality(Modality.NONE);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            statusLabel.setText("Failed to open activity view");
+        }
     }
 
     private void handleUpdate(Voyage voyage) {

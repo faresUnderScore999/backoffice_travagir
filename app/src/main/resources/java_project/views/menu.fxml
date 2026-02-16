@@ -63,9 +63,7 @@
         
             <Label text="✈️ Gestion Voyage"/>
         </HBox>
-        <HBox fx:id="menuActivity" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-            <Label text="🏄 Gestion Activités"/>
-        </HBox>
+
         <HBox fx:id="menuReservation" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
           
             <Label text="🎟️ Gestion Reservation"/>
