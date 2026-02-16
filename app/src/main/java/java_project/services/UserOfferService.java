@@ -12,11 +12,12 @@ public class UserOfferService {
 
     /**
      * Claim an offer. User ID is pulled from JWT.
-     * Endpoint: POST /api/v1/user-offers/claim
+     * Endpoint: POST /v1/user-offers/claim
      * Body: { "offerId": int }
      */
     public CompletableFuture<HttpResponse<String>> claimOffer(int offerId) {
         String json = "{\"offerId\":" + offerId + "}";
+        System.out.println("Claiming offer with payload: " + json);
         return apiClient.sendWithRetry("/api/v1/user-offers/claim", "POST", json);
     }
 

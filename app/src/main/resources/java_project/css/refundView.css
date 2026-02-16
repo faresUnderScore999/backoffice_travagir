@@ -32,7 +32,7 @@
 }
 
 /* ===== BUTTONS ===== */
-.primary-button {
+.primary-button, .button.primary-button {
     -fx-background-color: -fx-gold-accent;
     -fx-text-fill: #131a22;
     -fx-font-weight: bold;
@@ -41,7 +41,7 @@
     -fx-cursor: hand;
 }
 
-.secondary-button {
+.secondary-button, .button.secondary-button {
     -fx-background-color: white;
     -fx-text-fill: #131a22;
     -fx-border-color: #131a22;
@@ -50,7 +50,7 @@
     -fx-border-radius: 10;
 }
 
-.add-user {
+.add-user, .button.add-user {
     -fx-background-color: linear-gradient(to right, #F9B729, #FFD166);
     -fx-text-fill: #131a22;
     -fx-font-weight: bold;
@@ -99,9 +99,7 @@
     -fx-cursor: hand;
 }
 
-.refund-add-button:hover {
-    -fx-background-color: linear-gradient(to right, -fx-gold-accent, -fx-gold-light);
-}
+
 
 /* ===== SEARCH ROW ===== */
 .refund-search-row {
