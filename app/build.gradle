@@ -55,3 +55,8 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+tasks.named('run') {
+    // Disable configuration cache for run task due to JavaFX compatibility issues
+    doNotTrackState("Configuration cache incompatible with JavaFX run task")
+}
