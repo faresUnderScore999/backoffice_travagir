@@ -5,11 +5,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class ActivityService {
     private final ApiClient apiClient = new ApiClient();
-
-    public CompletableFuture<HttpResponse<String>> getAllActivities() {
-        return apiClient.sendWithRetry("/api/v1/activities", "GET", null);
-    }
-
     public CompletableFuture<HttpResponse<String>> getActivitiesByVoyage(int voyageId) {
         return apiClient.sendWithRetry("/api/v1/activities/voyage/" + voyageId, "GET", null);
     }

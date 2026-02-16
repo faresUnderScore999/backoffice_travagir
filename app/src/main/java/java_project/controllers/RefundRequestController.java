@@ -110,12 +110,16 @@ public class RefundRequestController {
 
         if (approveButton != null) {
             approveButton.disableProperty().bind(refundTable.getSelectionModel().selectedItemProperty().isNull());
+        approveButton.setStyle("-fx-background-color: #1aff00; -fx-text-fill: white;");
+             
         }
         if (rejectButton != null) {
             rejectButton.disableProperty().bind(refundTable.getSelectionModel().selectedItemProperty().isNull());
+            rejectButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
         }
         if (deleteButton != null) {
             deleteButton.disableProperty().bind(refundTable.getSelectionModel().selectedItemProperty().isNull());
+            deleteButton.setStyle("-fx-background-color: #ff0000; -fx-text-fill: white;");
         }
 
         loadMyRefunds(); // USER view
