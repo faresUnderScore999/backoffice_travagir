@@ -1,0 +1,66 @@
+.root {
+    -fx-primary-navy: #131a22;
+    -fx-gold-accent: #F9B729;
+    -fx-light-bg: #F8F9FA;
+}
+
+.form-card {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 15, 0, 0, 5);
+}
+
+.form-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #131a22;
+}
+
+.form-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6B7280;
+}
+
+.field-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #374151;
+    -fx-font-size: 13px;
+}
+
+.form-field {
+    -fx-background-color: #F9FAFB;
+    -fx-border-color: #E5E7EB;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+
+.form-field:focused {
+    -fx-border-color: #F9B729;
+    -fx-background-color: white;
+}
+
+/* Buttons */
+.btn-save {
+    -fx-background-color: #F9B729;
+    -fx-text-fill: #131a22;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+}
+
+.btn-save:hover {
+    -fx-background-color: #FFD166;
+}
+
+.btn-cancel {
+    -fx-background-color: white;
+    -fx-text-fill: #6B7280;
+    -fx-border-color: #E5E7EB;
+    -fx-border-width: 1;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+}
