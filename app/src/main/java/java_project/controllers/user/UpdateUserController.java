@@ -33,6 +33,7 @@ public class UpdateUserController {
         nameField.setText(user.getName());
         emailField.setText(user.getEmail());
         phoneField.setText(user.getTel());
+        imageUrlField.setText(user.getImageUrl());
     
         // roleCombo.setValue(user.getRole()); // Set if role is in User model
     }
@@ -46,7 +47,7 @@ public class UpdateUserController {
                 nameField.getText(),
                 emailField.getText(),
                 passField.getText(),
-                "imageUrlField.getText()",
+                imageUrlField.getText(),
                 phoneField.getText()
                 // roleCombo.getValue().toLowerCase()
             );

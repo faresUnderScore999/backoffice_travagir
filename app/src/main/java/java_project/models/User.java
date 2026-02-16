@@ -21,7 +21,17 @@ public class User {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public void setImageUrl(String imageUrl) {
+    if (imageUrl == null || imageUrl.isBlank()) {
+        // Fallback to a placeholder if the value is null or empty
+        this.imageUrl = "https://i0.wp.com/newspack-washingtoncitypaper.s3.amazonaws.com/uploads/2009/04/contexts.org_socimages_files_2009_04_d_silhouette.png?fit=1920%2C1210&ssl=1";
+    } else if (!imageUrl.startsWith("http") && !imageUrl.startsWith("file:")) {
+        // Handle cases where the path might be a local string without a protocol
+        this.imageUrl = "https://i0.wp.com/newspack-washingtoncitypaper.s3.amazonaws.com/uploads/2009/04/contexts.org_socimages_files_2009_04_d_silhouette.png?fit=1920%2C1210&ssl=1";
+    } else {
+        this.imageUrl = imageUrl.trim();
+    }
+}
     public String getTel() { return tel; }
     public void setTel(String tel) { this.tel = tel; }
 }

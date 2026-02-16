@@ -35,6 +35,8 @@ public class UserController {
     @FXML
     private TableColumn<User, Void> colActions;
     @FXML
+private TableColumn<User, String> colAvatar;
+    @FXML
     private Label statusLabel;
     @FXML
     private TextField searchField;
@@ -46,6 +48,27 @@ public class UserController {
 
     @FXML
     public void initialize() {
+        colAvatar.setCellValueFactory(new PropertyValueFactory<>("imageUrl"));
+    colAvatar.setCellFactory(column -> new TableCell<User, String>() {
+        private final javafx.scene.image.ImageView imageView = new javafx.scene.image.ImageView();
+
+        @Override
+        protected void updateItem(String url, boolean empty) {
+            super.updateItem(url, empty);
+            if (empty || url == null) {
+                setGraphic(null);
+            } else {
+                javafx.scene.image.Image image = new javafx.scene.image.Image(url, 40, 40, true, true, true);
+                imageView.setImage(image);
+                
+                // Make the image circular (Optional but looks better)
+                javafx.scene.shape.Circle clip = new javafx.scene.shape.Circle(20, 20, 20);
+                imageView.setClip(clip);
+                
+                setGraphic(imageView);
+            }
+        }
+    });
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));

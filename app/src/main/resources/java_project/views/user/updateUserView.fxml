@@ -40,6 +40,9 @@
 
         <Label text="Password" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="field-label"/>
         <PasswordField fx:id="passField" promptText="••••••••" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="form-field"/>
+
+            <Label text="AVATAR" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="imageUrlField" promptText="Enter avatar URL" GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="form-field"/>
     </GridPane>
 
     <Region VBox.vgrow="ALWAYS" />

@@ -44,6 +44,7 @@
     <VBox VBox.vgrow="ALWAYS">
         <TableView fx:id="userTable" VBox.vgrow="ALWAYS" styleClass="table-view">
             <columns>
+           <TableColumn fx:id="colAvatar" text="Photo" prefWidth="40" resizable="false" style="-fx-alignment: CENTER;" />
                 <TableColumn fx:id="colId" text="ID" prefWidth="80" style="-fx-alignment: CENTER;"/>
                 <TableColumn fx:id="colName" text="Full Name" prefWidth="250" style="-fx-alignment: CENTER;"/>
                 <TableColumn fx:id="colEmail" text="Email" prefWidth="320" style="-fx-alignment: CENTER;"/>
