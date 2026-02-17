@@ -57,7 +57,7 @@ public class ActivityController {
     @FXML
     private void openAddActivityModal() {
         if (voyageId == null) {
-            if (statusLabel != null) statusLabel.setText("ℹ️ Open activities from a voyage first.");
+            if (statusLabel != null) statusLabel.setText(" Open activities from a voyage first.");
             return;
         }
 
@@ -66,19 +66,19 @@ public class ActivityController {
             String jsonBody = buildActivityJson(activity, false);
             if (jsonBody == null) return;
 
-            if (statusLabel != null) statusLabel.setText("⌛ Adding activity...");
+            if (statusLabel != null) statusLabel.setText("Adding activity...");
             activityService.addActivity(jsonBody)
                     .thenAccept(response -> Platform.runLater(() -> {
                         if (response.statusCode() == 200 || response.statusCode() == 201) {
                             if (statusLabel != null) statusLabel.setText("✅ Activity added.");
                             loadActivities();
                         } else {
-                            if (statusLabel != null) statusLabel.setText("❌ Add failed: " + response.statusCode());
+                            if (statusLabel != null) statusLabel.setText(" Add failed: " + response.statusCode());
                         }
                     }))
                     .exceptionally(ex -> {
                         Platform.runLater(() -> {
-                            if (statusLabel != null) statusLabel.setText("❌ Server unreachable.");
+                            if (statusLabel != null) statusLabel.setText(" Server unreachable.");
                         });
                         return null;
                     });
@@ -88,12 +88,12 @@ public class ActivityController {
     @FXML
     private void loadActivities() {
         if (voyageId == null) {
-            if (statusLabel != null) statusLabel.setText("ℹ️ Select a voyage and click 'View Activities'.");
+            if (statusLabel != null) statusLabel.setText(" Select a voyage and click 'View Activities'.");
             if (activityTable != null) activityTable.setItems(FXCollections.observableArrayList());
             return;
         }
 
-        if (statusLabel != null) statusLabel.setText("⌛ Chargement...");
+        if (statusLabel != null) statusLabel.setText(" Chargement...");
 
         activityService.getActivitiesByVoyage(voyageId).thenAccept(response -> {
             Platform.runLater(() -> { // Toujours mettre à jour l'UI dans Platform.runLater
@@ -158,7 +158,7 @@ public class ActivityController {
     private void openUpdateActivityModal(Activity existing) {
         if (existing == null) return;
         if (voyageId == null) {
-            if (statusLabel != null) statusLabel.setText("ℹ️ Open activities from a voyage first.");
+            if (statusLabel != null) statusLabel.setText("Open activities from a voyage first.");
             return;
         }
 
@@ -174,12 +174,12 @@ public class ActivityController {
                             if (statusLabel != null) statusLabel.setText("✅ Activity updated.");
                             loadActivities();
                         } else {
-                            if (statusLabel != null) statusLabel.setText("❌ Update failed: " + response.statusCode());
+                            if (statusLabel != null) statusLabel.setText("Update failed: " + response.statusCode());
                         }
                     }))
                     .exceptionally(ex -> {
                         Platform.runLater(() -> {
-                            if (statusLabel != null) statusLabel.setText("❌ Server unreachable.");
+                            if (statusLabel != null) statusLabel.setText("Server unreachable.");
                         });
                         return null;
                     });
@@ -204,12 +204,12 @@ public class ActivityController {
                         if (statusLabel != null) statusLabel.setText("✅ Activity deleted.");
                         loadActivities();
                     } else {
-                        if (statusLabel != null) statusLabel.setText("❌ Delete failed: " + response.statusCode());
+                        if (statusLabel != null) statusLabel.setText("Delete failed: " + response.statusCode());
                     }
                 }))
                 .exceptionally(ex -> {
                     Platform.runLater(() -> {
-                        if (statusLabel != null) statusLabel.setText("❌ Server unreachable.");
+                        if (statusLabel != null) statusLabel.setText("Server unreachable.");
                     });
                     return null;
                 });
@@ -306,7 +306,7 @@ public class ActivityController {
             return objectMapper.writeValueAsString(payload);
         } catch (Exception e) {
             e.printStackTrace();
-            if (statusLabel != null) statusLabel.setText("❌ Failed to build request body");
+            if (statusLabel != null) statusLabel.setText("Failed to build request body");
             return null;
         }
     }

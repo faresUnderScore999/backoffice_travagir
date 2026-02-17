@@ -14,7 +14,7 @@
 
     <VBox spacing="10">
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header-label-container">
-            <Label text="🎁 Offer &amp; Promotion Management" styleClass="header-label" />
+            <Label text="🔥 Offer &amp; Promotion Management" styleClass="header-label" />
             <Region HBox.hgrow="ALWAYS" />
             <HBox spacing="15" alignment="CENTER_RIGHT">
                 <padding>

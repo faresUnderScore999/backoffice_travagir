@@ -6,89 +6,91 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<VBox xmlns="http://javafx.com/javafx/25"
-      xmlns:fx="http://javafx.com/fxml/1"
-      spacing="15"
-      prefWidth="250"
-      fx:controller="java_project.controllers.MenuController"
-      styleClass="sidebar"
-      stylesheets="@../css/menu.css">
+<VBox xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" 
+      spacing="15" prefWidth="250" fx:controller="java_project.controllers.MenuController" 
+      styleClass="sidebar" stylesheets="@../css/menu.css">
 
-    <!-- Company header -->
-    <HBox spacing="10" styleClass="company-box">
-        <ImageView fitWidth="200" fitHeight="50" preserveRatio="true">
+
+
+
+    <!-- Profile row: populated at runtime with logged-in user -->
+    <?import javafx.scene.layout.StackPane?>
+    <?import javafx.scene.shape.Circle?>
+    <?import javafx.scene.layout.Region?>
+
+    <HBox spacing="10" styleClass="profile-row">
+        <StackPane styleClass="avatar-wrap">
+            <ImageView fx:id="profileImage" fitWidth="48" fitHeight="48" preserveRatio="true" styleClass="avatar-image">
+                <clip>
+                        <Circle centerX="24" centerY="24" radius="24" />
+                    </clip>
+            </ImageView>
+        </StackPane>
+
+        <VBox>
+            <Label fx:id="profileName" text="Guest" styleClass="profile-name" />
+            <Label fx:id="profileRole" text="Administrator" styleClass="profile-role" />
+            <!-- Brand header -->
+    <!-- <HBox  styleClass="brand" alignment="CENTER_LEFT">
+        <Label text="tra" styleClass="brand-part" />
+        <Label text="V" styleClass="brand-v" />
+        <Label text="agir" styleClass="brand-part" />
+    </HBox> -->
+        </VBox>
+
+        <Region HBox.hgrow="ALWAYS" />
+
+        <ImageView fitWidth="18" fitHeight="18" preserveRatio="true" styleClass="logout-icon">
             <image>
-                <Image url="@../icons/logo.png"/>
+                <Image url="@../icons/logout.png" />
             </image>
         </ImageView>
-  
     </HBox>
 
-    <!-- Menu Items -->
-    <VBox spacing="10">
+    <VBox spacing="8" VBox.vgrow="ALWAYS">
 
         <HBox fx:id="menuDashboard" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-            
-            <Label text="🏠 Dashboard"/>
+            <Label text="🏠  Dashboard"/>
         </HBox>
 
         <HBox spacing="10" styleClass="menu-item">
-         
-            <Label text="📄	Overview"/>
+            <Label text="📅  Schedule"/>
         </HBox>
-
-        <HBox spacing="10" styleClass="menu-item">
-          
-            <Label text="📅 Schedule"/>
-        </HBox>
-
-        <HBox spacing="10" styleClass="menu-item">
-          
-            <Label text="🔔 Notifications"/>
-        </HBox>
-
-        <HBox fx:id="menuReclamation" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-          
-            <Label text="📢 Complain"/>
-        </HBox>
-<HBox fx:id="menuRefund"
-      onMouseClicked="#handleMenuClick"
-      spacing="10"
-      styleClass="menu-item">
-
-    <Label text="💰 Refund Requests"/>
-</HBox>
 
         <HBox fx:id="menuVoyage" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-        
-            <Label text="✈️ Gestion Voyage"/>
-        </HBox>
-
-        <HBox fx:id="menuReservation" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-          
-            <Label text="🎟️ Gestion Reservation"/>
-        </HBox>
-
-        <HBox fx:id="menuUser" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-          
-            <Label text="💻 Gestion Utilisateur"/>
+            <Label text="✈︎  Gestion Voyage"/>
         </HBox>
 
         <HBox fx:id="menuOffer" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-          
-            <Label text="🔥 Promo"/>
+            <Label text="🔥  Promo"/>
+        </HBox>
+
+        <HBox fx:id="menuUser" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="👤  Gestion Utilisateur"/> </HBox>
+
+        <HBox fx:id="menuReservation" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="📑  Gestion Reservation"/>
+        </HBox>
+
+        <HBox fx:id="menuReclamation" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="📢  Complain"/>
+        </HBox>
+
+        <HBox fx:id="menuRefund" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="💳  Refund Requests"/> </HBox>
+
+        <HBox fx:id="menuAssociation" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="🤝  Associations"/>
         </HBox>
 
         <HBox fx:id="menuUserOffer" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-          
-            <Label text="🎁 My Offers"/>
+            <Label text="🎁  My Offers"/>
         </HBox>
 
         <HBox spacing="10" styleClass="menu-item">
-          
-            <Label text="⚙️ Settings"/>
+            <Label text="⚙️  Settings"/>
         </HBox>
-
+    
     </VBox>
 
 </VBox>

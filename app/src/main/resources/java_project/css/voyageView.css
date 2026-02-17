@@ -192,10 +192,12 @@
     -fx-background-radius: 5;
 }
 .button.docs-btn {
-    -fx-background-color: #3bb942;
-    -fx-text-fill: #131a22;
+
+ 
     -fx-font-weight: bold;
     -fx-background-radius: 5;
+    -fx-background-color: #131a22;
+     -fx-text-fill: white;
 }
 .button.delete-btn {
     -fx-background-color: #EF4444;
