@@ -51,4 +51,9 @@ public class AssociationService {
     public CompletableFuture<HttpResponse<String>> deleteAssociation(int id) {
         return apiClient.sendWithRetry("/api/v1/associations/" + id, "DELETE", null);
     }
+
+    // Get users linked to an association
+    public CompletableFuture<HttpResponse<String>> getLinkedUsers(int associationId) {
+        return apiClient.sendWithRetry("/api/v1/associations/" + associationId + "/users", "GET", null);
+    }
 }

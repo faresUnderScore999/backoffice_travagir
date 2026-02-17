@@ -76,11 +76,13 @@ public class AssociationController {
             private final Button editBtn = new Button("Edit");
             private final Button deleteBtn = new Button("Delete");
             private final Button linkBtn = new Button("Link User");
-            private final HBox pane = new HBox(8, editBtn, linkBtn, deleteBtn);
+            private final Button viewUsersBtn = new Button("View Users");
+            private final HBox pane = new HBox(8, editBtn, linkBtn, viewUsersBtn, deleteBtn);
             {
                 editBtn.getStyleClass().add("update-btn");
                 deleteBtn.getStyleClass().add("delete-btn");
                 linkBtn.getStyleClass().add("docs-btn");
+                viewUsersBtn.getStyleClass().add("docs-btn");
 
                 editBtn.setOnAction(e -> openUpdateModal(getTableView().getItems().get(getIndex())));
                 deleteBtn.setOnAction(e -> {
@@ -91,6 +93,7 @@ public class AssociationController {
                 });
 
                 linkBtn.setOnAction(e -> openLinkModal(getTableView().getItems().get(getIndex())));
+                viewUsersBtn.setOnAction(e -> openLinkedUsersModal(getTableView().getItems().get(getIndex())));
             }
 
             @Override
@@ -134,6 +137,20 @@ public class AssociationController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/association/linkAssociationView.fxml"));
             Parent root = loader.load();
             java_project.controllers.association.LinkAssociationController ctrl = loader.getController();
+            ctrl.setAssociation(association);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            loadAssociations();
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    private void openLinkedUsersModal(Association association) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/association/linkedUsersView.fxml"));
+            Parent root = loader.load();
+            java_project.controllers.association.LinkedUsersController ctrl = loader.getController();
             ctrl.setAssociation(association);
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
