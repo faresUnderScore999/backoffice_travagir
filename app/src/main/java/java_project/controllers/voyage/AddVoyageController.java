@@ -8,13 +8,10 @@ import java_project.services.ApiClient;
 import java.util.concurrent.CompletableFuture;
 import java.net.http.HttpResponse;
 import javafx.application.Platform;
-import java.net.URI;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class AddVoyageController {
 
@@ -24,7 +21,6 @@ public class AddVoyageController {
     @FXML private DatePicker startDatePicker;
     @FXML private DatePicker endDatePicker;
     @FXML private TextField priceField;
-    @FXML private TextField imageUrlField; // For simplicity, taking a comma-separated list or single URL
 
     private final ApiClient apiClient = new ApiClient();
     private final ObjectMapper mapper = new ObjectMapper();
@@ -36,8 +32,7 @@ public class AddVoyageController {
     @FXML
     private void handleSave() {
         if (isInputValid()) {
-            // Process image URLs: if empty or invalid, omit from payload
-            List<String> validImages = parseValidImageUrls(imageUrlField != null ? imageUrlField.getText() : null);
+            // We'll create the voyage first, then upload any attached files to the created voyage id.
 
             String jsonBody;
             try {
@@ -48,9 +43,7 @@ public class AddVoyageController {
                 payload.put("startDate", startDatePicker.getValue().format(DateTimeFormatter.ISO_DATE));
                 payload.put("endDate", endDatePicker.getValue().format(DateTimeFormatter.ISO_DATE));
                 payload.put("price", Double.parseDouble(priceField.getText()));
-                if (!validImages.isEmpty()) {
-                    payload.put("imageUrl", validImages);
-                }
+                // image URLs are replaced by file attachments; uploads happen after creation
                 jsonBody = mapper.writeValueAsString(payload);
             } catch (Exception e) {
                 Platform.runLater(() -> showError("Payload Error", "Could not build request payload."));
@@ -142,32 +135,5 @@ public class AddVoyageController {
     private CompletableFuture<HttpResponse<String>> sendRequest(String endpoint, String method, String body) {
         return apiClient.sendWithRetry(endpoint, method, body);
     }
-
-    private List<String> parseValidImageUrls(String raw) {
-        if (raw == null || raw.trim().isEmpty()) {
-            return List.of();
-        }
-
-        return Arrays.stream(raw.split(","))
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .filter(this::isValidHttpUrl)
-                .collect(Collectors.toList());
-    }
-
-    private boolean isValidHttpUrl(String value) {
-        try {
-            URI uri = new URI(value);
-            String scheme = uri.getScheme();
-            if (scheme == null) {
-                return false;
-            }
-            if (!("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme))) {
-                return false;
-            }
-            return uri.getHost() != null && !uri.getHost().isBlank();
-        } catch (Exception e) {
-            return false;
-        }
-    }
+    
 }

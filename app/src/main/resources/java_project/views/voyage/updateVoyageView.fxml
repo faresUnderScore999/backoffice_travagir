@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="20" alignment="TOP_CENTER" prefWidth="550" prefHeight="700"
+<VBox spacing="20" alignment="TOP_CENTER" prefWidth="850" prefHeight="700"
       xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="java_project.controllers.voyage.UpdateVoyageController"
       stylesheets="@../../css/addUser.css" styleClass="form-card">
@@ -45,10 +45,13 @@
             <Label text="Description" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="field-label"/>
             <TextArea fx:id="descriptionArea" prefHeight="100" wrapText="true" promptText="Describe the trip..." GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="form-field"/>
 
-            <Label text="Image URLs" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="field-label"/>
-            <VBox spacing="5" GridPane.rowIndex="6" GridPane.columnIndex="1">
-                <TextField fx:id="imageUrlField" promptText="Comma-separated URLs" styleClass="form-field"/>
-                <Button text="+ Add Image URL" style="-fx-font-size: 11px;" />
+            <!-- Gallery and Upload -->
+            <Label text="Voyage Images" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="field-label"/>
+            <VBox spacing="8" GridPane.rowIndex="6" GridPane.columnIndex="1">
+                <FlowPane fx:id="imageGallery" hgap="10" vgap="10" prefWrapLength="420" />
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Button fx:id="uploadImageBtn" text="Upload Image" onAction="#handleUploadImage" styleClass="btn-save" />
+                </HBox>
             </VBox>
         </GridPane>
     </ScrollPane>

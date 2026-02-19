@@ -45,11 +45,7 @@
             <Label text="Description" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="field-label"/>
             <TextArea fx:id="descriptionArea" prefHeight="100" wrapText="true" promptText="Describe the trip..." GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="form-field"/>
 
-            <Label text="Image URLs" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="field-label"/>
-            <VBox spacing="5" GridPane.rowIndex="6" GridPane.columnIndex="1">
-                <TextField fx:id="imageUrlField" promptText="Paste image URL here" styleClass="form-field"/>
-                <Button text="+ Add Image URL" style="-fx-font-size: 11px;" />
-            </VBox>
+            <!-- images removed from create form -->
         </GridPane>
     </ScrollPane>
 
