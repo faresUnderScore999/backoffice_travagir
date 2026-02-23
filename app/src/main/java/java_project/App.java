@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import java_project.controllers.PdfApiServer;
 
 public class App extends Application {
 
@@ -39,6 +40,12 @@ public class App extends Application {
 
             primaryStage.setScene(scene);
             primaryStage.show();
+            try {
+                // Start the lightweight PDF API server (requires the Spark dependency)
+                PdfApiServer.startServer(4567);
+            } catch (Exception e) {
+                System.err.println("Failed to start PDF API server: " + e.getMessage());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
