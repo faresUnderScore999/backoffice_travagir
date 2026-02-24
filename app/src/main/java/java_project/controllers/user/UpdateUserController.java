@@ -163,10 +163,8 @@ public class UpdateUserController {
 
     private boolean isInputValid() {
         String errorMessage = "";
-        if (nameField.getText() == null || nameField.getText().isEmpty()) errorMessage += "Name is required!\n";
-        if (emailField.getText() == null || !emailField.getText().contains("@")) errorMessage += "Valid email is required!\n";
-        if (passField.getText() == null || passField.getText().length() < 6) errorMessage += "Password must be at least 6 characters!\n";
-        if (roleCombo.getValue() == null) errorMessage += "Please select a role!\n";
+        if (nameField.getText() != null && nameField.getText().isEmpty()) errorMessage += "Name is required!\n";
+        if (emailField.getText() != null && !emailField.getText().contains("@")) errorMessage += "Valid email is required!\n";
         if (errorMessage.isEmpty()) {
             return true;
         } else {
