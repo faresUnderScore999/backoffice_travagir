@@ -38,7 +38,7 @@
               <PasswordField fx:id="passwordField" promptText="••••••••••••" />
           </VBox>
       
-          <Button fx:id="loginButton" onAction="#handleLogin" prefWidth="350.0" text="Sign In" />
+          <Button fx:id="loginButton" onAction="#handleLogin" styleClass="login-button" prefWidth="350.0" text="Sign In" />
           
           <Label fx:id="errorLabel" style="-fx-text-fill: #EF4444; -fx-font-weight: bold;" text="" />
           

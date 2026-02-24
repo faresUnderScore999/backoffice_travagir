@@ -6,6 +6,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class ApiClient {
@@ -33,6 +36,57 @@ public CompletableFuture<HttpResponse<String>> sendWithRetry(String endpoint, St
         }
         return CompletableFuture.completedFuture(response);
     });
+}
+
+public CompletableFuture<HttpResponse<String>> sendMultipartWithRetry(String endpoint, String fieldName, Path filePath) {
+    return sendMultipartRequest(endpoint, fieldName, filePath).thenCompose(response -> {
+        if (response.statusCode() == 401) {
+            return authService.refreshAccessToken().thenCompose(success -> {
+                if (success) {
+                    return sendMultipartRequest(endpoint, fieldName, filePath);
+                } else {
+                    return CompletableFuture.completedFuture(response);
+                }
+            });
+        }
+        return CompletableFuture.completedFuture(response);
+    });
+}
+
+private CompletableFuture<HttpResponse<String>> sendMultipartRequest(String endpoint, String fieldName, Path filePath) {
+    try {
+        String boundary = "----JavaBoundary" + UUID.randomUUID().toString();
+        byte[] fileBytes = Files.readAllBytes(filePath);
+        String filename = filePath.getFileName().toString();
+
+        String partHeader = "--" + boundary + "\r\n"
+                + "Content-Disposition: form-data; name=\"" + fieldName + "\"; filename=\"" + filename + "\"\r\n"
+                + "Content-Type: application/octet-stream\r\n\r\n";
+        String end = "\r\n--" + boundary + "--\r\n";
+
+        byte[] headerBytes = partHeader.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        byte[] endBytes = end.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+
+        byte[] all = new byte[headerBytes.length + fileBytes.length + endBytes.length];
+        System.arraycopy(headerBytes, 0, all, 0, headerBytes.length);
+        System.arraycopy(fileBytes, 0, all, headerBytes.length, fileBytes.length);
+        System.arraycopy(endBytes, 0, all, headerBytes.length + fileBytes.length, endBytes.length);
+
+        String token = SessionManager.getInstance().getAccessToken();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(EnvVariable.baseUrl + endpoint))
+                .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "multipart/form-data; boundary=" + boundary)
+                .POST(HttpRequest.BodyPublishers.ofByteArray(all))
+                .build();
+
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+    } catch (Exception e) {
+        CompletableFuture<HttpResponse<String>> failed = new CompletableFuture<>();
+        failed.completeExceptionally(e);
+        return failed;
+    }
 }
 
 private CompletableFuture<HttpResponse<String>> sendRequest(String endpoint, String method, String body) {

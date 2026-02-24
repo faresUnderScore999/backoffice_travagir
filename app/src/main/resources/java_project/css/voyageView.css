@@ -2,7 +2,7 @@
    VOYAGE VIEW STYLES - FIXED VERSION
    ============================================ */
 
-.root {
+.root, .card {
     /* Fixed: Using standard naming conventions to avoid lookup errors */
     -fx-primary-navy: #131a22;
     -fx-gold-accent: #F9B729;
@@ -59,6 +59,76 @@
     -fx-text-fill: #131a22;
     -fx-font-weight: bold;
     -fx-background-radius: 10;
+}
+
+/* ============================================
+   REFUND VIEW (REUSE VOYAGE THEME)
+   ============================================ */
+
+/* Form row (Amount / Reason / Add) */
+.refund-form-row {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 12;
+    -fx-border-color: -fx-border-gray;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 2);
+}
+
+.refund-input {
+    -fx-background-color: -fx-light-bg;
+    -fx-border-color: -fx-border-gray;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10 12;
+}
+
+.refund-input:focused {
+    -fx-background-color: white;
+    -fx-border-color: -fx-gold-accent;
+}
+
+.refund-reason {
+    -fx-pref-height: 44;
+}
+
+.refund-add-button {
+    -fx-padding: 10 18;
+    -fx-font-size: 13px;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+/* Tools row (Search + Sort) */
+.refund-tools-row {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 10 12;
+    -fx-border-color: -fx-border-gray;
+    -fx-border-radius: 12;
+}
+
+.refund-tools-input {
+    -fx-pref-height: 44;
+    -fx-max-width: Infinity;
+}
+
+.refund-search-field {
+    -fx-pref-height: 44;
+}
+
+.refund-choice {
+    -fx-background-color: -fx-light-bg;
+    -fx-background-radius: 10;
+    -fx-border-color: -fx-border-gray;
+    -fx-border-radius: 10;
+    -fx-padding: 4 10;
+    -fx-pref-height: 44;
+}
+
+.refund-choice:focused {
+    -fx-background-color: white;
+    -fx-border-color: -fx-gold-accent;
 }
 
 /* ===== TABLE VIEW - THE CRITICAL FIXES ===== */
@@ -122,10 +192,12 @@
     -fx-background-radius: 5;
 }
 .button.docs-btn {
-    -fx-background-color: #3bb942;
-    -fx-text-fill: #131a22;
+
+ 
     -fx-font-weight: bold;
     -fx-background-radius: 5;
+    -fx-background-color: #131a22;
+     -fx-text-fill: white;
 }
 .button.delete-btn {
     -fx-background-color: #EF4444;

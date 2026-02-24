@@ -38,7 +38,24 @@
     -fx-text-fill: -fx-navy-dark;
     -fx-font-size: 20px;
     -fx-font-weight: 800;
+    -fx-font-weight: bold;
     -fx-letter-spacing: 1px;
+}
+
+/* Brand header */
+.brand { -fx-alignment: CENTER_LEFT; -fx-spacing: 10; -fx-padding: 0 0 12 0; }
+.brand-v {
+    -fx-text-fill: #F97316; /* bright orange */
+    -fx-font-size: 12px;
+    -fx-font-weight: 900;
+    -fx-padding: 0 6 0 0;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.08), 6, 0.0, 0, 2 );
+}
+.brand-part {
+    -fx-text-fill: -fx-navy-dark;
+    -fx-font-size: 12px;
+    -fx-font-weight: 800;
+    -fx-letter-spacing: 0.6px;
 }
 
 /* ===== MENU ITEMS ===== */
@@ -82,3 +99,74 @@
     -fx-border-width: 0 0 0 4;
 
 }
+/* Ensure the HBox aligns everything to the center-left */
+.menu-item {
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+}
+
+/* Force the emoji to occupy exactly 30px of width */
+.menu-icon {
+    -fx-min-width: 28px;
+    -fx-pref-width: 28px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-opacity: 0.9;
+}
+
+.menu-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-text-muted;
+    -fx-padding: 0 0 0 6;
+}
+
+/* Profile row */
+.profile-row {
+    -fx-padding: 8 0 14 0;
+    -fx-alignment: CENTER_LEFT;
+    -fx-spacing: 10;
+}
+
+.avatar-wrap {
+    -fx-min-width: 48px;
+    -fx-min-height: 48px;
+    -fx-max-width: 48px;
+    -fx-max-height: 48px;
+    -fx-background-color: linear-gradient(#f3f4f6, #e6e9ee);
+    -fx-background-radius: 50;
+    -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.12), 6, 0, 0, 2);
+    -fx-alignment: CENTER;
+}
+
+.avatar-image {
+    -fx-fit-width: 48px;
+    -fx-fit-height: 48px;
+}
+
+.profile-name {
+    -fx-text-fill: #F9B729; 
+    -fx-font-family: "System"; /* This ensures JavaFX looks for the bold variant */
+    -fx-font-weight: 900;      /* 900 is the 'heavy' weight, thicker than standard bold */
+    -fx-font-size: 15px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.15), 6, 0.0, 0, 1 ); /* Slightly stronger shadow */
+}
+.profile-role {
+    -fx-font-size: 11px;
+    -fx-text-fill: #6B7280;
+}
+
+.logout-icon {
+    -fx-opacity: 0.7;
+    -fx-cursor: hand;
+}
+.logout-icon:hover { -fx-opacity: 1; -fx-translate-y: -1; }
+
+/* smoother hover */
+.menu-item { -fx-transition: all 0.15s ease; }
+.menu-item:hover { -fx-scale-x: 1.02; -fx-scale-y: 1.02; -fx-background-color: rgba(249,183,41,0.08); }
+
+/* Active style: stronger, left accent and subtle glow */
+.menu-item.active { -fx-background-color: linear-gradient(to right, rgba(249,183,41,0.12), transparent); -fx-border-color: transparent transparent transparent #F9B729; -fx-border-width: 0 0 0 4; -fx-effect: dropshadow(three-pass-box, rgba(249,183,41,0.08), 8, 0, 0, 2); }
+
+/* Tooltip styling (platform dependent) */
+.tooltip { -fx-background-color: #111827; -fx-text-fill: white; }

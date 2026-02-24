@@ -1,15 +1,17 @@
 package java_project.controllers.voyage;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import java_project.services.ApiClient;
 import java.util.concurrent.CompletableFuture;
 import java.net.http.HttpResponse;
 import javafx.application.Platform;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class AddVoyageController {
 
@@ -19,7 +21,9 @@ public class AddVoyageController {
     @FXML private DatePicker startDatePicker;
     @FXML private DatePicker endDatePicker;
     @FXML private TextField priceField;
-    @FXML private TextField imageUrlField; // For simplicity, taking a comma-separated list or single URL
+
+    private final ApiClient apiClient = new ApiClient();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     /**
      * Handles the Save button action.
@@ -28,28 +32,26 @@ public class AddVoyageController {
     @FXML
     private void handleSave() {
         if (isInputValid()) {
-            // Process the image URL field into a JSON array format
-            List<String> images = Arrays.stream(imageUrlField.getText().split(","))
-                                       .map(String::trim)
-                                       .collect(Collectors.toList());
-            String imagesJson = images.stream()
-                                     .map(s -> "\"" + s + "\"")
-                                     .collect(Collectors.joining(", ", "[", "]"));
+            // We'll create the voyage first, then upload any attached files to the created voyage id.
 
-            // 1. Construct the JSON payload
-            String jsonBody = String.format(
-                "{\"title\":\"%s\", \"description\":\"%s\", \"destination\":\"%s\", \"startDate\":\"%s\", \"endDate\":\"%s\", \"price\":%s, \"imageUrl\":%s}",
-                titleField.getText(),
-                descriptionArea.getText().replace("\n", "\\n"), // Escape newlines for JSON
-                destinationField.getText(),
-                startDatePicker.getValue().format(DateTimeFormatter.ISO_DATE),
-                endDatePicker.getValue().format(DateTimeFormatter.ISO_DATE),
-                priceField.getText(),
-                imagesJson
-            );
+            String jsonBody;
+            try {
+                Map<String, Object> payload = new LinkedHashMap<>();
+                payload.put("title", titleField.getText());
+                payload.put("description", descriptionArea.getText());
+                payload.put("destination", destinationField.getText());
+                payload.put("startDate", startDatePicker.getValue().format(DateTimeFormatter.ISO_DATE));
+                payload.put("endDate", endDatePicker.getValue().format(DateTimeFormatter.ISO_DATE));
+                payload.put("price", Double.parseDouble(priceField.getText()));
+                // image URLs are replaced by file attachments; uploads happen after creation
+                jsonBody = mapper.writeValueAsString(payload);
+            } catch (Exception e) {
+                Platform.runLater(() -> showError("Payload Error", "Could not build request payload."));
+                return;
+            }
 
-            // 2. Send the async request using the logic from AddUserController
-            sendRequest("/voyages/add", "POST", jsonBody)
+            // 2. Send the async request
+            sendRequest("/api/v1/voyages", "POST", jsonBody)
                 .thenAccept(response -> {
                     if (response.statusCode() == 201 || response.statusCode() == 200) {
                         Platform.runLater(() -> {
@@ -131,7 +133,7 @@ public class AddVoyageController {
     }
 
     private CompletableFuture<HttpResponse<String>> sendRequest(String endpoint, String method, String body) {
-        // Implementation should match your project's ApiService or BaseController logic
-        return null; 
+        return apiClient.sendWithRetry(endpoint, method, body);
     }
+    
 }
