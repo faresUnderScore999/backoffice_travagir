@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
@@ -14,8 +15,8 @@
     </padding>
 
     <VBox spacing="5" alignment="CENTER_LEFT" styleClass="form-header">
-        <Label text="Register New User" styleClass="form-title"/>
-        <Label text="Please fill in all information accurately." styleClass="form-subtitle"/>
+        <Label text="Edit User" styleClass="form-title"/>
+        <Label text="Modify the details as needed." styleClass="form-subtitle"/>
     </VBox>
 
     <Separator />
@@ -42,7 +43,11 @@
         <PasswordField fx:id="passField" promptText="••••••••" GridPane.rowIndex="4" GridPane.columnIndex="1" styleClass="form-field"/>
 
             <Label text="AVATAR" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="field-label"/>
-        <TextField fx:id="imageUrlField" promptText="Enter avatar URL" GridPane.rowIndex="5" GridPane.columnIndex="1" styleClass="form-field"/>
+        <HBox spacing="5" GridPane.rowIndex="5" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+            <TextField fx:id="imageUrlField" promptText="Enter avatar URL" styleClass="form-field" HBox.hgrow="ALWAYS"/>
+            <Button text="Choose…" onAction="#handleChooseImage" styleClass="btn-upload" />
+            <ImageView fx:id="avatarPreview" fitWidth="50" fitHeight="50" preserveRatio="true" />
+        </HBox>
     </GridPane>
 
     <Region VBox.vgrow="ALWAYS" />
