@@ -9,6 +9,11 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.Map;
+import java.awt.Desktop;
+import java.net.URI;
+import java.io.IOException;
+
 import java_project.models.Reclamation;
 import java_project.services.ReclamationService;
 
@@ -30,6 +35,7 @@ public class ReclamationController {
 
     private final ReclamationService reclamationService = new ReclamationService();
     private final ObjectMapper mapper = new ObjectMapper();
+    private static final String BACKEND_BASE_URL = "http://localhost:8080/api"; // backend base URL
 
     @FXML
     public void initialize() {
@@ -67,16 +73,23 @@ public class ReclamationController {
             public TableCell<Reclamation, Void> call(final TableColumn<Reclamation, Void> param) {
                 return new TableCell<>() {
                     private final Button resolveBtn = new Button("Resolve");
+                    private final Button exportBtn = new Button("Export as PDF");
                     private final HBox pane = new HBox(10, resolveBtn);
 
                     {
                         resolveBtn.getStyleClass().add("submit-button"); // Uses your CSS
+                        exportBtn.getStyleClass().add("secondary-button");
                         pane.setStyle("-fx-alignment: CENTER;");
                         
                         resolveBtn.setOnAction(e -> {
                             Reclamation rec = getTableView().getItems().get(getIndex());
                             handleResolveAction(rec);
                         });
+                        exportBtn.setOnAction(e -> {
+                            Reclamation rec = getTableView().getItems().get(getIndex());
+                            exportAsPdf(rec);
+                        });
+                        pane.getChildren().add(exportBtn);
                     }
 
                     @Override
@@ -125,6 +138,50 @@ public class ReclamationController {
                     }
                 });
         });
+    }
+
+    private void exportAsPdf(Reclamation rec) {
+        if (rec == null) {
+            showError("No selection", "Please select a reclamation to export.");
+            return;
+        }
+
+        reclamationService.exportReclamationAsPdf(rec.getId())
+                .thenAccept(postResp -> {
+                    if (postResp.statusCode() >= 200 && postResp.statusCode() < 300) {
+                        try {
+                            Map<String, Object> respMap = mapper.readValue(postResp.body(), Map.class);
+                            Object document = respMap.get("document");
+                            if (document instanceof Map) {
+                                Object preview = ((Map) document).get("preview_url");
+                                if (preview != null) {
+                                    String previewUrl = preview.toString();
+                                    Platform.runLater(() -> {
+                                        try {
+                                            if (Desktop.isDesktopSupported()) {
+                                                Desktop.getDesktop().browse(new URI(previewUrl));
+                                            } else {
+                                                showInfo("PDF Created", "Preview URL: " + previewUrl);
+                                            }
+                                        } catch (IOException | java.net.URISyntaxException ex) {
+                                            showError("Error", "Failed to open preview: " + ex.getMessage());
+                                        }
+                                    });
+                                    return;
+                                }
+                            }
+                        } catch (Exception e) {
+                            // fallthrough to generic success
+                        }
+                        Platform.runLater(() -> showInfo("PDF Created", "Document created successfully."));
+                    } else {
+                        Platform.runLater(() -> showError("Error", "Failed to create PDF: " + postResp.body()));
+                    }
+                })
+                .exceptionally(ex -> {
+                    Platform.runLater(() -> showError("Error", "Export failed: " + ex.getMessage()));
+                    return null;
+                });
     }
 
     private void showError(String title, String content) {
