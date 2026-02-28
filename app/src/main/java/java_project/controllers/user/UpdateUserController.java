@@ -7,7 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
-import java.net.http.HttpResponse;
 import java.nio.file.Path;
 import javafx.application.Platform;
 import java_project.services.UploadService;

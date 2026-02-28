@@ -1,6 +1,4 @@
 package java_project.controllers;
-
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
