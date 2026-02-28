@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" alignment="TOP_CENTER" prefWidth="650" prefHeight="650"
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1" fx:controller="java_project.controllers.promocode.AddPromoCodeController" stylesheets="@../../css/addUser.css" styleClass="form-card">
+
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" styleClass="form-header">
+        <Label text="Create New Promo Code" styleClass="form-title"/>
+        <Label text="Define a new promotional code for users." styleClass="form-subtitle"/>
+    </VBox>
+
+    <Separator />
+
+    <GridPane vgap="15" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="130" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Code" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="codeField" promptText="e.g. SAVE20" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Usage Limit" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="maxUsageField" promptText="e.g. 100" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Expiry Date" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label"/>
+        <DatePicker fx:id="expiryDatePicker" maxWidth="Infinity" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Active" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label"/>
+        <CheckBox fx:id="activeCheckBox" text="Enabled" selected="true" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 20 0 0 0;">
+        <Button text="Save Code" onAction="#handleSave" styleClass="btn-save" />
+    </HBox>
+</VBox>
