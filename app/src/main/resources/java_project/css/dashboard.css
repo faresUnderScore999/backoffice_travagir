@@ -204,3 +204,88 @@
 .dashboard-root .scroll-bar .thumb:hover {
     -fx-background-color: #F9B729;
 }
+
+/* ===== CHARTS ===== */
+.dashboard-root .dashboard-chart {
+    -fx-pref-height: 320;
+    -fx-background-color: white;
+    -fx-padding: 10;
+}
+
+/* Chart legend styling */
+.dashboard-root .dashboard-chart .chart-legend {
+    -fx-padding: 8 12;
+    -fx-background-color: transparent;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.dashboard-root .dashboard-chart .chart-legend .label {
+    -fx-text-fill: #131a22;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-text-alignment: left;
+}
+
+/* Axis styling */
+.dashboard-root .dashboard-chart .axis {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 11px;
+    -fx-tick-label-fill: #374151;
+}
+
+.dashboard-root .dashboard-chart .axis-label {
+    -fx-fill: #131a22;
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+}
+
+/* X-axis and Y-axis lines */
+.dashboard-root .dashboard-chart .axis .axis-tick-mark,
+.dashboard-root .dashboard-chart .axis .minor-tick-mark {
+    -fx-tick-mark-visible: true;
+    -fx-stroke: #D1D5DB;
+}
+
+.dashboard-root .dashboard-chart .axis-line {
+    -fx-stroke: #131a22;
+    -fx-stroke-width: 2;
+}
+
+/* Grid lines */
+.dashboard-root .dashboard-chart .chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.dashboard-root .dashboard-chart .chart-vertical-grid-lines,
+.dashboard-root .dashboard-chart .chart-horizontal-grid-lines {
+    -fx-stroke: rgba(209, 213, 219, 0.3);
+    -fx-stroke-width: 1;
+}
+
+/* Bar chart series coloring */
+.dashboard-root .dashboard-chart .chart-bar {
+    -fx-bar-fill: #F9B729;
+    -fx-background-radius: 4;
+}
+
+.dashboard-root .dashboard-chart .chart-bar:hover {
+    -fx-bar-fill: #FFD166;
+    -fx-effect: dropshadow(gaussian, rgba(249,183,41,0.3), 6, 0, 0, 2);
+}
+
+/* Line chart series styling */
+.dashboard-root .dashboard-chart .chart-line-symbol {
+    -fx-background-color: #F9B729;
+    -fx-background-radius: 5;
+    -fx-padding: 4;
+}
+
+.dashboard-root .dashboard-chart .chart-series-line {
+    -fx-stroke: #F9B729;
+    -fx-stroke-width: 2.5;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
