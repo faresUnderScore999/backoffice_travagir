@@ -1,0 +1,206 @@
+/* ============================================
+   DASHBOARD STYLES — Voyage Theme
+   ============================================ */
+
+/* ===== COLOR PALETTE (matches voyageView.css) ===== */
+.dashboard-root {
+    -fx-primary-navy:  #131a22;
+    -fx-gold-accent:   #F9B729;
+    -fx-gold-light:    #FFD166;
+    -fx-gold-dark:     #E6A420;
+    -fx-light-bg:      #F8F9FA;
+    -fx-border-gray:   #E0E0E0;
+
+    -fx-background-color: #F0F2F5;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* ===== TOP HEADER BAR ===== */
+.dashboard-root > .top {
+    -fx-background-color: linear-gradient(to right, #131a22, #1E293B);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0, 0, 4);
+}
+
+.dashboard-root > .top .label {
+    -fx-text-fill: #F9B729;
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-padding: 14 0 14 18;
+    -fx-letter-spacing: 1;
+}
+
+/* ===== SCROLL PANE ===== */
+.dashboard-root .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-padding: 0;
+}
+
+.dashboard-root .scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ===== OVERVIEW METRICS STRIP ===== */
+.dashboard-root .overview-box {
+    -fx-spacing: 10;
+    -fx-background-color: linear-gradient(to right, #131a22, #1E293B);
+    -fx-padding: 16 20;
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.20), 14, 0, 0, 6);
+    -fx-alignment: CENTER_LEFT;
+}
+
+.dashboard-root .metric-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #131a22;
+    -fx-background-color: linear-gradient(to bottom, #FFD166, #F9B729);
+    -fx-border-color: #E6A420;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 10 16;
+    -fx-min-width: 110;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 6, 0, 0, 2);
+    -fx-cursor: hand;
+}
+
+.dashboard-root .metric-label:hover {
+    -fx-background-color: linear-gradient(to bottom, #ffe28a, #FFD166);
+    -fx-effect: dropshadow(gaussian, rgba(249,183,41,0.4), 10, 0, 0, 3);
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+}
+
+/* ===== TITLED PANE (section cards) ===== */
+.dashboard-root .dashboard-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 12, 0, 0, 4);
+}
+
+/* Title bar of each pane */
+.dashboard-root .dashboard-pane > .title {
+    -fx-background-color: linear-gradient(to right, #131a22, #1E293B);
+    -fx-background-radius: 14 14 0 0;
+    -fx-border-radius: 14 14 0 0;
+    -fx-padding: 0 16;
+}
+
+.dashboard-root .dashboard-pane > .title .text {
+    -fx-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+}
+
+/* Arrow/disclosure triangle */
+.dashboard-root .dashboard-pane > .title .arrow-button .arrow {
+    -fx-background-color: #F9B729;
+}
+
+/* Expanded title bar accent */
+.dashboard-root .dashboard-pane:expanded > .title {
+    -fx-background-color: linear-gradient(to right, #131a22, #1E2D40);
+    -fx-border-color: transparent transparent #F9B729 transparent;
+    -fx-border-width: 0 0 3 0;
+}
+
+/* Content area inside pane */
+.dashboard-root .dashboard-pane > .content {
+    -fx-background-color: white;
+    -fx-background-radius: 0 0 14 14;
+    -fx-padding: 12;
+}
+
+/* ===== TABLE VIEW ===== */
+.dashboard-root .table-view {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+}
+
+/* Column header strip */
+.dashboard-root .table-view .column-header-background {
+    -fx-background-color: #131a22;
+    -fx-background-radius: 10 10 0 0;
+    -fx-padding: 4 0;
+}
+
+.dashboard-root .table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-size: 42;
+}
+
+.dashboard-root .table-view .column-header .label {
+    -fx-text-fill: #F9B729;
+    -fx-font-weight: 700;
+    -fx-font-size: 13px;
+}
+
+/* Faint gold separator between columns */
+.dashboard-root .table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+/* Rows */
+.dashboard-root .table-row-cell {
+    -fx-background-color: white;
+    -fx-cell-size: 46;
+    -fx-border-color: transparent transparent #F0F0F0 transparent;
+}
+
+.dashboard-root .table-row-cell:odd {
+    -fx-background-color: #FAFAFA;
+}
+
+.dashboard-root .table-row-cell:hover {
+    -fx-background-color: rgba(249, 183, 41, 0.10);
+}
+
+.dashboard-root .table-row-cell:selected {
+    -fx-background-color: rgba(249, 183, 41, 0.22);
+    -fx-border-color: transparent transparent #F9B729 transparent;
+}
+
+/* Cells */
+.dashboard-root .table-view .table-cell {
+    -fx-text-fill: #374151;
+    -fx-font-size: 13px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 10;
+}
+
+.dashboard-root .table-row-cell:selected .table-cell {
+    -fx-text-fill: #131a22;
+    -fx-font-weight: 600;
+}
+
+/* Empty table placeholder */
+.dashboard-root .table-view .placeholder .label {
+    -fx-text-fill: #9CA3AF;
+    -fx-font-style: italic;
+    -fx-font-size: 13px;
+}
+
+/* Scrollbar inside tables */
+.dashboard-root .scroll-bar:vertical .track,
+.dashboard-root .scroll-bar:horizontal .track {
+    -fx-background-color: #F3F4F6;
+}
+
+.dashboard-root .scroll-bar .thumb {
+    -fx-background-color: #D1D5DB;
+    -fx-background-radius: 4;
+}
+
+.dashboard-root .scroll-bar .thumb:hover {
+    -fx-background-color: #F9B729;
+}

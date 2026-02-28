@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="java_project.controllers.DashboardController" stylesheets="@../css/dashboard.css" styleClass="dashboard-root">
+    <top>
+        <Label text="Dashboard" style="-fx-font-size:24px; -fx-padding:10 0 10 10;" />
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="20">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10" />
+                </padding>
+                <!-- overview metrics -->
+                <HBox fx:id="overviewBox" spacing="15" styleClass="overview-box" />
+
+                <!-- recent logins -->
+                <TitledPane text="Recent Logins" expanded="false" styleClass="dashboard-pane">
+                    <TableView fx:id="recentLoginsTable">
+                        <columns>
+                            <TableColumn text="Time" fx:id="colLoginTime" />
+                            <TableColumn text="User" fx:id="colLoginUser" />
+                            <TableColumn text="Method" fx:id="colLoginMethod" />
+                            <TableColumn text="IP" fx:id="colLoginIP" />
+                        </columns>
+                    </TableView>
+                </TitledPane>
+
+                <!-- popular voyages -->
+                <TitledPane text="Popular Voyages" expanded="false" VBox.vgrow="ALWAYS" styleClass="dashboard-pane">
+                    <TableView fx:id="popularVoyagesTable">
+                        <columns>
+                            <TableColumn text="Title"  fx:id="colVoyageTitle" />
+                            <TableColumn text="Destination" fx:id="colVoyageDest" />
+                            <TableColumn text="Visits" fx:id="colVoyageCount" />
+                        </columns>
+                    </TableView>
+                </TitledPane>
+
+                <!-- trending searches -->
+                <TitledPane text="Trending Searches" expanded="false" styleClass="dashboard-pane">
+                    <TableView fx:id="trendingTable">
+                        <columns>
+                            <TableColumn text="Query" fx:id="colTrendQuery" />
+                            <TableColumn text="Count" fx:id="colTrendCount" />
+                        </columns>
+                    </TableView>
+                </TitledPane>
+
+                <!-- activity timeline -->
+                <TitledPane text="Activity Timeline" expanded="false" styleClass="dashboard-pane">
+                    <TableView fx:id="timelineTable">
+                        <columns>
+                            <TableColumn text="Date" fx:id="colTimelineDate" />
+                            <TableColumn text="Logins" fx:id="colTimelineLogins" />
+                        </columns>
+                    </TableView>
+                </TitledPane>
+
+                <!-- offer performance -->
+                <TitledPane text="Offer Performance" expanded="false" styleClass="dashboard-pane">
+                    <TableView fx:id="offerPerfTable">
+                        <columns>
+                            <TableColumn text="Title" fx:id="colOfferTitle" />
+                            <TableColumn text="Discount%" fx:id="colOfferDiscount" />
+                            <TableColumn text="Clicks" fx:id="colOfferClicks" />
+                            <TableColumn text="Views" fx:id="colOfferViews" />
+                        </columns>
+                    </TableView>
+                </TitledPane>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
