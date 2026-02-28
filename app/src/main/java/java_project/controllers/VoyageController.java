@@ -8,7 +8,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import java_project.controllers.ActivityController;
 import java_project.controllers.voyage.UpdateVoyageController;
 import java_project.models.Voyage; // Reusing your Voyage model
 import java_project.services.ApiClient;

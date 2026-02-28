@@ -39,6 +39,7 @@
           </VBox>
       
           <Button fx:id="loginButton" onAction="#handleLogin" styleClass="login-button" prefWidth="350.0" text="Sign In" />
+          <Button fx:id="googleLoginButton" onAction="#startGoogleLogin" styleClass="google-button" prefWidth="350.0" text="Sign In with Google" />
           
           <Label fx:id="errorLabel" style="-fx-text-fill: #EF4444; -fx-font-weight: bold;" text="" />
           

@@ -6,8 +6,6 @@ import javafx.stage.Stage;
 import java_project.models.Offer;
 import java_project.services.OfferService;
 import javafx.application.Platform;
-import java.time.LocalDate;
-
 public class UpdateOfferController {
     // FXML Fields matching all backend requirements
     @FXML private TextField titleField, voyageIdField, discountField;

@@ -3,8 +3,6 @@ package java_project.controllers.user;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import java.util.concurrent.CompletableFuture;
-import java.net.http.HttpResponse;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import java_project.services.UserService;

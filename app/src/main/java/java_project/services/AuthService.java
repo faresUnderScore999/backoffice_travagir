@@ -41,6 +41,34 @@ public class AuthService {
         return response;
     }
 
+    /**
+     * Google OAuth login: exchange accessToken for backend tokens and session.
+     * POST to /api/v1/admins/google with {"accessToken": "..."}
+     */
+    public HttpResponse<String> googleLogin(String accessToken) throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(java.util.Map.of("accessToken", accessToken));
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(EnvVariable.baseUrl + "/api/v1/admins/google"))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            // Parse the response into our LoginResponse model
+            LoginResponse data = objectMapper.readValue(response.body(), LoginResponse.class);
+
+            // Save to global session
+            SessionManager.getInstance().setSession(
+                    data.tokens().accessToken(),
+                    data.tokens().refreshToken(),
+                    data.user());
+        }
+        return response;
+    }
+
     public CompletableFuture<Boolean> refreshAccessToken() {
         String refreshToken = SessionManager.getInstance().getRefreshToken();
         if (refreshToken == null)

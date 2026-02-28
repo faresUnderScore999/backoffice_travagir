@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -272,11 +271,5 @@ public class UpdateVoyageController {
         return apiClient.sendWithRetry(endpoint, method, body);
     }
 
-    private List<String> parseValidImageUrls(String raw) {
-        return List.of();
-    }
 
-    private boolean isValidHttpUrl(String value) {
-        return false;
-    }
 }
