@@ -21,8 +21,8 @@ import java_project.controllers.offer.UpdateOfferController;
 
 public class OfferController {
     @FXML private TableView<Offer> offerTable;
-    @FXML private TableColumn<Offer, Integer> colId;
     @FXML private TableColumn<Offer, String> colTitle;
+    @FXML private TableColumn<Offer, String> colDestination;
     @FXML private TableColumn<Offer, Double> colDiscount;
     @FXML private TableColumn<Offer, Void> colActions;
     @FXML private TextField searchField;
@@ -39,8 +39,8 @@ public class OfferController {
     }
 
     private void setupColumns() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colDestination.setCellValueFactory(new PropertyValueFactory<>("destinationName"));
         colDiscount.setCellValueFactory(new PropertyValueFactory<>("discountPercentage"));
         setupActionColumn();
     }

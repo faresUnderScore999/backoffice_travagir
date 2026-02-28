@@ -14,7 +14,7 @@
 
     <VBox spacing="5" alignment="CENTER_LEFT" styleClass="form-header">
         <Label text="Create New Offer" styleClass="form-title"/>
-        <Label text="Set discounts for specific voyages." styleClass="form-subtitle"/>
+        <Label text="Set discounts for specific destinations." styleClass="form-subtitle"/>
     </VBox>
 
     <Separator />
@@ -25,8 +25,8 @@
             <ColumnConstraints hgrow="ALWAYS" />
         </columnConstraints>
 
-        <Label text="Voyage ID" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
-        <TextField fx:id="voyageIdField" promptText="Target Voyage ID" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+        <Label text="Destination Name" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="destinationField" promptText="e.g. Paris" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
 
         <Label text="Offer Title" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
         <TextField fx:id="titleField" promptText="e.g. Summer Pack" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>

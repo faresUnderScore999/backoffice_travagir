@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" alignment="TOP_CENTER" prefWidth="450" prefHeight="320"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="java_project.controllers.user_offer.AddUserOfferController"
+      stylesheets="@../../css/addUser.css" styleClass="form-card">
+
+    <padding>
+        <Insets top="25" right="35" bottom="25" left="35"/>
+    </padding>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" styleClass="form-header">
+        <Label text="Claim New Offer" styleClass="form-title"/>
+        <Label text="Enter the offer ID you want to claim." styleClass="form-subtitle"/>
+    </VBox>
+
+    <Separator />
+
+    <GridPane vgap="15" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="120" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Offer ID" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="offerIdField" promptText="e.g. 12" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+    </GridPane>
+
+    <Label fx:id="statusLabel" text="" wrapText="true" />
+
+    <Region VBox.vgrow="ALWAYS" />
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#handleCancel" styleClass="btn-cancel" />
+        <Button text="Claim" onAction="#handleClaim" styleClass="btn-save" />
+    </HBox>
+</VBox>

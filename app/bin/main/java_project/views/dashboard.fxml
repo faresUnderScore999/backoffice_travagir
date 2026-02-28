@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="java_project.controllers.DashboardController" stylesheets="@../css/dashboard.css" styleClass="dashboard-root">
+    <top>
+        <Label text="Dashboard" style="-fx-font-size:24px; -fx-padding:10 0 10 10;" />
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="20">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10" />
+                </padding>
+                <!-- overview metrics -->
+                <HBox fx:id="overviewBox" spacing="15" styleClass="overview-box" />
+
+                <!-- recent logins -->
+                <TitledPane text="Recent Logins" expanded="false" styleClass="dashboard-pane">
+                    <TableView fx:id="recentLoginsTable">
+                        <columns>
+                            <TableColumn text="Time" fx:id="colLoginTime" />
+                            <TableColumn text="User" fx:id="colLoginUser" />
+                            <TableColumn text="Method" fx:id="colLoginMethod" />
+                            <TableColumn text="IP" fx:id="colLoginIP" />
+                        </columns>
+                    </TableView>
+                </TitledPane>
+
+                <!-- popular voyages -->
+                <TitledPane text="Popular Voyages" expanded="false" VBox.vgrow="ALWAYS" styleClass="dashboard-pane">
+                    <TableView fx:id="popularVoyagesTable">
+                        <columns>
+                            <TableColumn text="Title"  fx:id="colVoyageTitle" />
+                            <TableColumn text="Destination" fx:id="colVoyageDest" />
+                            <TableColumn text="Visits" fx:id="colVoyageCount" />
+                        </columns>
+                    </TableView>
+                </TitledPane>
+
+                <!-- trending searches -->
+                <TitledPane text="Trending Searches" expanded="false" styleClass="dashboard-pane">
+                    <BarChart fx:id="trendingChart" styleClass="dashboard-chart">
+                        <xAxis>
+                            <CategoryAxis label="Search Query" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Count" />
+                        </yAxis>
+                    </BarChart>
+                </TitledPane>
+
+                <!-- activity timeline -->
+                <TitledPane text="Activity Timeline" expanded="false" styleClass="dashboard-pane">
+                    <LineChart fx:id="timelineChart" styleClass="dashboard-chart">
+                        <xAxis>
+                            <CategoryAxis label="Date" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Logins" />
+                        </yAxis>
+                    </LineChart>
+                </TitledPane>
+
+                <!-- offer performance -->
+                <TitledPane text="Offer Performance" expanded="false" styleClass="dashboard-pane">
+                    <BarChart fx:id="offerChart" styleClass="dashboard-chart">
+                        <xAxis>
+                            <CategoryAxis label="Offer Title" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Count" />
+                        </yAxis>
+                    </BarChart>
+                </TitledPane>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

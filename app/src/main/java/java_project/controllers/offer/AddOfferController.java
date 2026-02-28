@@ -7,7 +7,7 @@ import java_project.services.OfferService;
 import javafx.application.Platform;
 
 public class AddOfferController {
-    @FXML private TextField titleField, voyageIdField, discountField;
+    @FXML private TextField titleField, destinationField, discountField;
     @FXML private TextArea descriptionArea;
     @FXML private DatePicker startDatePicker, endDatePicker;
     @FXML private CheckBox activeCheckBox;
@@ -23,8 +23,8 @@ public class AddOfferController {
 
         // 2. Construct the JSON if valid
         String jsonBody = String.format(
-            "{\"voyageId\":%s, \"title\":\"%s\", \"description\":\"%s\", \"discountPercentage\":%s, \"startDate\":\"%s\", \"endDate\":\"%s\", \"active\":%b}",
-            voyageIdField.getText(), 
+            "{\"destinationName\":\"%s\", \"title\":\"%s\", \"description\":\"%s\", \"discountPercentage\":%s, \"startDate\":\"%s\", \"endDate\":\"%s\", \"active\":%b}",
+            destinationField.getText(), 
             titleField.getText(), 
             descriptionArea.getText().replace("\"", "\\\""), 
             discountField.getText(),
@@ -48,8 +48,8 @@ public class AddOfferController {
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (voyageIdField.getText() == null || voyageIdField.getText().isEmpty()) {
-            errorMessage += "Voyage ID is required!\n";
+        if (destinationField.getText() == null || destinationField.getText().isEmpty()) {
+            errorMessage += "Destination Name is required!\n";
         }
         if (titleField.getText() == null || titleField.getText().isEmpty()) {
             errorMessage += "Offer Title is required!\n";

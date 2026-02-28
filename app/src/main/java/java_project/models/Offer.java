@@ -6,7 +6,7 @@ import java.time.LocalDate;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Offer {
     private int id;
-    private int voyageId;
+    private String destinationName;
     private String title;
     private String description;
     private double discountPercentage;
@@ -21,8 +21,8 @@ public class Offer {
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public int getVoyageId() { return voyageId; }
-    public void setVoyageId(int voyageId) { this.voyageId = voyageId; }
+    public String getDestinationName() { return destinationName; }
+    public void setDestinationName(String destinationName) { this.destinationName = destinationName; }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }

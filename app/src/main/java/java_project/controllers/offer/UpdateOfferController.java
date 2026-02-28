@@ -8,7 +8,7 @@ import java_project.services.OfferService;
 import javafx.application.Platform;
 public class UpdateOfferController {
     // FXML Fields matching all backend requirements
-    @FXML private TextField titleField, voyageIdField, discountField;
+    @FXML private TextField titleField, destinationField, discountField;
     @FXML private TextArea descriptionArea;
     @FXML private DatePicker startDatePicker, endDatePicker;
     @FXML private CheckBox activeCheckBox;
@@ -21,7 +21,7 @@ public class UpdateOfferController {
      */
     public void setOfferData(Offer offer) {
         this.offerId = offer.getId();
-        this.voyageIdField.setText(String.valueOf(offer.getVoyageId()));
+        this.destinationField.setText(offer.getDestinationName());
         this.titleField.setText(offer.getTitle());
         this.descriptionArea.setText(offer.getDescription());
         this.discountField.setText(String.valueOf(offer.getDiscountPercentage()));
@@ -34,9 +34,9 @@ public class UpdateOfferController {
     private void handleUpdate() {
         // Construct FULL JSON payload required by your backend
         String jsonBody = String.format(
-            "{\"id\":%d, \"voyageId\":%s, \"title\":\"%s\", \"description\":\"%s\", \"discountPercentage\":%s, \"startDate\":\"%s\", \"endDate\":\"%s\", \"active\":%b}",
+            "{\"id\":%d, \"destinationName\":\"%s\", \"title\":\"%s\", \"description\":\"%s\", \"discountPercentage\":%s, \"startDate\":\"%s\", \"endDate\":\"%s\", \"active\":%b}",
             offerId,
-            voyageIdField.getText(),
+            destinationField.getText(),
             titleField.getText(),
             descriptionArea.getText().replace("\"", "\\\""), // Escape quotes for JSON
             discountField.getText(),

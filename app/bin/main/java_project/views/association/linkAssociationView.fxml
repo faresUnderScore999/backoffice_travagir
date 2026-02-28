@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="12" alignment="TOP_CENTER" prefWidth="420" prefHeight="220"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="java_project.controllers.association.LinkAssociationController"
+      stylesheets="@../../css/addUser.css, @../../css/voyageView.css" styleClass="form-card">
+
+    <padding>
+        <Insets top="16" right="18" bottom="16" left="18"/>
+    </padding>
+
+    <VBox spacing="6" alignment="CENTER_LEFT" styleClass="form-header">
+        <Label text="Link / Unlink User" styleClass="form-title"/>
+        <Label text="Provide a user id to link or unlink from this association." styleClass="form-subtitle"/>
+    </VBox>
+
+    <Separator />
+
+    <GridPane vgap="10" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="120" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Association" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <Label fx:id="assocLabel" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+        <Label text="User ID" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="userIdField" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label fx:id="statusLabel" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+    </GridPane>
+
+    <Region VBox.vgrow="ALWAYS" />
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#handleCancel" styleClass="cancel-button"/>
+        <Button text="Unlink" onAction="#handleUnlink" styleClass="delete-btn"/>
+        <Button text="Link" onAction="#handleLink" styleClass="submit-button"/>
+    </HBox>
+</VBox>
