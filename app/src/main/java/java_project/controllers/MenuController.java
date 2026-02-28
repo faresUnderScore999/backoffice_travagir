@@ -48,9 +48,8 @@ public class MenuController implements Initializable {
             fxmlPath = "/java_project/views/refundView.fxml";
         else if (clickedItem.getId().equals("menuActivity"))
             fxmlPath = "/java_project/views/activityView.fxml";
-
-        // else if (clickedItem.getId().equals("menuDashboard")) fxmlPath =
-        // "/java_project/views/dashboardView.fxml";
+        else if (clickedItem.getId().equals("menuDashboard"))
+            fxmlPath = "/java_project/views/dashboard.fxml";
 
         try {
             BorderPane root = (BorderPane) clickedItem.getScene().getRoot();
