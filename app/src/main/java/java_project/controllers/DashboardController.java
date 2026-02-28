@@ -3,7 +3,13 @@ package java_project.controllers;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import java_project.services.DashboardService;
 import java_project.models.*;
 
@@ -25,25 +31,15 @@ public class DashboardController {
     @FXML private TableColumn<PopularVoyage, String> colVoyageDest;
     @FXML private TableColumn<PopularVoyage, Integer> colVoyageCount;
 
-    @FXML private TableView<TrendingSearch> trendingTable;
-    @FXML private TableColumn<TrendingSearch, String> colTrendQuery;
-    @FXML private TableColumn<TrendingSearch, Integer> colTrendCount;
-
-    @FXML private TableView<TimelineEntry> timelineTable;
-    @FXML private TableColumn<TimelineEntry, String> colTimelineDate;
-    @FXML private TableColumn<TimelineEntry, Integer> colTimelineLogins;
-
-    @FXML private TableView<OfferPerformance> offerPerfTable;
-    @FXML private TableColumn<OfferPerformance, String> colOfferTitle;
-    @FXML private TableColumn<OfferPerformance, Double> colOfferDiscount;
-    @FXML private TableColumn<OfferPerformance, Integer> colOfferClicks;
-    @FXML private TableColumn<OfferPerformance, Integer> colOfferViews;
+    @FXML private LineChart<String, Number> timelineChart;
+    @FXML private BarChart<String, Number> trendingChart;
+    @FXML private BarChart<String, Number> offerChart;
 
     private final DashboardService service = new DashboardService();
 
     @FXML
     public void initialize() {
-        // configure table columns
+        // configure table columns for remaining tables
         colLoginTime.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getLoginTime()));
         colLoginUser.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getUserName()));
         colLoginMethod.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getLoginMethod()));
@@ -52,17 +48,6 @@ public class DashboardController {
         colVoyageTitle.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getTitle()));
         colVoyageDest.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getDestination()));
         colVoyageCount.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(c.getValue().getVisitCount()).asObject());
-
-        colTrendQuery.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getQuery()));
-        colTrendCount.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(c.getValue().getCount()).asObject());
-
-        colTimelineDate.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getDate()));
-        colTimelineLogins.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(c.getValue().getLogins()).asObject());
-
-        colOfferTitle.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getTitle()));
-        colOfferDiscount.setCellValueFactory(c -> new javafx.beans.property.SimpleDoubleProperty(c.getValue().getDiscountPercentage()).asObject());
-        colOfferClicks.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(c.getValue().getClicks()).asObject());
-        colOfferViews.setCellValueFactory(c -> new javafx.beans.property.SimpleIntegerProperty(c.getValue().getViews()).asObject());
 
         // fetch data
         loadOverview();
@@ -115,22 +100,47 @@ public class DashboardController {
 
     private void loadTrending() {
         service.getTrendingSearches(5).thenAccept(list -> {
-            ObservableList<TrendingSearch> items = FXCollections.observableArrayList(list);
-            Platform.runLater(() -> trendingTable.setItems(items));
+            Platform.runLater(() -> {
+                XYChart.Series<String, Number> series = new XYChart.Series<>();
+                series.setName("Search Count");
+                for (TrendingSearch trend : list) {
+                    series.getData().add(new XYChart.Data<>(trend.getQuery(), trend.getCount()));
+                }
+                trendingChart.getData().clear();
+                trendingChart.getData().add(series);
+            });
         });
     }
 
     private void loadTimeline() {
         service.getActivityTimeline().thenAccept(list -> {
-            ObservableList<TimelineEntry> items = FXCollections.observableArrayList(list);
-            Platform.runLater(() -> timelineTable.setItems(items));
+            Platform.runLater(() -> {
+                XYChart.Series<String, Number> series = new XYChart.Series<>();
+                series.setName("Logins");
+                for (TimelineEntry entry : list) {
+                    series.getData().add(new XYChart.Data<>(entry.getDate(), entry.getLogins()));
+                }
+                timelineChart.getData().clear();
+                timelineChart.getData().add(series);
+            });
         });
     }
 
     private void loadOfferPerformance() {
         service.getOfferPerformance().thenAccept(list -> {
-            ObservableList<OfferPerformance> items = FXCollections.observableArrayList(list);
-            Platform.runLater(() -> offerPerfTable.setItems(items));
+            Platform.runLater(() -> {
+                XYChart.Series<String, Number> clicksSeries = new XYChart.Series<>();
+                clicksSeries.setName("Clicks");
+                XYChart.Series<String, Number> viewsSeries = new XYChart.Series<>();
+                viewsSeries.setName("Views");
+                
+                for (OfferPerformance offer : list) {
+                    clicksSeries.getData().add(new XYChart.Data<>(offer.getTitle(), offer.getClicks()));
+                    viewsSeries.getData().add(new XYChart.Data<>(offer.getTitle(), offer.getViews()));
+                }
+                offerChart.getData().clear();
+                offerChart.getData().addAll(clicksSeries, viewsSeries);
+            });
         });
     }
 }

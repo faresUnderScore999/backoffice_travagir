@@ -2,6 +2,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="java_project.controllers.DashboardController" stylesheets="@../css/dashboard.css" styleClass="dashboard-root">
     <top>
@@ -41,34 +45,38 @@
 
                 <!-- trending searches -->
                 <TitledPane text="Trending Searches" expanded="false" styleClass="dashboard-pane">
-                    <TableView fx:id="trendingTable">
-                        <columns>
-                            <TableColumn text="Query" fx:id="colTrendQuery" />
-                            <TableColumn text="Count" fx:id="colTrendCount" />
-                        </columns>
-                    </TableView>
+                    <BarChart fx:id="trendingChart" styleClass="dashboard-chart">
+                        <xAxis>
+                            <CategoryAxis label="Search Query" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Count" />
+                        </yAxis>
+                    </BarChart>
                 </TitledPane>
 
                 <!-- activity timeline -->
                 <TitledPane text="Activity Timeline" expanded="false" styleClass="dashboard-pane">
-                    <TableView fx:id="timelineTable">
-                        <columns>
-                            <TableColumn text="Date" fx:id="colTimelineDate" />
-                            <TableColumn text="Logins" fx:id="colTimelineLogins" />
-                        </columns>
-                    </TableView>
+                    <LineChart fx:id="timelineChart" styleClass="dashboard-chart">
+                        <xAxis>
+                            <CategoryAxis label="Date" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Logins" />
+                        </yAxis>
+                    </LineChart>
                 </TitledPane>
 
                 <!-- offer performance -->
                 <TitledPane text="Offer Performance" expanded="false" styleClass="dashboard-pane">
-                    <TableView fx:id="offerPerfTable">
-                        <columns>
-                            <TableColumn text="Title" fx:id="colOfferTitle" />
-                            <TableColumn text="Discount%" fx:id="colOfferDiscount" />
-                            <TableColumn text="Clicks" fx:id="colOfferClicks" />
-                            <TableColumn text="Views" fx:id="colOfferViews" />
-                        </columns>
-                    </TableView>
+                    <BarChart fx:id="offerChart" styleClass="dashboard-chart">
+                        <xAxis>
+                            <CategoryAxis label="Offer Title" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Count" />
+                        </yAxis>
+                    </BarChart>
                 </TitledPane>
 
             </VBox>
