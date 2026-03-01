@@ -3,16 +3,34 @@ package java_project.controllers.offer;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import java_project.models.Voyage;
 import java_project.services.OfferService;
+import java_project.services.ApiClient;
 import javafx.application.Platform;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.util.List;
 
 public class AddOfferController {
-    @FXML private TextField titleField, voyageIdField, discountField;
+    @FXML private TextField titleField, discountField;
+    @FXML private ComboBox<Voyage> voyageComboBox;
     @FXML private TextArea descriptionArea;
     @FXML private DatePicker startDatePicker, endDatePicker;
     @FXML private CheckBox activeCheckBox;
 
+    // mapper used for parsing voyage list
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final ApiClient apiClient = new ApiClient();
+
     private final OfferService offerService = new OfferService();
+
+    @FXML
+    public void initialize() {
+        // prepare jackson mapper for LocalDate
+        mapper.registerModule(new JavaTimeModule());
+        setupVoyageCombo();
+        loadVoyages();
+    }
 
     @FXML
     private void handleSave() {
@@ -21,10 +39,14 @@ public class AddOfferController {
             return; // Stop if something is missing
         }
 
-        // 2. Construct the JSON if valid
+        // 2. Determine selected voyage id
+        Voyage selectedVoyage = voyageComboBox.getValue();
+        int voyageId = selectedVoyage.getId();
+
+        // 3. Construct the JSON if valid
         String jsonBody = String.format(
-            "{\"voyageId\":%s, \"title\":\"%s\", \"description\":\"%s\", \"discountPercentage\":%s, \"startDate\":\"%s\", \"endDate\":\"%s\", \"active\":%b}",
-            voyageIdField.getText(), 
+            "{\"voyageId\":%d, \"title\":\"%s\", \"description\":\"%s\", \"discountPercentage\":%s, \"startDate\":\"%s\", \"endDate\":\"%s\", \"active\":%b}",
+            voyageId,
             titleField.getText(), 
             descriptionArea.getText().replace("\"", "\\\""), 
             discountField.getText(),
@@ -48,8 +70,8 @@ public class AddOfferController {
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (voyageIdField.getText() == null || voyageIdField.getText().isEmpty()) {
-            errorMessage += "Voyage ID is required!\n";
+        if (voyageComboBox.getValue() == null) {
+            errorMessage += "Voyage selection is required!\n";
         }
         if (titleField.getText() == null || titleField.getText().isEmpty()) {
             errorMessage += "Offer Title is required!\n";
@@ -94,5 +116,51 @@ public class AddOfferController {
     @FXML
     private void handleCancel() {
         ((Stage) titleField.getScene().getWindow()).close();
+    }
+
+    /***************************************************
+     * helper methods for voyages
+     ***************************************************/
+    private void setupVoyageCombo() {
+        // display title + destination
+        voyageComboBox.setCellFactory(cb -> new ListCell<>() {
+            @Override
+            protected void updateItem(Voyage item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getTitle() + " - " + item.getDestination());
+                }
+            }
+        });
+        voyageComboBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(Voyage item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getTitle() + " - " + item.getDestination());
+                }
+            }
+        });
+    }
+
+    private void loadVoyages() {
+        apiClient.sendWithRetry("/api/v1/offers/voyages", "GET", null)
+                 .thenAccept(response -> {
+                     if (response.statusCode() == 200) {
+                         try {
+                             List<Voyage> voyages = mapper.readValue(
+                                     response.body(),
+                                     new com.fasterxml.jackson.core.type.TypeReference<List<Voyage>>() {}
+                             );
+                             Platform.runLater(() -> voyageComboBox.getItems().setAll(voyages));
+                         } catch (Exception e) {
+                             e.printStackTrace();
+                         }
+                     }
+                 });
     }
 }

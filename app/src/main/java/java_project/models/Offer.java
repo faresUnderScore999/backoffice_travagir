@@ -7,6 +7,8 @@ import java.time.LocalDate;
 public class Offer {
     private int id;
     private int voyageId;
+    // name used only on frontend for display (title - destination)
+    private String voyageName;
     private String title;
     private String description;
     private double discountPercentage;
@@ -23,6 +25,9 @@ public class Offer {
 
     public int getVoyageId() { return voyageId; }
     public void setVoyageId(int voyageId) { this.voyageId = voyageId; }
+
+    public String getVoyageName() { return voyageName; }
+    public void setVoyageName(String voyageName) { this.voyageName = voyageName; }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }

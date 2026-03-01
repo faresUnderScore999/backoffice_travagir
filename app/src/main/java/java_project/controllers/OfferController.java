@@ -12,16 +12,20 @@ import javafx.stage.Stage;
 import javafx.application.Platform;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java_project.models.Offer;
+import java_project.models.Voyage;
 import java_project.services.OfferService;
+import java_project.services.ApiClient;
 import java_project.controllers.offer.UpdateOfferController;
 
 public class OfferController {
     @FXML private TableView<Offer> offerTable;
-    @FXML private TableColumn<Offer, Integer> colId;
+    // show human-friendly voyage name after fetching voyages
+    @FXML private TableColumn<Offer, String> colVoyage;
     @FXML private TableColumn<Offer, String> colTitle;
     @FXML private TableColumn<Offer, Double> colDiscount;
     @FXML private TableColumn<Offer, Void> colActions;
@@ -29,6 +33,7 @@ public class OfferController {
     @FXML private Label statusLabel;
 
     private final OfferService offerService = new OfferService();
+    private final ApiClient apiClient = new ApiClient();
     private final ObjectMapper mapper = new ObjectMapper();
 
     @FXML
@@ -39,7 +44,7 @@ public class OfferController {
     }
 
     private void setupColumns() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colVoyage.setCellValueFactory(new PropertyValueFactory<>("voyageName"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colDiscount.setCellValueFactory(new PropertyValueFactory<>("discountPercentage"));
         setupActionColumn();
@@ -47,13 +52,29 @@ public class OfferController {
 
     @FXML
     public void loadOffers() {
-        offerService.getAllOffers().thenAccept(response -> {
+        offerService.getAllOffers().thenCompose(response -> {
             if (response.statusCode() == 200) {
                 try {
                     List<Offer> offers = mapper.readValue(response.body(), new TypeReference<List<Offer>>() {});
-                    Platform.runLater(() -> offerTable.getItems().setAll(offers));
-                } catch (Exception e) { e.printStackTrace(); }
+                    return fetchVoyages().thenApply(voyages -> {
+                        // map id to Voyage
+                        for (Offer o : offers) {
+                            for (Voyage v : voyages) {
+                                if (v.getId() == o.getVoyageId()) {
+                                    o.setVoyageName(v.getTitle() + " - " + v.getDestination());
+                                    break;
+                                }
+                            }
+                        }
+                        return offers;
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+            return CompletableFuture.completedFuture(List.<Offer>of());
+        }).thenAccept(offers -> {
+            Platform.runLater(() -> offerTable.getItems().setAll(offers));
         });
     }
 
@@ -108,5 +129,18 @@ public class OfferController {
             stage.showAndWait();
             loadOffers();
         } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    // helper to fetch voyages from backend
+    private CompletableFuture<List<Voyage>> fetchVoyages() {
+        return apiClient.sendWithRetry("/api/v1/offers/voyages", "GET", null)
+                .thenApply(response -> {
+                    if (response.statusCode() == 200) {
+                        try {
+                            return mapper.readValue(response.body(), new TypeReference<List<Voyage>>() {});
+                        } catch (Exception e) { e.printStackTrace(); }
+                    }
+                    return List.<Voyage>of();
+                });
     }
 }
