@@ -26,8 +26,8 @@
             <ColumnConstraints hgrow="ALWAYS" />
         </columnConstraints>
 
-        <Label text="Voyage ID" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
-        <TextField fx:id="voyageIdField" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+        <Label text="Voyage" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <ComboBox fx:id="voyageComboBox" promptText="Select a voyage" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
 
         <Label text="Offer Title" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
         <TextField fx:id="titleField" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>
