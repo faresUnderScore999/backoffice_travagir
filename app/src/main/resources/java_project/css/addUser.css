@@ -40,6 +40,16 @@
     -fx-background-color: white;
 }
 
+/* read-only field styling */
+.form-field.readonly-field {
+    -fx-cursor: not-allowed;
+    -fx-opacity: 0.8;
+}
+
+.form-field.readonly-field:hover {
+    -fx-cursor: not-allowed;
+}
+
 /* Buttons */
 .btn-save {
     -fx-background-color: #F9B729;

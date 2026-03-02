@@ -109,12 +109,14 @@ public class VoyageController {
             private final Button updateButton = new Button("Update");
             private final Button deleteButton = new Button("Delete");
             private final Button viewActivitiesButton = new Button("View Activities");
-            private final HBox pane = new HBox(10, updateButton, deleteButton, viewActivitiesButton);
+            private final Button newOfferButton = new Button("New Offer");
+            private final HBox pane = new HBox(10, updateButton, deleteButton, viewActivitiesButton, newOfferButton);
 
             {
                 updateButton.setStyle("-fx-background-color: #F9B729; -fx-text-fill: white;");
                 deleteButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
                 viewActivitiesButton.setStyle("-fx-background-color: #131a22; -fx-text-fill: white;");
+                newOfferButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
 
                 updateButton.setOnAction(event -> {
                     Voyage voyage = getTableView().getItems().get(getIndex());
@@ -131,6 +133,11 @@ public class VoyageController {
                 viewActivitiesButton.setOnAction(event -> {
                     Voyage voyage = getTableView().getItems().get(getIndex());
                     openActivityView(voyage);
+                });
+
+                newOfferButton.setOnAction(event -> {
+                    Voyage voyage = getTableView().getItems().get(getIndex());
+                    openAddOfferForVoyage(voyage.getId());
                 });
             }
 
@@ -191,6 +198,28 @@ public class VoyageController {
         } catch (IOException e) {
             e.printStackTrace();
             statusLabel.setText("Failed to open update voyage view");
+        }
+    }
+
+    /**
+     * Open the add-offer dialog and pre-fill the voyage id field.
+     */
+    private void openAddOfferForVoyage(int voyageId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/offer/addOfferView.fxml"));
+            Parent root = loader.load();
+
+            Object controller = loader.getController();
+            if (controller instanceof java_project.controllers.offer.AddOfferController) {
+                ((java_project.controllers.offer.AddOfferController) controller).setVoyageId(voyageId);
+            }
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
