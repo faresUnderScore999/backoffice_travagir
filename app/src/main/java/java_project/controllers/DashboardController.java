@@ -36,6 +36,8 @@ public class DashboardController {
     @FXML private BarChart<String, Number> offerChart;
 
     private final DashboardService service = new DashboardService();
+    @FXML private Button btnSuggest;
+    @FXML private TextArea suggestionArea;
 
     @FXML
     public void initialize() {
@@ -56,6 +58,31 @@ public class DashboardController {
         loadTrending();
         loadTimeline();
         loadOfferPerformance();
+        // wire suggestion UI
+        if (suggestionArea != null) {
+            suggestionArea.setEditable(false);
+        }
+    }
+
+    @FXML
+    public void onSuggestVoyage() {
+        // disable button while waiting
+        btnSuggest.setDisable(true);
+        suggestionArea.setText("Requesting suggestion...");
+
+        String body = "{\"message\":\"Please propose the best new voyage to create.\"}";
+        service.suggestVoyage(body).thenAccept(s -> {
+            Platform.runLater(() -> {
+                suggestionArea.setText(s == null || s.isEmpty() ? "No suggestion returned." : s);
+                btnSuggest.setDisable(false);
+            });
+        }).exceptionally(ex -> {
+            Platform.runLater(() -> {
+                suggestionArea.setText("Error: " + ex.getMessage());
+                btnSuggest.setDisable(false);
+            });
+            return null;
+        });
     }
 
     private void loadOverview() {
