@@ -86,4 +86,22 @@ public class DashboardService {
                     }
                 });
     }
+
+    /**
+     * Calls the admin suggestion endpoint to get an AI-generated voyage suggestion.
+     * Returns the suggestion text (or empty string on error).
+     */
+    public CompletableFuture<String> suggestVoyage(String promptJson) {
+        return api.sendWithRetry("/api/v1/admins/suggest", "POST", promptJson)
+                .thenApply(response -> {
+                    try {
+                        var root = mapper.readTree(response.body());
+                        var suggestionNode = root.get("suggestion");
+                        return suggestionNode != null ? suggestionNode.asText() : "";
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return "";
+                    }
+                });
+    }
 }

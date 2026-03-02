@@ -79,6 +79,17 @@
                     </BarChart>
                 </TitledPane>
 
+                <!-- AI suggestion -->
+                <TitledPane text="AI Suggestion" expanded="false" styleClass="dashboard-pane">
+                    <VBox spacing="8">
+                        <padding>
+                            <Insets top="8" right="8" bottom="8" left="8" />
+                        </padding>
+                        <Button text="Suggest New Voyage" fx:id="btnSuggest" onAction="#onSuggestVoyage" />
+                        <TextArea fx:id="suggestionArea" promptText="AI suggestion will appear here..." wrapText="true" prefRowCount="8" />
+                    </VBox>
+                </TitledPane>
+
             </VBox>
         </ScrollPane>
     </center>
