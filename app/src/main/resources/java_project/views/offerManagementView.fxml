@@ -21,7 +21,7 @@
                     <Insets right="20" />
                 </padding>
                 <Button text="🔄 Refresh" onAction="#loadOffers" styleClass="secondary-button" />
-                <Button text="+ Create New Offer" styleClass="add-user" onAction="#openAddModal" />
+                <!-- moved create button to voyage list for contextual creation -->
             </HBox>
         </HBox>
         

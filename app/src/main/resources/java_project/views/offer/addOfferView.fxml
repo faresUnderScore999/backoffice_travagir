@@ -25,7 +25,7 @@
             <ColumnConstraints hgrow="ALWAYS" />
         </columnConstraints>
 
-        <Label text="Voyage ID" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <Label text="Voyage number" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
         <TextField fx:id="voyageIdField" promptText="Target Voyage ID" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
 
         <Label text="Offer Title" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
