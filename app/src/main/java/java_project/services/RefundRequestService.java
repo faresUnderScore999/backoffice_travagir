@@ -14,7 +14,7 @@ public class RefundRequestService {
 
     // USER: get my refunds
     public CompletableFuture<HttpResponse<String>> getMyRefunds() {
-        return apiClient.sendWithRetry("/api/v1/refunds/my", "GET", null);
+        return apiClient.sendWithRetry("/api/v1/refunds/all", "GET", null);
     }
 
     // USER: create refund (jsonBody contains reclamationId, amount, reason)

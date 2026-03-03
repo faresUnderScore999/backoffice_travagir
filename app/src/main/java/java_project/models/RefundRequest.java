@@ -9,6 +9,7 @@ public class RefundRequest {
     private double amount;
     private String status;
     private String reason;
+    private String translatedReason;
 
     public RefundRequest() {}
 
@@ -17,6 +18,14 @@ public class RefundRequest {
         this.amount = amount;
         this.status = status;
         this.reason = reason;
+    }
+
+    public RefundRequest(int id, double amount, String status, String reason, String translatedReason) {
+        this.id = id;
+        this.amount = amount;
+        this.status = status;
+        this.reason = reason;
+        this.translatedReason = translatedReason;
     }
 
     public int getId() {
@@ -49,5 +58,13 @@ public class RefundRequest {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getTranslatedReason() {
+        return translatedReason;
+    }
+
+    public void setTranslatedReason(String translatedReason) {
+        this.translatedReason = translatedReason;
     }
 }

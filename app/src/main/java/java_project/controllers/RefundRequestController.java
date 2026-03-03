@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -71,7 +72,14 @@ public class RefundRequestController {
         amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
         if (reasonCol != null) {
-            reasonCol.setCellValueFactory(new PropertyValueFactory<>("reason"));
+            // Show translatedReason when available (fallback to original reason)
+            reasonCol.setCellValueFactory(cell -> {
+                RefundRequest r = cell == null ? null : cell.getValue();
+                String translated = r == null ? null : r.getTranslatedReason();
+                String original = r == null ? null : r.getReason();
+                String display = (translated != null && !translated.isBlank()) ? translated : original;
+                return new ReadOnlyStringWrapper(display == null ? "" : display);
+            });
         }
 
         // Table data is stored in refundItems.
@@ -417,7 +425,11 @@ public class RefundRequestController {
             case "id" -> buildIdPredicate(vNorm);
             case "amount" -> buildAmountPredicate(vNorm);
             case "status" -> item -> normalize(item.getStatus()).contains(vNorm);
-            case "reason", "desc", "description" -> item -> normalize(item.getReason()).contains(vNorm);
+            case "reason", "desc", "description" -> item -> {
+                String original = normalize(item.getReason());
+                String translated = normalize(item.getTranslatedReason());
+                return original.contains(vNorm) || translated.contains(vNorm);
+            };
             default -> {
                 // Unknown field: treat as free text fallback
                 final String fallback = normalize(v);
@@ -438,7 +450,8 @@ public class RefundRequestController {
 
         String status = normalize(item.getStatus());
         String reason = normalize(item.getReason());
-        return status.contains(term) || reason.contains(term);
+        String translatedReason = normalize(item.getTranslatedReason());
+        return status.contains(term) || reason.contains(term) || translatedReason.contains(term);
     }
 
     private Predicate<RefundRequest> buildIdPredicate(String expr) {
