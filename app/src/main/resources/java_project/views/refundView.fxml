@@ -60,7 +60,32 @@
 </VBox>
 
     <HBox spacing="20" alignment="CENTER_LEFT" styleClass="footer-bar">
-        <Label text="✅ Status: " styleClass="status-label" />
+        <Label text="✅ Status:" styleClass="status-label" />
+        <Label fx:id="statusTextLabel" text="Ready" styleClass="status-label" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="Export CSV" onAction="#handleExportCsv" styleClass="secondary-button" />
+        <HBox spacing="14" alignment="CENTER_RIGHT">
+            <HBox spacing="5">
+                <Label text="Total:" styleClass="stats-label" />
+                <Label fx:id="refundTotalLabel" text="0" styleClass="stats-value" />
+            </HBox>
+            <HBox spacing="5">
+                <Label text="Pending:" styleClass="stats-label" />
+                <Label fx:id="refundPendingLabel" text="0" styleClass="stats-value" />
+            </HBox>
+            <HBox spacing="5">
+                <Label text="Approved:" styleClass="stats-label" />
+                <Label fx:id="refundApprovedLabel" text="0" styleClass="stats-value" />
+            </HBox>
+            <HBox spacing="5">
+                <Label text="Rejected:" styleClass="stats-label" />
+                <Label fx:id="refundRejectedLabel" text="0" styleClass="stats-value" />
+            </HBox>
+            <HBox spacing="5">
+                <Label text="Sum Approved:" styleClass="stats-label" />
+                <Label fx:id="refundApprovedSumLabel" text="0" styleClass="stats-value" />
+            </HBox>
+        </HBox>
     </HBox>
 
 </VBox>

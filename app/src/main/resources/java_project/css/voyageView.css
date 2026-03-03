@@ -205,3 +205,26 @@
     -fx-font-weight: bold;
     -fx-background-radius: 5;
 }
+
+/* ===== FOOTER / STATS (used by refund + reclamation views) ===== */
+.footer-bar {
+    -fx-background-color: white;
+    -fx-padding: 12 20;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 2);
+}
+
+.status-label {
+    -fx-text-fill: #64748B;
+    -fx-font-weight: bold;
+}
+
+.stats-label {
+    -fx-text-fill: #64748B;
+    -fx-font-weight: bold;
+}
+
+.stats-value {
+    -fx-text-fill: #131a22;
+    -fx-font-weight: 800;
+}

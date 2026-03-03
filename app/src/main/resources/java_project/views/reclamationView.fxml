@@ -21,6 +21,7 @@
                     <Insets right="20" />
                 </padding>
                 <Button text="🔄 Refresh" onAction="#loadReclamations" styleClass="secondary-button" />
+                <Button text="Export CSV" onAction="#handleExportCsv" styleClass="secondary-button" />
             </HBox>
         </HBox>
         
@@ -29,7 +30,7 @@
             <Region HBox.hgrow="ALWAYS" />
             <HBox spacing="10" alignment="CENTER_RIGHT">
                 <Label text="Total Items:" styleClass="stats-label"/>
-                <Label text="Active" styleClass="stats-value"/>
+                <Label fx:id="totalReclamationsLabel" text="0" styleClass="stats-value"/>
             </HBox>
         </HBox>
     </VBox>
@@ -59,21 +60,22 @@
     </VBox>
     
     <HBox spacing="20" alignment="CENTER_LEFT" styleClass="footer-bar"> 
-        <Label text="✅ Status: Ready" styleClass="status-label info" />
+        <Label text="✅ Status:" styleClass="status-label info" />
+        <Label fx:id="reclamationStatusLabel" text="Ready" styleClass="status-label info" />
         <Region HBox.hgrow="ALWAYS" />
         <HBox spacing="20" alignment="CENTER_RIGHT">
             <HBox spacing="5">
                 <Label text="Pending:" styleClass="stats-label"/> 
-                <Label text="Issues" styleClass="stats-value"/> 
+                <Label fx:id="pendingReclamationsLabel" text="0" styleClass="stats-value"/> 
             </HBox>
             <HBox spacing="5">
                 <Label text="Resolved:" styleClass="stats-label"/>
-                <Label text="Completed" styleClass="stats-value" style="-fx-text-fill: #10B981;"/>
+                <Label fx:id="resolvedReclamationsLabel" text="0" styleClass="stats-value" style="-fx-text-fill: #10B981;"/>
             </HBox>
             <Separator orientation="VERTICAL" />
             <HBox spacing="5">
                 <Label text="Last updated:" styleClass="stats-label"/>
-                <Label text="Just now" styleClass="stats-value"/>
+                <Label fx:id="lastUpdatedLabel" text="-" styleClass="stats-value"/>
             </HBox>
         </HBox>
     </HBox>

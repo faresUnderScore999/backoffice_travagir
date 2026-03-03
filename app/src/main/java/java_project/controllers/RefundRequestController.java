@@ -12,10 +12,17 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 
 import java_project.models.RefundRequest;
 import java_project.services.RefundRequestService;
+import java_project.utils.CsvUtils;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.text.DecimalFormat;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +49,13 @@ public class RefundRequestController {
     @FXML private Button rejectButton;
     @FXML private Button deleteButton;
 
+    @FXML private Label statusTextLabel;
+    @FXML private Label refundTotalLabel;
+    @FXML private Label refundPendingLabel;
+    @FXML private Label refundApprovedLabel;
+    @FXML private Label refundRejectedLabel;
+    @FXML private Label refundApprovedSumLabel;
+
     private final ObservableList<RefundRequest> refundItems = FXCollections.observableArrayList();
     private FilteredList<RefundRequest> filteredRefunds;
 
@@ -62,6 +76,8 @@ public class RefundRequestController {
 
     private final RefundRequestService refundService = new RefundRequestService();
     private final ObjectMapper mapper = new ObjectMapper();
+
+    private static final DecimalFormat MONEY_FMT = new DecimalFormat("0.##");
 
     @FXML
     private void initialize() {
@@ -132,6 +148,9 @@ public class RefundRequestController {
 
         loadMyRefunds(); // USER view
         // if you want ADMIN view instead, use: loadAllRefunds();
+
+        // Initialize stats once UI is loaded
+        updateRefundStats();
     }
 
     /**
@@ -308,6 +327,7 @@ public class RefundRequestController {
         final String raw = query == null ? "" : query.trim();
         if (raw.isEmpty()) {
             filteredRefunds.setPredicate(item -> true);
+            updateRefundStats();
             return;
         }
 
@@ -361,6 +381,7 @@ public class RefundRequestController {
         // If parsing produced no predicates, default to "show all" rather than hide everything.
         if (groupPredicates.isEmpty()) {
             filteredRefunds.setPredicate(item -> true);
+            updateRefundStats();
             return;
         }
 
@@ -370,6 +391,93 @@ public class RefundRequestController {
             }
             return false;
         });
+
+        updateRefundStats();
+    }
+
+    private void updateRefundStats() {
+        if (refundTable == null) return;
+
+        List<RefundRequest> view = new ArrayList<>(refundTable.getItems());
+        int total = view.size();
+
+        Map<String, Integer> statusCounts = new LinkedHashMap<>();
+        double approvedSum = 0.0;
+
+        for (RefundRequest r : view) {
+            if (r == null) continue;
+            String status = r.getStatus() == null ? "" : r.getStatus().trim().toUpperCase();
+            statusCounts.put(status, statusCounts.getOrDefault(status, 0) + 1);
+            if ("APPROVED".equals(status)) {
+                approvedSum += r.getAmount();
+            }
+        }
+
+        int pending = statusCounts.getOrDefault("PENDING", 0);
+        int approved = statusCounts.getOrDefault("APPROVED", 0);
+        int rejected = statusCounts.getOrDefault("REJECTED", 0);
+
+        if (refundTotalLabel != null) refundTotalLabel.setText(String.valueOf(total));
+        if (refundPendingLabel != null) refundPendingLabel.setText(String.valueOf(pending));
+        if (refundApprovedLabel != null) refundApprovedLabel.setText(String.valueOf(approved));
+        if (refundRejectedLabel != null) refundRejectedLabel.setText(String.valueOf(rejected));
+        if (refundApprovedSumLabel != null) refundApprovedSumLabel.setText(MONEY_FMT.format(approvedSum));
+
+        if (statusTextLabel != null) {
+            statusTextLabel.setText("Showing " + total + " refund(s)");
+        }
+    }
+
+    @FXML
+    private void handleExportCsv() {
+        if (refundTable == null) return;
+
+        List<RefundRequest> rows = new ArrayList<>(refundTable.getItems());
+        if (rows.isEmpty()) {
+            showAlert(Alert.AlertType.INFORMATION, "Export CSV", "No refunds to export (current view is empty).");
+            return;
+        }
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Export Refunds to CSV");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        chooser.setInitialFileName("refunds.csv");
+        File file = chooser.showSaveDialog(refundTable.getScene() == null ? null : refundTable.getScene().getWindow());
+        if (file == null) return;
+
+        try {
+            Path path = file.toPath();
+            List<String> headers = List.of(
+                    "id",
+                    "userId",
+                    "reservationId",
+                    "amount",
+                    "status",
+                    "reason",
+                    "translatedReason",
+                    "createdAt"
+            );
+
+            List<List<String>> data = new ArrayList<>();
+            for (RefundRequest r : rows) {
+                if (r == null) continue;
+                data.add(List.of(
+                        String.valueOf(r.getId()),
+                        String.valueOf(r.getUserId()),
+                        String.valueOf(r.getReservationId()),
+                        MONEY_FMT.format(r.getAmount()),
+                        r.getStatus(),
+                        r.getReason(),
+                        r.getTranslatedReason(),
+                        r.getCreatedAt() == null ? null : r.getCreatedAt().toString()
+                ));
+            }
+
+            CsvUtils.write(path, headers, data);
+            showAlert(Alert.AlertType.INFORMATION, "Export CSV", "Exported " + data.size() + " row(s) to:\n" + path);
+        } catch (Exception ex) {
+            showAlert(Alert.AlertType.ERROR, "Export CSV", "Export failed: " + ex.getMessage());
+        }
     }
 
     /**
@@ -791,6 +899,7 @@ public class RefundRequestController {
                         populateSearchValueChoices();
                         runSearchFromUi();
                         applySortFromUi();
+                        updateRefundStats();
                     });
                 } else {
                     Platform.runLater(() ->
@@ -828,6 +937,7 @@ public class RefundRequestController {
                         populateSearchValueChoices();
                         runSearchFromUi();
                         applySortFromUi();
+                        updateRefundStats();
                     });
                 } else {
                     Platform.runLater(() ->

@@ -8,14 +8,20 @@ import javafx.util.Callback;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 
 import java.util.Map;
 import java.awt.Desktop;
 import java.net.URI;
 import java.io.IOException;
+import java.io.File;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java_project.models.Reclamation;
 import java_project.services.ReclamationService;
+import java_project.utils.CsvUtils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,9 +39,17 @@ public class ReclamationController {
     @FXML private TableColumn<Reclamation, String> colStatus;
     @FXML private TableColumn<Reclamation, Void> colActions;
 
+    @FXML private Label totalReclamationsLabel;
+    @FXML private Label pendingReclamationsLabel;
+    @FXML private Label resolvedReclamationsLabel;
+    @FXML private Label lastUpdatedLabel;
+    @FXML private Label reclamationStatusLabel;
+
     private final ReclamationService reclamationService = new ReclamationService();
     private final ObjectMapper mapper = new ObjectMapper();
     private static final String BACKEND_BASE_URL = "http://localhost:8080/api"; // backend base URL
+
+    private static final DateTimeFormatter UPDATED_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @FXML
     public void initialize() {
@@ -51,6 +65,7 @@ public class ReclamationController {
 
         setupActionButtons();
         loadReclamations();
+        updateReclamationStats();
     }
 
     @FXML
@@ -59,12 +74,99 @@ public class ReclamationController {
             try {
                 if (response.statusCode() == 200) {
                     List<Reclamation> list = mapper.readValue(response.body(), new TypeReference<List<Reclamation>>() {});
-                    Platform.runLater(() -> reclamationTable.getItems().setAll(list));
+                    Platform.runLater(() -> {
+                        reclamationTable.getItems().setAll(list);
+                        updateReclamationStats();
+                    });
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void updateReclamationStats() {
+        if (reclamationTable == null) return;
+
+        List<Reclamation> list = reclamationTable.getItems();
+        int total = list == null ? 0 : list.size();
+        int pending = 0;
+        int resolved = 0;
+
+        if (list != null) {
+            for (Reclamation r : list) {
+                if (r == null) continue;
+                String status = r.getStatus() == null ? "" : r.getStatus().trim().toUpperCase();
+                if ("RESOLVED".equals(status)) {
+                    resolved++;
+                } else {
+                    pending++;
+                }
+            }
+        }
+
+        if (totalReclamationsLabel != null) totalReclamationsLabel.setText(String.valueOf(total));
+        if (pendingReclamationsLabel != null) pendingReclamationsLabel.setText(String.valueOf(pending));
+        if (resolvedReclamationsLabel != null) resolvedReclamationsLabel.setText(String.valueOf(resolved));
+        if (lastUpdatedLabel != null) lastUpdatedLabel.setText(LocalDateTime.now().format(UPDATED_FMT));
+        if (reclamationStatusLabel != null) reclamationStatusLabel.setText("Showing " + total + " reclamation(s)");
+    }
+
+    @FXML
+    private void handleExportCsv() {
+        if (reclamationTable == null) return;
+        List<Reclamation> rows = reclamationTable.getItems();
+
+        if (rows == null || rows.isEmpty()) {
+            showInfo("Export CSV", "No reclamations to export.");
+            return;
+        }
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Export Reclamations to CSV");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        chooser.setInitialFileName("reclamations.csv");
+        File file = chooser.showSaveDialog(reclamationTable.getScene() == null ? null : reclamationTable.getScene().getWindow());
+        if (file == null) return;
+
+        try {
+            Path path = file.toPath();
+
+            List<String> headers = List.of(
+                    "id",
+                    "reservationId",
+                    "userId",
+                    "title",
+                    "description",
+                    "priority",
+                    "status",
+                    "reclamationDate",
+                    "adminResponse",
+                    "responseDate"
+            );
+
+            List<List<String>> data = new java.util.ArrayList<>();
+            for (Reclamation r : rows) {
+                if (r == null) continue;
+                data.add(List.of(
+                        String.valueOf(r.getId()),
+                        String.valueOf(r.getReservationId()),
+                        String.valueOf(r.getUserId()),
+                        r.getTitle(),
+                        r.getDescription(),
+                        r.getPriority(),
+                        r.getStatus(),
+                        r.getReclamationDate() == null ? null : r.getReclamationDate().toString(),
+                        r.getAdminResponse(),
+                        r.getResponseDate() == null ? null : r.getResponseDate().toString()
+                ));
+            }
+
+            CsvUtils.write(path, headers, data);
+            showInfo("Export CSV", "Exported " + data.size() + " row(s) to:\n" + path);
+        } catch (Exception ex) {
+            showError("Export CSV", "Export failed: " + ex.getMessage());
+        }
     }
 
     private void setupActionButtons() {
