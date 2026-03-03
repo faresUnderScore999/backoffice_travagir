@@ -13,6 +13,28 @@ public class AddOfferController {
     @FXML private CheckBox activeCheckBox;
 
     private final OfferService offerService = new OfferService();
+    private Integer initialVoyageId = null;
+
+    /**
+     * Called by parent controllers to prefill the voyage ID.
+     */
+    public void setVoyageId(int voyageId) {
+        this.initialVoyageId = voyageId;
+        if (voyageIdField != null) {
+            voyageIdField.setText(String.valueOf(voyageId));
+            voyageIdField.setEditable(false);
+            voyageIdField.getStyleClass().add("readonly-field");
+        }
+    }
+
+    @FXML
+    private void initialize() {
+        if (initialVoyageId != null && voyageIdField != null) {
+            voyageIdField.setText(String.valueOf(initialVoyageId));
+            voyageIdField.setEditable(false);
+            voyageIdField.getStyleClass().add("readonly-field");
+        }
+    }
 
     @FXML
     private void handleSave() {
