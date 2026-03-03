@@ -9,7 +9,10 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="java_project.controllers.DashboardController" stylesheets="@../css/dashboard.css" styleClass="dashboard-root">
     <top>
-        <Label text="Dashboard" style="-fx-font-size:24px; -fx-padding:10 0 10 10;" />
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding:10;">
+            <Label text="Dashboard" style="-fx-font-size:24px;" />
+            <Button text="📊 Statistics" onAction="#showStatisticsPopup" styleClass="stats-button" />
+        </HBox>
     </top>
     <center>
         <ScrollPane fitToWidth="true">
@@ -77,17 +80,6 @@
                             <NumberAxis label="Count" />
                         </yAxis>
                     </BarChart>
-                </TitledPane>
-
-                <!-- AI suggestion -->
-                <TitledPane text="AI Suggestion" expanded="false" styleClass="dashboard-pane">
-                    <VBox spacing="8">
-                        <padding>
-                            <Insets top="8" right="8" bottom="8" left="8" />
-                        </padding>
-                        <Button text="Suggest New Voyage" fx:id="btnSuggest" onAction="#onSuggestVoyage" />
-                        <TextArea fx:id="suggestionArea" promptText="AI suggestion will appear here..." wrapText="true" prefRowCount="8" />
-                    </VBox>
                 </TitledPane>
 
             </VBox>

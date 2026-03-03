@@ -54,4 +54,12 @@ public class OfferService {
     public CompletableFuture<HttpResponse<String>> deleteOffer(int offerId) {
         return apiClient.sendWithRetry("/api/v1/offers/" + offerId, "DELETE", null);
     }
+
+    /**
+     * Gets a voyage by ID to extract destination name.
+     * Endpoint: GET /api/v1/voyages/{id}
+     */
+    public CompletableFuture<HttpResponse<String>> getVoyageById(int voyageId) {
+        return apiClient.sendWithRetry("/api/v1/voyages/" + voyageId, "GET", null);
+    }
 }

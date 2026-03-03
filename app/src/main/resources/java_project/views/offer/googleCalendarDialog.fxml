@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox prefHeight="500" prefWidth="600" 
+    xmlns="http://javafx.com/javafx/21"
+    xmlns:fx="http://javafx.com/fxml/1" 
+    stylesheets="@../../css/voyageView.css" 
+    fx:controller="java_project.controllers.offer.GoogleCalendarDialogController" 
+    spacing="20" 
+    styleClass="card">
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="15" styleClass="header-label-container">
+        <Label text="📅 Google Calendar" styleClass="header-label"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Ajouter l'offre au calendrier" style="-fx-text-fill: white; font-size: 14px;"/>
+    </HBox>
+
+    <!-- Offer Details Section -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #E0E0E0; -fx-border-radius: 15; -fx-padding: 20;">
+        <Label text="📋 Détails de l'offre" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+        
+        <GridPane hgap="15" vgap="10">
+            <Label text="Titre:" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: 600; -fx-text-fill: #5A6C7D;"/>
+            <Label fx:id="titleLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-text-fill: #2C3E50; -fx-font-weight: 500;"/>
+            
+            <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-weight: 600; -fx-text-fill: #5A6C7D;"/>
+            <Label fx:id="descriptionLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-text-fill: #2C3E50; -fx-wrap-text: true; -fx-max-width: 350;"/>
+            
+            <Label text="Réduction:" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: 600; -fx-text-fill: #5A6C7D;"/>
+            <Label fx:id="discountLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-text-fill: #F9B729; -fx-font-weight: bold;"/>
+            
+            <Label text="Date de début:" GridPane.columnIndex="0" GridPane.rowIndex="3" style="-fx-font-weight: 600; -fx-text-fill: #5A6C7D;"/>
+            <Label fx:id="startDateLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-text-fill: #2C3E50;"/>
+            
+            <Label text="Date de fin:" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-weight: 600; -fx-text-fill: #5A6C7D;"/>
+            <Label fx:id="endDateLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" style="-fx-text-fill: #2C3E50;"/>
+        </GridPane>
+    </VBox>
+
+    <!-- Reminder Options -->
+    <VBox spacing="10" style="-fx-background-color: #F8F9FA; -fx-background-radius: 15; -fx-padding: 20;">
+        <CheckBox fx:id="addReminderCheckBox" text="🔔 Ajouter un rappel" style="-fx-font-size: 16px; -fx-font-weight: 600; -fx-text-fill: #2C3E50;"/>
+        
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 0 0 0 25;">
+            <Label text="Rappel:" style="-fx-text-fill: #5A6C7D; -fx-font-weight: 500;"/>
+            <ComboBox fx:id="reminderTimeComboBox" prefWidth="200" styleClass="combo-box"/>
+        </HBox>
+    </VBox>
+
+    <!-- Progress Section -->
+    <VBox spacing="10" style="-fx-background-color: #E8F5E8; -fx-background-radius: 10; -fx-padding: 15;" visible="false">
+        <ProgressBar fx:id="progressBar" prefWidth="Infinity" style="-fx-accent: #4CAF50;"/>
+        <Label fx:id="statusLabel" style="-fx-text-fill: #2E7D32; -fx-font-weight: 600;"/>
+    </VBox>
+
+    <!-- Action Buttons -->
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button fx:id="cancelButton" text="❌ Annuler" onAction="#handleCancel" styleClass="secondary-button" prefWidth="120"/>
+        <Button fx:id="addToCalendarButton" text="📅 Ajouter au Calendar" onAction="#handleAddToCalendar" styleClass="add-user" prefWidth="180"/>
+    </HBox>
+
+    <!-- Info Footer -->
+    <HBox spacing="10" alignment="CENTER" style="-fx-background-color: #FFF3CD; -fx-background-radius: 10; -fx-padding: 15;">
+        <Label text="ℹ️" style="-fx-font-size: 16px; -fx-text-fill: #856404;"/>
+        <Label text="Cette action ouvrira Google Calendar dans votre navigateur avec l'événement pré-rempli." 
+               style="-fx-text-fill: #856404; -fx-wrap-text: true; -fx-font-size: 13px;"/>
+    </HBox>
+
+</VBox>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="768" prefWidth="1376.0"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      stylesheets="@../css/offersView.css"
+      fx:controller="frontoffice.controllers.views.OffersViewController"
+      spacing="25"
+      styleClass="offers-container">
+
+    <VBox spacing="10">
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header-label-container">
+            <Label text="🔥 Special Offers" styleClass="header-label" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="statusLabel" text="" styleClass="status-label" />
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <padding>
+                    <Insets right="20" />
+                </padding>
+                <TextField fx:id="searchField"
+                          promptText="🔍 Search offers by title or destination..."
+                          styleClass="search-field" />
+                <Button text="🔄 Refresh" onAction="#onRefresh" styleClass="refresh-button" />
+            </HBox>
+        </HBox>
+    </VBox>
+
+    <!-- Cards Container -->
+    <ScrollPane fx:id="scrollPane" VBox.vgrow="ALWAYS" styleClass="offers-scroll-pane">
+        <VBox styleClass="cards-container">
+            <FlowPane fx:id="offersCardsContainer"
+                      hgap="20"
+                      vgap="20"
+                      prefWrapLength="1200"
+                      styleClass="cards-flow-pane">
+                <!-- Offer cards will be added here dynamically -->
+            </FlowPane>
+        </VBox>
+    </ScrollPane>
+
+</VBox>

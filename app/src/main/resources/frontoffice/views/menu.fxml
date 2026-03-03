@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Region?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="15"
+      prefWidth="250"
+      fx:controller="frontoffice.controllers.MenuController"
+      styleClass="sidebar"
+      stylesheets="@../css/menu.css">
+
+    <HBox spacing="10" styleClass="company-box">
+        <Label text="TRAVAGIR" styleClass="company-name" />
+    </HBox>
+
+    <VBox spacing="10">
+        <HBox fx:id="menuVoyages" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="✈️ Voyages"/>
+        </HBox>
+        <HBox fx:id="menuActivities" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="🏄 Activities"/>
+        </HBox>
+        <HBox fx:id="menuOffers" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="🔥 Offers"/>
+        </HBox>
+        <HBox fx:id="menuMyOffers" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="🎁 My Offers"/>
+        </HBox>
+        <HBox fx:id="menuReservations" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="🎟️ Reservations"/>
+        </HBox>
+        <HBox fx:id="menuReclamations" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="📢 Reclamations"/>
+        </HBox>
+        <HBox fx:id="menuRefunds" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="💰 Refunds"/>
+        </HBox>
+        <HBox fx:id="menuDocuments" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="📄 Documents"/>
+        </HBox>
+        <HBox fx:id="menuAssociations" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="🏢 Associations"/>
+        </HBox>
+        <HBox fx:id="menuProfile" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="⚙️ Profile"/>
+        </HBox>
+        <Region prefHeight="20" />
+        <HBox fx:id="menuLogout" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+            <Label text="🚪 Logout"/>
+        </HBox>
+    </VBox>
+
+</VBox>

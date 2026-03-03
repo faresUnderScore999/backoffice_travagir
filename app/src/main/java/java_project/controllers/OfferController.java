@@ -17,14 +17,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java_project.models.Offer;
 import java_project.services.OfferService;
+import java_project.services.GoogleCalendarService;
 import java_project.controllers.offer.UpdateOfferController;
+import java_project.controllers.offer.GoogleCalendarDialogController;
 
 public class OfferController {
     @FXML private TableView<Offer> offerTable;
-    @FXML private TableColumn<Offer, Integer> colId;
-    @FXML private TableColumn<Offer, String> colTitle;
-    @FXML private TableColumn<Offer, Double> colDiscount;
-    @FXML private TableColumn<Offer, Void> colActions;
     @FXML private TextField searchField;
     @FXML private Label statusLabel;
 
@@ -39,10 +37,14 @@ public class OfferController {
     }
 
     private void setupColumns() {
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        // Get columns by index since we removed fx:ids (ID column removed)
+        TableColumn<Offer, String> colTitle = (TableColumn<Offer, String>) offerTable.getColumns().get(0);
+        TableColumn<Offer, Double> colDiscount = (TableColumn<Offer, Double>) offerTable.getColumns().get(1);
+        TableColumn<Offer, Void> colActions = (TableColumn<Offer, Void>) offerTable.getColumns().get(2);
+        
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colDiscount.setCellValueFactory(new PropertyValueFactory<>("discountPercentage"));
-        setupActionColumn();
+        setupActionColumn(colActions);
     }
 
     @FXML
@@ -57,16 +59,21 @@ public class OfferController {
         });
     }
 
-    private void setupActionColumn() {
+    private void setupActionColumn(TableColumn<Offer, Void> colActions) {
         colActions.setCellFactory(param -> new TableCell<>() {
             private final Button editBtn = new Button("Edit");
             private final Button deleteBtn = new Button("Delete");
-            private final HBox pane = new HBox(10, editBtn, deleteBtn);
+            private final Button calendarBtn = new Button("📅");
+            private final HBox pane = new HBox(5, editBtn, calendarBtn, deleteBtn);
 
             {
-                  editBtn.getStyleClass().add("update-btn");
+                editBtn.getStyleClass().add("update-btn");
                 deleteBtn.getStyleClass().add("delete-btn");
+                calendarBtn.getStyleClass().add("calendar-btn");
+                calendarBtn.setTooltip(new Tooltip("Ajouter au Google Calendar"));
+                
                 editBtn.setOnAction(e -> openUpdateModal(getTableView().getItems().get(getIndex())));
+                calendarBtn.setOnAction(e -> openGoogleCalendarDialog(getTableView().getItems().get(getIndex())));
                 deleteBtn.setOnAction(e -> {
                     Offer offer = getTableView().getItems().get(getIndex());
                     offerService.deleteOffer(offer.getId()).thenAccept(res -> {
@@ -108,5 +115,26 @@ public class OfferController {
             stage.showAndWait();
             loadOffers();
         } catch (IOException e) { e.printStackTrace(); }
+    }
+    
+    private void openGoogleCalendarDialog(Offer offer) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/offer/googleCalendarDialog.fxml"));
+            Parent root = loader.load();
+            
+            GoogleCalendarDialogController controller = loader.getController();
+            controller.setOffer(offer);
+            
+            Stage stage = new Stage();
+            stage.setTitle("📅 Ajouter au Google Calendar");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            controller.setDialogStage(stage);
+            stage.showAndWait();
+            
+        } catch (IOException e) {
+            System.err.println("❌ Erreur lors de l'ouverture de la boîte de dialogue Google Calendar: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

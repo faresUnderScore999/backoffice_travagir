@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<HBox prefHeight="768.0" prefWidth="1376.0" stylesheets="@../css/login.css"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="frontoffice.controllers.LoginController">
+    <children>
+
+        <VBox HBox.hgrow="ALWAYS" alignment="CENTER" style="-fx-background-color: #F3F4F6;">
+            <ImageView fitHeight="768.0" preserveRatio="true" pickOnBounds="true">
+                <image>
+                    <Image url="https://res.cloudinary.com/dn2rjd2fq/image/upload/v1770477053/Capture_n4kwpu.png" />
+                </image>
+            </ImageView>
+        </VBox>
+
+        <VBox alignment="CENTER" prefWidth="600.0" spacing="30.0" styleClass="vbox" HBox.hgrow="NEVER">
+            <padding>
+                <Insets left="80.0" right="80.0" />
+            </padding>
+
+            <VBox alignment="CENTER" spacing="10">
+                <Label text="TRAVAGIR" styleClass="label-brand" style="-fx-font-size: 32; -fx-font-weight: 900;" textFill="#f9b729" />
+                <Label text="User Login Portal" style="-fx-font-size: 18; -fx-text-fill: #6B7280;" />
+            </VBox>
+
+            <VBox maxWidth="350.0" spacing="8.0">
+                <Label text="Email Address" styleClass="field-label" />
+                <TextField fx:id="emailField" promptText="user@travagir.com" />
+            </VBox>
+
+            <VBox maxWidth="350.0" spacing="8.0">
+                <Label text="Password" styleClass="field-label" />
+                <PasswordField fx:id="passwordField" promptText="••••••••••••" />
+            </VBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button prefWidth="170.0" text="Sign In" onAction="#onLogin" />
+                <Button prefWidth="170.0" text="Create Account" onAction="#onGoToRegister" />
+            </HBox>
+
+            <Label fx:id="messageLabel" style="-fx-text-fill: #EF4444; -fx-font-weight: bold;" text="" />
+
+            <Region prefHeight="50" />
+            <Label text="© 2026 Travagir Team" style="-fx-text-fill: #9CA3AF; -fx-font-size: 11;" />
+        </VBox>
+    </children>
+</HBox>

@@ -48,10 +48,12 @@
 .secondary-button {
     -fx-background-color: white;
     -fx-text-fill: #131a22;
-    -fx-border-color: #131a22;
-    -fx-border-width: 2;
+    -fx-font-weight: bold;
     -fx-background-radius: 10;
-    -fx-border-radius: 10;
+    -fx-padding: 10 25;
+    -fx-cursor: hand;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
 }
 
 .add-user {
@@ -59,6 +61,219 @@
     -fx-text-fill: #131a22;
     -fx-font-weight: bold;
     -fx-background-radius: 10;
+}
+
+/* ===== PROMO CODE PAGE STYLES ===== */
+.filter-section {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 2);
+    -fx-margin-bottom: 20;
+}
+
+.filter-label {
+    -fx-text-fill: #374151;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+
+.search-field {
+    -fx-background-color: #F8F9FA;
+    -fx-border-color: #E0E0E0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10 12;
+    -fx-font-size: 14px;
+    -fx-pref-height: 40;
+}
+
+.search-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #F9B729;
+    -fx-border-width: 2;
+}
+
+.search-field:hover {
+    -fx-border-color: #D1D5DB;
+}
+
+/* Promo Code Buttons */
+.stats-button {
+    -fx-background-color: linear-gradient(to bottom, #F9B729, #E6A420);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);
+}
+
+.stats-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #FFD166, #F9B729);
+    -fx-effect: dropshadow(gaussian, rgba(249,183,41,0.4), 8, 0, 0, 3);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.stats-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #E6A420, #D4941A);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 1);
+}
+
+.export-button {
+    -fx-background-color: linear-gradient(to bottom, #27ae60, #229954);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);
+}
+
+.export-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #2ecc71, #27ae60);
+    -fx-effect: dropshadow(gaussian, rgba(39,174,96,0.4), 8, 0, 0, 3);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.export-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #229954, #1e8449);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 1);
+}
+
+/* ComboBox Styling */
+.combo-box {
+    -fx-background-color: #F8F9FA;
+    -fx-border-color: #E0E0E0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-pref-height: 40;
+    -fx-font-size: 14px;
+}
+
+.combo-box:focused .list-cell {
+    -fx-background-color: white;
+    -fx-border-color: #F9B729;
+}
+
+.combo-box:hover {
+    -fx-border-color: #D1D5DB;
+}
+
+/* Status Filters */
+.status-filters {
+    -fx-background-color: #F8F9FA;
+    -fx-background-radius: 10;
+    -fx-padding: 10 15;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 10;
+}
+
+.status-checkbox {
+    -fx-text-fill: #374151;
+    -fx-font-size: 13px;
+    -fx-font-weight: 500;
+}
+
+.status-checkbox .box {
+    -fx-background-color: white;
+    -fx-border-color: #D1D5DB;
+    -fx-border-radius: 4;
+    -fx-padding: 2;
+}
+
+.status-checkbox:selected .box {
+    -fx-background-color: #F9B729;
+    -fx-border-color: #F9B729;
+}
+
+.status-checkbox:selected .mark {
+    -fx-text-fill: white;
+}
+
+/* Table Action Buttons */
+.table-button {
+    -fx-font-size: 11px;
+    -fx-font-weight: 600;
+    -fx-padding: 6 12;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-border-radius: 5;
+}
+
+.button.edit-btn {
+    -fx-background-color: #F9B729;
+    -fx-text-fill: #131a22;
+}
+
+.button.edit-btn:hover {
+    -fx-background-color: #FFD166;
+}
+
+.button.pdf-btn {
+    -fx-background-color: #3B82F6;
+    -fx-text-fill: white;
+}
+
+.button.pdf-btn:hover {
+    -fx-background-color: #2563EB;
+}
+
+.button.delete-btn {
+    -fx-background-color: #EF4444;
+    -fx-text-fill: white;
+}
+
+.button.delete-btn:hover {
+    -fx-background-color: #DC2626;
+}
+
+.button.calendar-btn {
+    -fx-background-color: #4285F4;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-padding: 4 8px;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.button.calendar-btn:hover {
+    -fx-background-color: #3367D6;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.button.email-button {
+    -fx-background-color: linear-gradient(to bottom, #4CAF50, #45a049);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(76,175,80,0.3), 6, 0, 0, 2);
+}
+
+.button.email-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #45a049, #3d8b40);
+    -fx-effect: dropshadow(gaussian, rgba(76,175,80,0.5), 8, 0, 0, 3);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.button.email-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #3d8b40, #357a38);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
 }
 
 /* ============================================
@@ -204,4 +419,15 @@
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 5;
+}
+
+.button.pdf-btn {
+    -fx-background-color: #3B82F6;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+}
+
+.button.pdf-btn:hover {
+    -fx-background-color: #2563EB;
 }

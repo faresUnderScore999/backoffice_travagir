@@ -289,3 +289,28 @@
     -fx-stroke-line-cap: round;
     -fx-stroke-line-join: round;
 }
+
+/* ===== STATISTICS BUTTON ===== */
+.stats-button {
+    -fx-background-color: linear-gradient(to bottom, #F9B729, #E6A420);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);
+}
+
+.stats-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #FFD166, #F9B729);
+    -fx-effect: dropshadow(gaussian, rgba(249,183,41,0.4), 8, 0, 0, 3);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.stats-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #E6A420, #D4941A);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 1);
+}
