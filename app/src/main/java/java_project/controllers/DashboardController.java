@@ -5,11 +5,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.Modality;
 import java_project.services.DashboardService;
 import java_project.models.*;
 
@@ -58,6 +63,7 @@ public class DashboardController {
         loadTrending();
         loadTimeline();
         loadOfferPerformance();
+
         // wire suggestion UI
         if (suggestionArea != null) {
             suggestionArea.setEditable(false);
@@ -169,5 +175,105 @@ public class DashboardController {
                 offerChart.getData().addAll(clicksSeries, viewsSeries);
             });
         });
+    }
+
+    @FXML
+    public void showStatisticsPopup() {
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setTitle("📊 Statistics Dashboard");
+        popup.setWidth(900);
+        popup.setHeight(700);
+
+        VBox root = new VBox(20);
+        root.setStyle("-fx-padding: 20; -fx-background-color: #f5f5f5;");
+
+        // Title
+        Label title = new Label("📊 Statistics Overview");
+        title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
+
+        // Stats Cards
+        HBox cardsBox = new HBox(20);
+        cardsBox.getChildren().addAll(
+            createStatCard("Total Offers", "142", "#3498db"),
+            createStatCard("Active Promo Codes", "28", "#2ecc71"),
+            createStatCard("Total Users", "1,247", "#e74c3c"),
+            createStatCard("New Users Today", "15", "#f39c12")
+        );
+
+        // Charts Section
+        HBox chartsBox = new HBox(20);
+        
+        // Pie Chart for Offers
+        PieChart offerPieChart = new PieChart();
+        offerPieChart.setTitle("Offers Distribution");
+        offerPieChart.getData().addAll(
+            new PieChart.Data("Active", 85),
+            new PieChart.Data("Inactive", 25),
+            new PieChart.Data("Expired", 32)
+        );
+        offerPieChart.setPrefSize(400, 300);
+
+        // Line Chart for Promo Codes
+        LineChart<String, Number> promoLineChart = new LineChart<>(new CategoryAxis(), new NumberAxis());
+        promoLineChart.setTitle("Promo Codes Usage (Last 7 Days)");
+        promoLineChart.setPrefSize(400, 300);
+        
+        XYChart.Series<String, Number> promoSeries = new XYChart.Series<>();
+        promoSeries.setName("Redemptions");
+        promoSeries.getData().addAll(
+            new XYChart.Data<>("Mon", 5),
+            new XYChart.Data<>("Tue", 8),
+            new XYChart.Data<>("Wed", 12),
+            new XYChart.Data<>("Thu", 7),
+            new XYChart.Data<>("Fri", 15),
+            new XYChart.Data<>("Sat", 22),
+            new XYChart.Data<>("Sun", 18)
+        );
+        promoLineChart.getData().add(promoSeries);
+
+        chartsBox.getChildren().addAll(offerPieChart, promoLineChart);
+
+        // Bar Chart for User Activity
+        BarChart<String, Number> userBarChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
+        userBarChart.setTitle("User Registration (Last 6 Months)");
+        userBarChart.setPrefSize(820, 250);
+        
+        XYChart.Series<String, Number> userSeries = new XYChart.Series<>();
+        userSeries.setName("New Users");
+        userSeries.getData().addAll(
+            new XYChart.Data<>("Jan", 120),
+            new XYChart.Data<>("Feb", 150),
+            new XYChart.Data<>("Mar", 180),
+            new XYChart.Data<>("Apr", 165),
+            new XYChart.Data<>("May", 210),
+            new XYChart.Data<>("Jun", 195)
+        );
+        userBarChart.getData().add(userSeries);
+
+        // Close Button
+        Button closeButton = new Button("Close");
+        closeButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;");
+        closeButton.setOnAction(e -> popup.close());
+
+        root.getChildren().addAll(title, cardsBox, chartsBox, userBarChart, closeButton);
+
+        Scene scene = new Scene(root);
+        popup.setScene(scene);
+        popup.showAndWait();
+    }
+
+    private VBox createStatCard(String title, String value, String color) {
+        VBox card = new VBox(10);
+        card.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-border-color: " + color + "; -fx-border-width: 2; -fx-border-radius: 10;");
+        
+        Label titleLabel = new Label(title);
+        titleLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #7f8c8d;");
+        
+        Label valueLabel = new Label(value);
+        valueLabel.setStyle("-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: " + color + ";");
+        
+        card.getChildren().addAll(titleLabel, valueLabel);
+        return card;
     }
 }

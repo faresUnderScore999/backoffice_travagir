@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20" alignment="TOP_CENTER" prefWidth="900" prefHeight="650"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="frontoffice.controllers.RegisterController"
+      stylesheets="@../css/addUser.css" styleClass="form-card">
+
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <VBox spacing="5" alignment="CENTER_LEFT" styleClass="form-header">
+        <Label text="Create account" styleClass="form-title"/>
+        <Label text="Join Travagir" styleClass="form-subtitle"/>
+    </VBox>
+
+    <Separator/>
+
+    <GridPane vgap="15" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="120" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <Label text="Name" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="nameField" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Email" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="emailField" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Phone" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="field-label"/>
+        <TextField fx:id="telField" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="form-field"/>
+
+        <Label text="Password" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="field-label"/>
+        <PasswordField fx:id="passwordField" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="form-field"/>
+    </GridPane>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Back" onAction="#onBackToLogin" styleClass="btn-cancel" />
+        <Button text="Register" onAction="#onRegister" styleClass="btn-save" />
+    </HBox>
+
+    <Label fx:id="messageLabel" text="" />
+
+</VBox>

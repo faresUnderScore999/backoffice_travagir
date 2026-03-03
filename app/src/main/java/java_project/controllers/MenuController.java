@@ -38,6 +38,8 @@ public class MenuController implements Initializable {
             fxmlPath = "/java_project/views/reservationView.fxml";
         else if (clickedItem.getId().equals("menuOffer"))
             fxmlPath = "/java_project/views/offerManagementView.fxml";
+        else if (clickedItem.getId().equals("menuPromoCode"))
+            fxmlPath = "/java_project/views/promoCodeView.fxml";
         else if (clickedItem.getId().equals("menuAssociation"))
             fxmlPath = "/java_project/views/association/associationManagementView.fxml";
         else if (clickedItem.getId().equals("menuUserOffer"))

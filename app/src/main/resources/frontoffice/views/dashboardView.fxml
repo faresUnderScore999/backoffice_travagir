@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="frontoffice.controllers.DashboardController">
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+            <Label fx:id="userLabel" text="" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button text="Logout" onAction="#onLogout" />
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane>
+            <tabs>
+                <Tab text="Voyages" closable="false">
+                    <BorderPane>
+                        <top>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10" />
+                                </padding>
+                                <TextField fx:id="voyageSearchField" promptText="Search by title" />
+                                <Button text="Search" onAction="#onSearchVoyages" />
+                                <Button text="Refresh" onAction="#onRefreshVoyages" />
+                            </HBox>
+                        </top>
+                        <center>
+                            <TableView fx:id="voyagesTable">
+                                <columns>
+                                    <TableColumn fx:id="voyageIdCol" text="ID" prefWidth="80" />
+                                    <TableColumn fx:id="voyageTitleCol" text="Title" prefWidth="320" />
+                                    <TableColumn fx:id="voyageDestinationCol" text="Destination" prefWidth="220" />
+                                    <TableColumn fx:id="voyagePriceCol" text="Price" prefWidth="120" />
+                                </columns>
+                            </TableView>
+                        </center>
+                        <bottom>
+                            <VBox spacing="8">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10" />
+                                </padding>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Label text="People:" />
+                                    <TextField fx:id="peopleCountField" promptText="1" prefWidth="80" />
+                                    <Button text="Book selected voyage" onAction="#onBookSelectedVoyage" />
+                                </HBox>
+                                <Label fx:id="bookingMessageLabel" text="" />
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </Tab>
+
+                <Tab text="Offers" closable="false">
+                    <BorderPane>
+                        <top>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10" />
+                                </padding>
+                                <TextField fx:id="offerSearchField" promptText="Search by title" />
+                                <Button text="Search" onAction="#onSearchOffers" />
+                                <Button text="Refresh" onAction="#onRefreshOffers" />
+                            </HBox>
+                        </top>
+                        <center>
+                            <TableView fx:id="offersTable">
+                                <columns>
+                                    <TableColumn fx:id="offerIdCol" text="ID" prefWidth="80" />
+                                    <TableColumn fx:id="offerTitleCol" text="Title" prefWidth="420" />
+                                    <TableColumn fx:id="offerDiscountCol" text="Discount %" prefWidth="120" />
+                                </columns>
+                            </TableView>
+                        </center>
+                    </BorderPane>
+                </Tab>
+
+                <Tab text="My Reservations" closable="false">
+                    <BorderPane>
+                        <top>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10" />
+                                </padding>
+                                <Button text="Refresh" onAction="#onRefreshReservations" />
+                            </HBox>
+                        </top>
+                        <center>
+                            <TableView fx:id="reservationsTable">
+                                <columns>
+                                    <TableColumn fx:id="reservationIdCol" text="ID" prefWidth="80" />
+                                    <TableColumn fx:id="reservationVoyageIdCol" text="Voyage" prefWidth="120" />
+                                    <TableColumn fx:id="reservationPeopleCol" text="People" prefWidth="120" />
+                                    <TableColumn fx:id="reservationStatusCol" text="Status" prefWidth="180" />
+                                </columns>
+                            </TableView>
+                        </center>
+                        <bottom>
+                            <VBox spacing="8">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10" />
+                                </padding>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Button text="Cancel selected" onAction="#onCancelSelectedReservation" />
+                                    <Label text="Set people:" />
+                                    <TextField fx:id="reservationPeopleUpdateField" promptText="1" prefWidth="80" />
+                                    <Button text="Update people" onAction="#onUpdateSelectedReservationPeople" />
+                                </HBox>
+                                <Label fx:id="reservationActionLabel" text="" />
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </Tab>
+
+                <Tab text="Profile" closable="false">
+                    <BorderPane>
+                        <top>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10" />
+                                </padding>
+                                <Button text="Refresh" onAction="#onRefreshProfile" />
+                                <Button text="Save" onAction="#onSaveProfile" />
+                                <Label fx:id="profileStatusLabel" text="" />
+                            </HBox>
+                        </top>
+                        <center>
+                            <VBox spacing="10">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10" />
+                                </padding>
+                                <GridPane hgap="10" vgap="10">
+                                    <columnConstraints>
+                                        <ColumnConstraints minWidth="120" />
+                                        <ColumnConstraints hgrow="ALWAYS" />
+                                    </columnConstraints>
+
+                                    <Label text="Name" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                    <TextField fx:id="profileNameField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                    <Label text="Email" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                    <TextField fx:id="profileEmailField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                                    <Label text="Phone" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                    <TextField fx:id="profileTelField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                                    <Label text="Image URL" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                    <TextField fx:id="profileImageUrlField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                                </GridPane>
+                            </VBox>
+                        </center>
+                    </BorderPane>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>

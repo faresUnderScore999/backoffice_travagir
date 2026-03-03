@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox prefHeight="768" prefWidth="1376.0"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      stylesheets="@../css/voyageView.css"
+      fx:controller="frontoffice.controllers.views.MyOffersViewController"
+      spacing="25"
+      styleClass="card">
+
+    <VBox spacing="10">
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="header-label-container">
+            <Label text="🎁 My Offers" styleClass="header-label" />
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <padding>
+                    <Insets right="20" />
+                </padding>
+                <Button text="🔄 Refresh" onAction="#onRefresh" styleClass="secondary-button" />
+            </HBox>
+        </HBox>
+    </VBox>
+
+    <VBox VBox.vgrow="ALWAYS">
+        <TableView fx:id="claimsTable" VBox.vgrow="ALWAYS" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="60" />
+                <TableColumn fx:id="colOfferId" text="Offer" prefWidth="120" />
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="140" />
+                <TableColumn fx:id="colClaimedAt" text="Claimed At" prefWidth="220" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+        </TableView>
+    </VBox>
+
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <Button text="Delete selected claim" onAction="#onDeleteSelected" styleClass="primary-button" />
+        <Label fx:id="statusLabel" text="" />
+    </HBox>
+
+</VBox>

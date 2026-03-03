@@ -9,7 +9,10 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="java_project.controllers.DashboardController" stylesheets="@../css/dashboard.css" styleClass="dashboard-root">
     <top>
-        <Label text="Dashboard" style="-fx-font-size:24px; -fx-padding:10 0 10 10;" />
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding:10;">
+            <Label text="Dashboard" style="-fx-font-size:24px;" />
+            <Button text="📊 Statistics" onAction="#showStatisticsPopup" styleClass="stats-button" />
+        </HBox>
     </top>
     <center>
         <ScrollPane fitToWidth="true">

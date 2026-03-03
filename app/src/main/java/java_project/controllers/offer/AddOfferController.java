@@ -43,23 +43,34 @@ public class AddOfferController {
             return; // Stop if something is missing
         }
 
-        // 2. Construct the JSON if valid
-        String jsonBody = String.format(
-            "{\"voyageId\":%s, \"title\":\"%s\", \"description\":\"%s\", \"discountPercentage\":%s, \"startDate\":\"%s\", \"endDate\":\"%s\", \"active\":%b}",
-            voyageIdField.getText(), 
-            titleField.getText(), 
-            descriptionArea.getText().replace("\"", "\\\""), 
-            discountField.getText(),
-            startDatePicker.getValue(), 
-            endDatePicker.getValue(), 
-            activeCheckBox.isSelected()
-        );
+        // 2. Get destination name from voyage ID
+        String voyageId = voyageIdField.getText();
+        offerService.getVoyageById(Integer.parseInt(voyageId)).thenAccept(voyageResponse -> {
+            if (voyageResponse.statusCode() == 200) {
+                // Parse voyage to get destination name
+                String destinationName = extractDestinationFromVoyage(voyageResponse.body());
+                
+                // 3. Construct the JSON with destinationName
+                String jsonBody = String.format(
+                    "{\"destinationName\":\"%s\", \"title\":\"%s\", \"description\":\"%s\", \"discountPercentage\":%s, \"startDate\":\"%s\", \"endDate\":\"%s\", \"active\":%b}",
+                    destinationName,
+                    titleField.getText(), 
+                    descriptionArea.getText().replace("\"", "\\\""), 
+                    discountField.getText(),
+                    startDatePicker.getValue(), 
+                    endDatePicker.getValue(), 
+                    activeCheckBox.isSelected()
+                );
 
-        offerService.addOffer(jsonBody).thenAccept(response -> {
-            if (response.statusCode() == 201 || response.statusCode() == 200) {
-                Platform.runLater(() -> ((Stage) titleField.getScene().getWindow()).close());
+                offerService.addOffer(jsonBody).thenAccept(response -> {
+                    if (response.statusCode() == 201 || response.statusCode() == 200) {
+                        Platform.runLater(() -> ((Stage) titleField.getScene().getWindow()).close());
+                    } else {
+                        Platform.runLater(() -> showError("Server Error", "Backend returned: " + response.body()));
+                    }
+                });
             } else {
-                Platform.runLater(() -> showError("Server Error", "Backend returned: " + response.body()));
+                Platform.runLater(() -> showError("Voyage Error", "Voyage with ID " + voyageId + " not found"));
             }
         });
     }
@@ -116,5 +127,27 @@ public class AddOfferController {
     @FXML
     private void handleCancel() {
         ((Stage) titleField.getScene().getWindow()).close();
+    }
+
+    /**
+     * Extracts destination name from voyage JSON response.
+     */
+    private String extractDestinationFromVoyage(String voyageJson) {
+        try {
+            // Simple JSON parsing to extract "destination" field
+            // Expected format: {"id":28,"title":"tounesss","destination":"tunis",...}
+            int destinationIndex = voyageJson.indexOf("\"destination\":");
+            if (destinationIndex != -1) {
+                int startQuote = voyageJson.indexOf("\"", destinationIndex + 14);
+                int endQuote = voyageJson.indexOf("\"", startQuote + 1);
+                if (startQuote != -1 && endQuote != -1) {
+                    return voyageJson.substring(startQuote + 1, endQuote);
+                }
+            }
+            return "";
+        } catch (Exception e) {
+            System.err.println("Error parsing destination from voyage: " + e.getMessage());
+            return "";
+        }
     }
 }
