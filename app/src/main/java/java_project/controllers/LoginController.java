@@ -36,8 +36,8 @@ public class LoginController {
      @FXML
     public void initialize() {
         // Clear error message on input change
-        emailField.setText("admin@travagir.com");
-        passwordField.setText("securepassword159A@");
+        emailField.setText("benalifares999@gmail.com");
+        passwordField.setText("password2");
     }
     @FXML
     public void handleLogin(ActionEvent event) {
