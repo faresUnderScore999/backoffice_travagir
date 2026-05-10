@@ -21,7 +21,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 import java_project.models.Voyage;
-import java_project.services.ApiClient;
+import java_project.services.VoyageService;   // new import
 import java_project.models.VoyageImage;
 import java_project.services.VoyageImageService;
 
@@ -36,43 +36,25 @@ public class UpdateVoyageController {
     @FXML private FlowPane imageGallery;
     @FXML private Button uploadImageBtn;
 
-    private final ApiClient apiClient = new ApiClient();
+    private final VoyageService voyageService = new VoyageService();   // use service
     private final ObjectMapper mapper = new ObjectMapper();
-
     private int voyageId;
-
     private final VoyageImageService voyageImageService = new VoyageImageService();
 
-    /**
-     * Pre-fills the form with the selected voyage data.
-     */
     public void setVoyageData(Voyage voyage) {
-        if (voyage == null) {
-            return;
-        }
-
+        if (voyage == null) return;
         this.voyageId = voyage.getId();
         titleField.setText(voyage.getTitle());
         descriptionArea.setText(voyage.getDescription());
         destinationField.setText(voyage.getDestination());
-
-        if (voyage.getStartDate() != null) {
-            startDatePicker.setValue(voyage.getStartDate());
-        }
-        if (voyage.getEndDate() != null) {
-            endDatePicker.setValue(voyage.getEndDate());
-        }
-
+        if (voyage.getStartDate() != null) startDatePicker.setValue(voyage.getStartDate());
+        if (voyage.getEndDate() != null) endDatePicker.setValue(voyage.getEndDate());
         priceField.setText(String.valueOf(voyage.getPrice()));
-
         loadImagesAsync();
     }
 
-
     @FXML
     private void initialize() {
-        
-        // ensure gallery spacing and wrap
         if (imageGallery != null) {
             imageGallery.setHgap(10);
             imageGallery.setVgap(10);
@@ -85,11 +67,10 @@ public class UpdateVoyageController {
             showError("Upload Error", "Voyage ID is not set.");
             return;
         }
-
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Select Image(s) to Upload");
         chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"   )
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
         List<File> selected = chooser.showOpenMultipleDialog(titleField.getScene().getWindow());
         if (selected == null || selected.isEmpty()) return;
@@ -100,14 +81,12 @@ public class UpdateVoyageController {
             Path p = f.toPath();
             futures.add(voyageImageService.uploadImage(voyageId, p));
         }
-
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                 .whenComplete((v, ex) -> {
                     Platform.runLater(() -> uploadImageBtn.setDisable(false));
                     if (ex != null) {
                         Platform.runLater(() -> showError("Upload Error", "One or more uploads failed."));
                     }
-                    // refresh gallery regardless
                     loadImagesAsync();
                 });
     }
@@ -136,7 +115,6 @@ public class UpdateVoyageController {
     private void renderGallery(VoyageImage[] imgs) {
         imageGallery.getChildren().clear();
         if (imgs == null || imgs.length == 0) return;
-
         for (VoyageImage img : imgs) {
             VBox card = new VBox(6);
             ImageView iv = new ImageView();
@@ -147,9 +125,7 @@ public class UpdateVoyageController {
             try {
                 Image image = new Image(img.getImageUrl(), 160, 100, true, true, true);
                 iv.setImage(image);
-            } catch (Exception ignored) {
-            }
-
+            } catch (Exception ignored) {}
             Button del = new Button("Delete");
             del.setOnAction(ae -> {
                 if (img.getId() == null) return;
@@ -169,16 +145,14 @@ public class UpdateVoyageController {
                             return null;
                         });
             });
-
             card.getChildren().addAll(iv, del);
             imageGallery.getChildren().add(card);
         }
     }
+
     @FXML
     private void handleUpdate() {
-        if (!isInputValid()) {
-            return;
-        }
+        if (!isInputValid()) return;
         String jsonBody;
         try {
             Map<String, Object> payload = new LinkedHashMap<>();
@@ -195,7 +169,7 @@ public class UpdateVoyageController {
             return;
         }
 
-        sendRequest("/api/v1/voyages/" + voyageId, "PUT", jsonBody)
+        voyageService.updateVoyage(voyageId, jsonBody)
                 .thenAccept(response -> {
                     int code = response.statusCode();
                     if (code == 200 || code == 204) {
@@ -220,28 +194,21 @@ public class UpdateVoyageController {
 
     private boolean isInputValid() {
         StringBuilder errorMessage = new StringBuilder();
-
         if (titleField.getText() == null || titleField.getText().isEmpty()) errorMessage.append("Title is required!\n");
         if (destinationField.getText() == null || destinationField.getText().isEmpty()) errorMessage.append("Destination is required!\n");
         if (startDatePicker.getValue() == null) errorMessage.append("Start date is required!\n");
         if (endDatePicker.getValue() == null) errorMessage.append("End date is required!\n");
-
         if (startDatePicker.getValue() != null && endDatePicker.getValue() != null) {
             if (endDatePicker.getValue().isBefore(startDatePicker.getValue())) {
                 errorMessage.append("End date cannot be before start date!\n");
             }
         }
-
         try {
             Double.parseDouble(priceField.getText());
         } catch (NumberFormatException e) {
             errorMessage.append("Invalid price format!\n");
         }
-
-        if (errorMessage.length() == 0) {
-            return true;
-        }
-
+        if (errorMessage.length() == 0) return true;
         showError("Invalid Fields", errorMessage.toString());
         return false;
     }
@@ -266,10 +233,4 @@ public class UpdateVoyageController {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
-    private CompletableFuture<HttpResponse<String>> sendRequest(String endpoint, String method, String body) {
-        return apiClient.sendWithRetry(endpoint, method, body);
-    }
-
-
 }

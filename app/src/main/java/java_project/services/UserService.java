@@ -65,4 +65,8 @@ public class UserService {
         // Endpoint: /api/v1/users/{email}
         return apiClient.sendWithRetry("/api/v1/users/" + email, "GET", null);
     }
+    // Add this method to UserService.java
+public CompletableFuture<HttpResponse<String>> getUserById(int userId) {
+    return apiClient.sendWithRetry("/api/v1/users/by-id/" + userId, "GET", null);
+}
 }

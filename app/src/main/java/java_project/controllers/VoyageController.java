@@ -9,8 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import java_project.controllers.voyage.UpdateVoyageController;
-import java_project.models.Voyage; // Reusing your Voyage model
-import java_project.services.ApiClient;
+import java_project.models.Voyage;
+import java_project.services.VoyageService;   // new import
 import javafx.stage.Stage;
 import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.stage.Modality;
@@ -22,34 +22,23 @@ import java.util.List;
 
 public class VoyageController {
 
-    @FXML
-    private TableView<Voyage> voyageTable;
-    @FXML
-    private TableColumn<Voyage, Integer> colId;
-    @FXML
-    private TableColumn<Voyage, String> colTitle;
-    @FXML
-    private TableColumn<Voyage, String> colDestination;
-    @FXML
-    private TableColumn<Voyage, Double> colPrice;
-    @FXML
-    private TableColumn<Voyage, String> colStartDate;
-    @FXML
-    private TableColumn<Voyage, String> colEndDate;
-    @FXML
-    private Label statusLabel;
-    private final ApiClient apiClient = new ApiClient();
-    @FXML
-    private TableColumn<Voyage, Void> colActions;
+    @FXML private TableView<Voyage> voyageTable;
+    @FXML private TableColumn<Voyage, Integer> colId;
+    @FXML private TableColumn<Voyage, String> colTitle;
+    @FXML private TableColumn<Voyage, String> colDestination;
+    @FXML private TableColumn<Voyage, Double> colPrice;
+    @FXML private TableColumn<Voyage, String> colStartDate;
+    @FXML private TableColumn<Voyage, String> colEndDate;
+    @FXML private Label statusLabel;
+    @FXML private TableColumn<Voyage, Void> colActions;
 
+    private final VoyageService voyageService = new VoyageService();   // use service
     private final ObjectMapper mapper = new ObjectMapper()
             .registerModule(new JavaTimeModule())
-            // This line prevents the "Error parsing" if API has extra fields
             .configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     @FXML
     public void initialize() {
-        // Link columns to Voyage properties
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colDestination.setCellValueFactory(new PropertyValueFactory<>("destination"));
@@ -65,31 +54,22 @@ public class VoyageController {
     public void loadVoyages() {
         statusLabel.setText("Fetching data...");
 
-        // 1. Use the ApiClient (which acts as your interceptor)
-        // It will automatically catch 403, refresh the token, and retry this call
-        apiClient.sendWithRetry("/api/v1/voyages", "GET", null)
+        voyageService.getAllVoyages()
                 .thenAccept(response -> {
                     try {
                         if (response.statusCode() == 200) {
-                            // 2. Parse JSON into List
                             List<Voyage> voyages = mapper.readValue(response.body(),
-                                    new TypeReference<List<Voyage>>() {
-                                    });
-
-                            // 3. Update UI on the JavaFX Thread
+                                    new TypeReference<List<Voyage>>() {});
                             javafx.application.Platform.runLater(() -> {
                                 voyageTable.setItems(FXCollections.observableArrayList(voyages));
                                 statusLabel.setText("Data Loaded Successfully");
                             });
                         } else if (response.statusCode() == 403) {
-                            // This only happens if BOTH access and refresh tokens are dead
-                            javafx.application.Platform.runLater(() -> {
-                                statusLabel.setText("Session Expired. Please login again.");
-                                // Optional: trigger logout redirect here
-                            });
+                            javafx.application.Platform.runLater(() ->
+                                    statusLabel.setText("Session Expired. Please login again."));
                         } else {
-                            javafx.application.Platform.runLater(
-                                    () -> statusLabel.setText("Error: Server returned " + response.statusCode()));
+                            javafx.application.Platform.runLater(() ->
+                                    statusLabel.setText("Error: Server returned " + response.statusCode()));
                         }
                     } catch (Exception e) {
                         javafx.application.Platform.runLater(() -> statusLabel.setText("Error parsing data"));
@@ -97,7 +77,6 @@ public class VoyageController {
                     }
                 })
                 .exceptionally(ex -> {
-                    // Handle Network Errors (Server offline, etc.)
                     javafx.application.Platform.runLater(() -> statusLabel.setText("Connection failed"));
                     ex.printStackTrace();
                     return null;
@@ -120,13 +99,11 @@ public class VoyageController {
 
                 updateButton.setOnAction(event -> {
                     Voyage voyage = getTableView().getItems().get(getIndex());
-                    // Call your update logic
                     handleUpdate(voyage);
                 });
 
                 deleteButton.setOnAction(event -> {
                     Voyage voyage = getTableView().getItems().get(getIndex());
-                    // Call your delete logic
                     handleDelete(voyage);
                 });
 
@@ -144,11 +121,7 @@ public class VoyageController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(pane);
-                }
+                setGraphic(empty ? null : pane);
             }
         });
     }
@@ -157,12 +130,10 @@ public class VoyageController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/activityView.fxml"));
             Parent root = loader.load();
-
             ActivityController controller = loader.getController();
             if (controller != null) {
                 controller.setVoyageId(voyage.getId());
             }
-
             Stage stage = new Stage();
             stage.setTitle("Activities - " + voyage.getTitle());
             stage.initModality(Modality.NONE);
@@ -175,45 +146,34 @@ public class VoyageController {
     }
 
     private void handleUpdate(Voyage voyage) {
-        if (voyage == null) {
-            return;
-        }
-
+        if (voyage == null) return;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/voyage/updateVoyageView.fxml"));
             Parent root = loader.load();
-
             UpdateVoyageController controller = loader.getController();
             if (controller != null) {
                 controller.setVoyageData(voyage);
             }
-
             Stage stage = new Stage();
             stage.setTitle("Update Voyage: " + voyage.getTitle());
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
-            loadVoyages();
+            loadVoyages(); // refresh after closing
         } catch (IOException e) {
             e.printStackTrace();
             statusLabel.setText("Failed to open update voyage view");
         }
     }
 
-    /**
-     * Open the add-offer dialog and pre-fill the voyage id field.
-     */
     private void openAddOfferForVoyage(int voyageId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/offer/addOfferView.fxml"));
             Parent root = loader.load();
-
             Object controller = loader.getController();
             if (controller instanceof java_project.controllers.offer.AddOfferController) {
                 ((java_project.controllers.offer.AddOfferController) controller).setVoyageId(voyageId);
             }
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -224,14 +184,11 @@ public class VoyageController {
     }
 
     private void handleDelete(Voyage voyage) {
-        if (voyage == null) {
-            return;
-        }
-
+        if (voyage == null) return;
         int voyageId = voyage.getId();
         statusLabel.setText("Deleting voyage id=" + voyageId + " ...");
 
-        apiClient.sendWithRetry("/api/v1/voyages/" + voyageId, "DELETE", null)
+        voyageService.deleteVoyage(voyageId)
                 .thenAccept(response -> {
                     int code = response.statusCode();
                     if (code == 200 || code == 204) {
@@ -254,23 +211,19 @@ public class VoyageController {
                 });
     }
 
-        @FXML
+    @FXML
     private void openAddVoyageModal() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/java_project/views/voyage/addVoyageView.fxml"));
             Parent root = loader.load();
-
             Stage stage = new Stage();
             stage.setTitle("Register New Voyage");
-            stage.initModality(Modality.APPLICATION_MODAL); // Blocks the main window until closed
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();
-
-            // Refresh the table after the modal closes
             loadVoyages();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
 }
