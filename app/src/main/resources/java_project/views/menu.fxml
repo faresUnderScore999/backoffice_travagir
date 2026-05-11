@@ -62,12 +62,12 @@
         </HBox>
 
         <HBox fx:id="menuOffer" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
-            <Label text="🔥  Promo"/>
+            <Label text="🔥  Offers"/>
         </HBox>
 
-        <HBox fx:id="menuPromoCode" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+        <!-- <HBox fx:id="menuPromoCode" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
             <Label text="🎫  Promo Codes"/>
-        </HBox>
+        </HBox> -->
 
         <HBox fx:id="menuUser" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
             <Label text="👤  Gestion Utilisateur"/> </HBox>
@@ -87,9 +87,9 @@
             <Label text="🤝  Associations"/>
         </HBox>
 
-        <HBox fx:id="menuUserOffer" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
+        <!-- <HBox fx:id="menuUserOffer" onMouseClicked="#handleMenuClick" spacing="10" styleClass="menu-item">
             <Label text="🎁  My Offers"/>
-        </HBox>
+        </HBox> -->
 
         <HBox spacing="10" styleClass="menu-item">
             <Label text="⚙️  Settings"/>
